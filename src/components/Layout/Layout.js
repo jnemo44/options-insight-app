@@ -2,7 +2,7 @@ import React from 'react';
 
 import Aux from "../../hoc/Auxilary";
 import TradeList from "../Trade/TradeList";
-import TradeInfo from "../Trade/NewTrade/NewTrade";
+import NewTrade from "../../containers/NewTrade/NewTrade";
 
 const layout = () => {
     return(
@@ -45,7 +45,7 @@ const layout = () => {
         
     </div>
     <TradeList></TradeList>
-    <TradeInfo></TradeInfo>
+    <NewTrade></NewTrade>
     </div>
       
     );
