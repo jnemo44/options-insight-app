@@ -9,7 +9,8 @@ class NewTrade extends Component {
       newTradeForm: null
   }
 
-  newTradeHandler () {
+  newTradeHandler (event) {
+    event.preventDefault();
     console.log("Santas got a brand new bag");
   }
 
@@ -33,7 +34,7 @@ class NewTrade extends Component {
             label="Open Price" 
             placeholder="2.75"/>
           <div>
-            <button type="submit">Hello Darkness</button>
+            <Button></Button>
           </div>
         </div>
       </form>
