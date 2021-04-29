@@ -7,7 +7,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <NewTrade></NewTrade>
+        <Layout></Layout>
       </div>
     );
   }

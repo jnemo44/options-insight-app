@@ -5,13 +5,27 @@ import Input from '../../components/UI/Input';
 import Button from '../../components/UI/Button';
 
 class NewTrade extends Component {
-  state = {
-      newTradeForm: null
+  constructor(props) {
+    super(props);
+    this.state = {
+      newTradeForm: null,
+      ticker: '',
+      numContracts: '',
+      openPrice: ''
+    }
+
+  this.newTradeHandler = this.newTradeHandler.bind(this);
+  this.inputChangedHandler = this.inputChangedHandler.bind(this);
   }
+  
 
   newTradeHandler (event) {
     event.preventDefault();
-    console.log("Santas got a brand new bag");
+    alert('A name was submitted: ' + this.state.value);
+  }
+
+  inputChangedHandler (event) {
+    this.setState({value: event.target.value});
   }
 
   render () {
@@ -22,7 +36,10 @@ class NewTrade extends Component {
             name="ticker" 
             type="text" 
             label="Ticker"
-            placeholder="AAPL"/>
+            placeholder="AAPL"
+            value={this.state.value}
+            //changed={(event) => this.inputChangedHandler(event)}/>
+            changed={this.inputChangedHandler}/>
           <Input 
             name="numcontracts" 
             type="number" 
