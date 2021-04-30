@@ -1,13 +1,37 @@
 // This component will display a list of all trades
 // It will need to fetch data from the backend
 // Find a List compopnent from Tailwind
-import React from 'react';
+import React, { useState } from 'react';
+
+import Button from '../UI/Button';
 
 
-const tradeList = () => {
+const TradeList = () => {
+  const [openOrders, setOpenOrders] = useState([]);
+
+  function fetchOpenTradesHandler() {
+    fetch('https://trade-tracker-tool.herokuapp.com/open-orders')
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      const transformedOrders = data.results.map(openOrdersData => {
+        return{
+          ticker: openOrdersData.ticker,
+          numContracts: openOrdersData.number_contracts,
+          openPrice: openOrdersData.open_price
+        }
+      })
+      setOpenOrders(transformedOrders);
+      console.log(transformedOrders);
+    })
+  }
  return (
     <div className="flex flex-col">
     <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <Button
+        clicked={fetchOpenTradesHandler}>
+      </Button>
       <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
         <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
           <table className="min-w-full divide-y divide-gray-200">
@@ -100,4 +124,4 @@ const tradeList = () => {
 
 };
 
-export default tradeList;
+export default TradeList;

@@ -17,15 +17,21 @@ class NewTrade extends Component {
   this.newTradeHandler = this.newTradeHandler.bind(this);
   this.inputChangedHandler = this.inputChangedHandler.bind(this);
   }
-  
 
   newTradeHandler (event) {
     event.preventDefault();
-    alert('A name was submitted: ' + this.state.value);
+    alert('A name was submitted: ' + this.state.ticker +
+          ' Number of Contracts: ' + this.state.numContracts +
+          ' Open Price: ' + this.state.openPrice);
+    
   }
 
   inputChangedHandler (event) {
-    this.setState({value: event.target.value});
+    const value = event.target.value;
+    this.setState({
+      ...this.state,
+      [event.target.name]: value
+    });
   }
 
   render () {
@@ -38,18 +44,21 @@ class NewTrade extends Component {
             label="Ticker"
             placeholder="AAPL"
             value={this.state.value}
-            //changed={(event) => this.inputChangedHandler(event)}/>
             changed={this.inputChangedHandler}/>
           <Input 
-            name="numcontracts" 
+            name="numContracts" 
             type="number" 
             label="Number of Contracts" 
-            placeholder="-1"/>
+            placeholder="-1"
+            value={this.state.value}
+            changed={this.inputChangedHandler}/>
           <Input 
-            name="openprice" 
+            name="openPrice" 
             type="number" 
             label="Open Price" 
-            placeholder="2.75"/>
+            placeholder="2.75"
+            value={this.state.value}
+            changed={this.inputChangedHandler}/>
           <div>
             <Button></Button>
           </div>
