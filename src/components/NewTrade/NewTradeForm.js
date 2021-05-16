@@ -1,8 +1,8 @@
 //Build a new Trade
 //Ticker/#Contracts/SellorBuy/OpenPrice/OpenDate/Type
 import { useRef } from 'react';
-import Input from '../../components/UI/Input';
-import Button from '../../components/UI/Button';
+import Input from '../UI/Input';
+import Button from '../UI/Button';
 
 function NewTradeForm(props) {
   // Create reference objects for the form

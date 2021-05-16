@@ -1,12 +1,16 @@
 import  { Route, Switch} from 'react';
 
-import Layout from "./components/Layout/Layout"
-import NewTrade from "./containers/NewTrade/NewTrade"
+import Layout from "./components/Layout/Layout";
+import OpenTradesPage from "./pages/OpenTrades";
 
 function App () {
     return (
       <div>
-        <NewTrade></NewTrade>
+        <Layout>
+            <Route path='/' exact={true}>
+              <OpenTradesPage></OpenTradesPage>
+            </Route>
+        </Layout>
       </div>
     );
 }
