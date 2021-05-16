@@ -10,7 +10,7 @@ const TradeList = () => {
   const [openOrders, setOpenOrders] = useState([]);
 
   function fetchOpenTradesHandler() {
-    fetch('https://trade-tracker-tool.herokuapp.com/open-orders')
+    fetch('https://tether-89676-default-rtdb.firebaseio.com/.json')
     .then((response) => {
       return response.json();
     })

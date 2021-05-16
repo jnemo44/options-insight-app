@@ -1,16 +1,14 @@
-import  React, { Component, useState } from 'react';
+import  { Route, Switch} from 'react';
 
 import Layout from "./components/Layout/Layout"
 import NewTrade from "./containers/NewTrade/NewTrade"
 
-class App extends Component {
-  render() {
+function App () {
     return (
       <div>
-        <Layout></Layout>
+        <NewTrade></NewTrade>
       </div>
     );
-  }
 }
 
 export default App;
