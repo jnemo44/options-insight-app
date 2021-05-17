@@ -1,7 +1,7 @@
 //Build a new Trade
 //Ticker/#Contracts/SellorBuy/OpenPrice/OpenDate/Type
 import { useRef } from 'react';
-import Input from '../UI/Input';
+import FormInput from '../UI/Input';
 import Button from '../UI/Button';
 
 function NewTradeForm(props) {
@@ -33,7 +33,7 @@ function NewTradeForm(props) {
   return (
     <form onSubmit={submitFormHandler}>
       <div>
-        <Input
+        <FormInput
           //name="ticker"
           type="text"
           label="Ticker"
@@ -41,7 +41,7 @@ function NewTradeForm(props) {
           ref={tickerInputRef} />
       </div>
       <div>
-        <Input
+        <FormInput
           //name="ticker"
           type="number"
           label="Number of Contracts"
@@ -49,7 +49,7 @@ function NewTradeForm(props) {
           ref={numContractInputRef} />
       </div>
       <div>
-        <Input
+        <FormInput
           //name="ticker"
           type="number"
           label="Open Price"

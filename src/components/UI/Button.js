@@ -1,6 +1,6 @@
-import React from "react";
 
-const button = (props) => {
+
+const Button = (props) => {
         return (
           <>
             <button
@@ -15,4 +15,4 @@ const button = (props) => {
 
 }
 
-export default button;
+export default Button;

@@ -1,17 +1,21 @@
-import  { Route, Switch} from 'react';
+import  { Route, Switch} from 'react-router-dom';
 
 import Layout from "./components/Layout/Layout";
+import NewTradeForm from './components/NewTrade/NewTradeForm';
 import OpenTradesPage from "./pages/OpenTrades";
 
 function App () {
     return (
-      <div>
         <Layout>
-            <Route path='/' exact={true}>
-              <OpenTradesPage></OpenTradesPage>
-            </Route>
+            <Switch>
+                <Route path="/" exact={true}>
+                    <OpenTradesPage></OpenTradesPage>
+                </Route>
+                <Route path='/new-trade'>
+                    <NewTradeForm></NewTradeForm>
+                </Route>
+            </Switch>       
         </Layout>
-      </div>
     );
 }
 

@@ -3,8 +3,8 @@
 // Find a List compopnent from Tailwind
 import React, { useState } from 'react';
 
-import Button from '../UI/Button';
-
+//import Button from '../UI/Button';
+/*
 
 const TradeList = () => {
   const [openOrders, setOpenOrders] = useState([]);
@@ -125,3 +125,4 @@ const TradeList = () => {
 };
 
 export default TradeList;
+*/

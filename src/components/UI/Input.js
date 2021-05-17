@@ -1,6 +1,6 @@
 import React from 'react';
 
-const input = React.forwardRef ((props, ref) => {
+const FormInput = React.forwardRef ((props, ref) => {
     return (
         <div>
         <label htmlFor={props.name} className="block text-sm font-medium text-gray-700">
@@ -22,4 +22,4 @@ const input = React.forwardRef ((props, ref) => {
 }
 )
 
-export default input;
+export default FormInput;
