@@ -13,10 +13,16 @@ function OpenTradesPage() {
         setDisplayModal(true);
     }
 
+    function newTradeFormHideHandler () {
+        setDisplayModal(false);
+    }
+
 
     return (
         <div>
-        {displayModal && <Modal/>}
+        {displayModal && <Modal onHide={newTradeFormHideHandler}>
+            <NewTradeForm></NewTradeForm>     
+        </Modal>}
         <section>
             <div>Open Trades Page</div>
             <button 
