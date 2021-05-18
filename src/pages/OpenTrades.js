@@ -1,11 +1,35 @@
 import Modal from "../components/UI/Modal";
 import NewTradeForm from "../components/NewTrade/NewTradeForm";
+import { useHistory } from "react-router-dom";
 
 import { PlusIcon as PlusIconOutline } from '@heroicons/react/outline'
 import { useState } from "react";
+import TradeList from "../components/Trade/TradeList";
+
+const DUMMY_DATA = [
+    {
+      id: "m1",
+      ticker: "APPL",
+      numContracts: "1",
+      openPrice: "2.34"
+    },
+    {
+        id: "m2",
+        ticker: "XYZ",
+        numContracts: "3",
+        openPrice: "2.34"
+    },
+    {
+        id: "m3",
+        ticker: "QQQ",
+        numContracts: "2",
+        openPrice: "1.13"
+    },
+  ];
 
 
 function OpenTradesPage() {
+    const history = useHistory();
     const [displayModal, setDisplayModal] = useState(false)
 
     function newTradeHandler() {
@@ -17,14 +41,31 @@ function OpenTradesPage() {
         setDisplayModal(false);
     }
 
+    function addTradeHandler(newTradeData) {
+        fetch(
+            "https://tether-89676-default-rtdb.firebaseio.com/trades.json",
+            {
+              method: 'POST',
+              body: JSON.stringify(newTradeData),
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }
+          ).then(() => {
+            //history.replaceState('/')
+          })
+    }
 
     return (
         <div>
         {displayModal && <Modal onHide={newTradeFormHideHandler}>
-            <NewTradeForm></NewTradeForm>     
+            <NewTradeForm onAddTrade={addTradeHandler}></NewTradeForm>     
         </Modal>}
         <section>
-            <div>Open Trades Page</div>
+            <h1>Open Trades Page</h1>
+            <div>
+                <TradeList trades={DUMMY_DATA}></TradeList>
+            </div>
             <button 
                 type="button" 
                 onClick={newTradeHandler}

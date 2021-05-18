@@ -15,6 +15,7 @@ function NewTradeForm(props) {
     // Stop the page from reloading automatically
     event.preventDefault();
 
+
     // Get form values after submission
     const enteredTicker = tickerInputRef.current.value;
     const enteredNumContracts = numContractInputRef.current.value;
@@ -28,7 +29,9 @@ function NewTradeForm(props) {
 
     // Send data
     console.log(newTradeData);
+    props.onAddTrade(newTradeData);
   }
+
 
   return (
     <form onSubmit={submitFormHandler}>
