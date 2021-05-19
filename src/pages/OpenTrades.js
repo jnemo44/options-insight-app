@@ -3,45 +3,58 @@ import NewTradeForm from "../components/NewTrade/NewTradeForm";
 import { useHistory } from "react-router-dom";
 
 import { PlusIcon as PlusIconOutline } from '@heroicons/react/outline'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TradeList from "../components/Trade/TradeList";
-
-const DUMMY_DATA = [
-    {
-      id: "m1",
-      ticker: "APPL",
-      numContracts: "1",
-      openPrice: "2.34"
-    },
-    {
-        id: "m2",
-        ticker: "XYZ",
-        numContracts: "3",
-        openPrice: "2.34"
-    },
-    {
-        id: "m3",
-        ticker: "QQQ",
-        numContracts: "2",
-        openPrice: "1.13"
-    },
-  ];
 
 
 function OpenTradesPage() {
-    const history = useHistory();
-    const [displayModal, setDisplayModal] = useState(false)
+    const [displayModal, setDisplayModal] = useState(false);
+    const [newTradeAdded, setNewTradeAdded] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [loadedTrades, setLoadedTrades] = useState([]);
+
+    useEffect(() => {
+        setIsLoading(true);
+        fetch("https://tether-89676-default-rtdb.firebaseio.com/trades.json")
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            const trades = [];
+
+            for (const key in data) {
+                const trade = {
+                    id: key,
+                    ...data[key]
+                };
+                trades.push(trade);
+            };
+            setLoadedTrades(trades);
+            setIsLoading(false);
+            setNewTradeAdded(false);
+        })
+    }, [newTradeAdded]);
+
+    if (isLoading) {
+        return (
+            <section>
+                <h1>Loading...</h1>
+            </section>
+        )
+    }
 
     function newTradeHandler() {
-        // Turn on Modal
+        // Display Modal for New Trade entry
         setDisplayModal(true);
     }
 
     function newTradeFormHideHandler () {
+        // Hide Modal on cancel or 
         setDisplayModal(false);
     }
 
     function addTradeHandler(newTradeData) {
+        // Post Trade to backend
         fetch(
             "https://tether-89676-default-rtdb.firebaseio.com/trades.json",
             {
@@ -52,8 +65,12 @@ function OpenTradesPage() {
               }
             }
           ).then(() => {
-            //history.replaceState('/')
+            //
           })
+
+        // Close Modal after form submission
+        newTradeFormHideHandler();
+        setNewTradeAdded(true);
     }
 
     return (
@@ -64,7 +81,7 @@ function OpenTradesPage() {
         <section>
             <h1>Open Trades Page</h1>
             <div>
-                <TradeList trades={DUMMY_DATA}></TradeList>
+                <TradeList trades={loadedTrades}></TradeList>
             </div>
             <button 
                 type="button" 
