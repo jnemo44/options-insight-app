@@ -13,6 +13,11 @@ function OpenTradesPage() {
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrades, setLoadedTrades] = useState([]);
 
+    const modalAction = {
+        buttonTitle:"Submit",
+        buttonType:"submit"
+    }
+
     useEffect(() => {
         setIsLoading(true);
         fetch("https://tether-89676-default-rtdb.firebaseio.com/trades.json")
@@ -75,7 +80,7 @@ function OpenTradesPage() {
 
     return (
         <div>
-        {displayModal && <Modal onHide={newTradeFormHideHandler}>
+        {displayModal && <Modal onHide={newTradeFormHideHandler} modalAction={modalAction}>
             <NewTradeForm onAddTrade={addTradeHandler}></NewTradeForm>     
         </Modal>}
         <section>

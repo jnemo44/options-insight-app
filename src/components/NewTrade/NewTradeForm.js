@@ -18,7 +18,6 @@ function NewTradeForm(props) {
     // Stop the page from reloading automatically
     event.preventDefault();
 
-
     // Get form values after submission
     const enteredTicker = tickerInputRef.current.value;
     const enteredNumContracts = numContractInputRef.current.value;
@@ -82,9 +81,9 @@ function NewTradeForm(props) {
           ref={openPriceInputRef} />
       </div>
       
-      <div>
+      {/* <div>
           <Button></Button>
-      </div>
+      </div> */}
     </form>
   );
 

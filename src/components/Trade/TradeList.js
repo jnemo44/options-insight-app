@@ -52,9 +52,12 @@ function TradeList(props) {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.expirationDate}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.numContracts}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openPrice}</td>      
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900">
-                          Edit
+                      <td className="px-2 py-4 whitespace-nowrap text-right text-sm font-medium">
+                        <a href="#" className="text-indigo-600 hover:text-indigo-900 px-2">
+                          Adjust
+                        </a>
+                        <a href="#" className="text-red-600 hover:text-indigo-900 px-2">
+                          Delete
                         </a>
                       </td>
                     </tr>
