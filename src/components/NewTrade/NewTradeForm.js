@@ -1,6 +1,6 @@
 //Build a new Trade
 //Ticker/#Contracts/SellorBuy/OpenPrice/OpenDate/Type
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import FormInput from '../UI/Input';
 import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
@@ -13,6 +13,8 @@ function NewTradeForm(props) {
   const openDateInputRef = useRef();
   const expirationDateInputRef = useRef();
 
+  // Default to Sell (true)
+  const [enabled, setEnabled] = useState(true);
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
@@ -24,13 +26,15 @@ function NewTradeForm(props) {
     const enteredOpenPrice = openPriceInputRef.current.value;
     const enteredOpenDate = openDateInputRef.current.value;
     const enteredExpirationDate = expirationDateInputRef.current.value;
+    const buyOrSell = enabled;
 
     const newTradeData = {
       ticker: enteredTicker,
       numContracts: enteredNumContracts,
       openPrice: enteredOpenPrice,
       openDate: enteredOpenDate,
-      expirationDate: enteredExpirationDate
+      expirationDate: enteredExpirationDate,
+      buyOrSell: buyOrSell
     };
 
     // Send data
@@ -40,7 +44,7 @@ function NewTradeForm(props) {
 
 
   return (
-    <form onSubmit={submitFormHandler}>
+    <form onSubmit={submitFormHandler} class="space-y-3">
       <div>
         <FormInput
           type="date"
@@ -70,7 +74,7 @@ function NewTradeForm(props) {
           ref={numContractInputRef} />
       </div>
       <div>
-        <BuySellToggle></BuySellToggle>
+        <BuySellToggle enabled={enabled} setEnabled={setEnabled}></BuySellToggle>
       </div>
       <div>
         <FormInput
@@ -81,9 +85,9 @@ function NewTradeForm(props) {
           ref={openPriceInputRef} />
       </div>
       
-      {/* <div>
+      <div>
           <Button></Button>
-      </div> */}
+      </div>
     </form>
   );
 
