@@ -16,17 +16,28 @@ function NewTradeForm(props) {
   // Default to Sell (true)
   const [enabled, setEnabled] = useState(true);
 
+  // Set date to today
+  //let today = new Date().toISOString().substr(0, 10);
+  //document.querySelector("#today").value = today;
+  let today = new Date();
+  console.log(today)
+
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
     event.preventDefault();
 
     // Get form values after submission
     const enteredTicker = tickerInputRef.current.value;
-    const enteredNumContracts = numContractInputRef.current.value;
+    let enteredNumContracts = numContractInputRef.current.value;
     const enteredOpenPrice = openPriceInputRef.current.value;
     const enteredOpenDate = openDateInputRef.current.value;
     const enteredExpirationDate = expirationDateInputRef.current.value;
     const buyOrSell = enabled;
+
+    // If sold display as negative number
+    if (enabled) {
+      enteredNumContracts = -1 * enteredNumContracts;
+    } 
 
     const newTradeData = {
       ticker: enteredTicker,
@@ -79,7 +90,7 @@ function NewTradeForm(props) {
       <div>
         <FormInput
           type="number"
-          //step="0.01"
+          step="0.01"
           label="Open Price"
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />

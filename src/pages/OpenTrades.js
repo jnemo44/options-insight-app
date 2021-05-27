@@ -19,6 +19,11 @@ function OpenTradesPage() {
     }
 
     useEffect(() => {
+        var one_day = 1000 * 60 * 60 * 24;
+        var currentDate = new Date();
+        var currentTime = currentDate.getTime();
+        
+
         setIsLoading(true);
         fetch("https://tether-89676-default-rtdb.firebaseio.com/trades.json")
         .then((response) => {
@@ -32,6 +37,10 @@ function OpenTradesPage() {
                     id: key,
                     ...data[key]
                 };
+                const convertedDate = new Date(trade.expirationDate)
+                var result = (Math.round(Math.abs(convertedDate.getTime() - currentDate.getTime()) / (one_day))).toFixed(0);
+                console.log(result);
+                trade.dte = result; 
                 trades.push(trade);
             };
             setLoadedTrades(trades);
