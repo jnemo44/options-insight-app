@@ -1,84 +1,95 @@
+import { useState } from "react";
+import BootStrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
+import { Modal } from "react-bootstrap";
+import Button from "../UI/Button";
+
+//import Modal from "../UI/Modal";
 
 function TradeList(props) {
-    return (
-      <div className="flex flex-col">
-        <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Ticker
-                    </th>
-                    {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Open Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Expiration Date
-                    </th> */}
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      DTE
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      # Contracts
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Open Price
-                    </th>
-                    
-                    <th scope="col" className="relative px-6 py-3">
-                      <span className="sr-only">Edit</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {props.trades.map((trade, tradeIdx) => (
-                    <tr key={trade.id} className={tradeIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <a href="#" className="block hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{trade.ticker}</td>
-                      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openDate}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.expirationDate}</td> */}
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.dte}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.numContracts}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openPrice}</td>      
-                      <td className="px-2 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900 px-2">
-                          Adjust
-                        </a>
-                        <a href="#" className="text-red-600 hover:text-indigo-900 px-2">
-                          Delete
-                        </a>
-                      </td>
-                      </a>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+  const [displayTrade, setDisplayTrade] = useState(false);
+  const [modalInfo, setModalInfo] = useState();
+
+  const columns = [
+    { dataField: "ticker", text: "Ticker" },
+    { dataField: "dte", text: "DTE" },
+    { dataField: "numContracts", text: "Number of Contracts" },
+    { dataField: "openPrice", text: "Open Price" },
+    { dataField: "currentPrice", text: "Current Price" },
+    { dataField: "profitLoss", text: "P/L %" },
+  ];
+
+  const modalAction = {
+    buttonTitle: "Submit",
+    buttonType: "submit",
+  };
+
+  const rowEvents = {
+    onClick: (e, row) => {
+      console.log(row);
+      setModalInfo(row);
+      displayTradeHandler();
+    },
+  };
+
+  function displayTradeHandler() {
+    // Display Modal to view trade details
+    setDisplayTrade(true);
   }
 
-  export default TradeList;
-  
+  function displayTradeHideHandler() {
+    // Hide Modal on cancel
+    setDisplayTrade(false);
+  }
+
+  const ModalContent = () => {
+    return (
+      <Modal show={displayTrade} onHide={displayTradeHideHandler}>
+        <Modal.Header closeButton>
+          <Modal.Title>{modalInfo.ticker}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <div>
+                Number of Contracts: {modalInfo.numContracts}
+            </div>
+            <div>
+                Days till Expiration: {modalInfo.dte}
+            </div>
+            <div>
+                Days in Trade: {modalInfo.dit}
+            </div>
+            <div>
+                Open Price: {modalInfo.openPrice}
+            </div>
+            <div>
+                Notes: {modalInfo.notes}
+            </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            type="button"
+            onClick={displayTradeHideHandler}
+            name="Close"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          ></Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  };
+
+  return (
+    <div>
+      <BootStrapTable
+        keyField="name"
+        data={props.trades}
+        columns={columns}
+        pagination={paginationFactory()}
+        rowEvents={rowEvents}
+        hover
+      />
+      {displayTrade ? <ModalContent/> : null}
+    </div>
+  );
+}
+
+export default TradeList;

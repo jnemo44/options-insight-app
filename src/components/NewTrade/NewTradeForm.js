@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import FormInput from '../UI/Input';
 import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
+import TextArea from '../UI/TextArea';
 
 function NewTradeForm(props) {
   // Create reference objects for the form
@@ -12,6 +13,7 @@ function NewTradeForm(props) {
   const openPriceInputRef = useRef();
   const openDateInputRef = useRef();
   const expirationDateInputRef = useRef();
+  const notesInputRef = useRef();
 
   // Default to Sell (true)
   const [enabled, setEnabled] = useState(true);
@@ -32,6 +34,7 @@ function NewTradeForm(props) {
     const enteredOpenPrice = openPriceInputRef.current.value;
     const enteredOpenDate = openDateInputRef.current.value;
     const enteredExpirationDate = expirationDateInputRef.current.value;
+    const enteredNotes = notesInputRef.current.value;
     const buyOrSell = enabled;
 
     // If sold display as negative number
@@ -45,7 +48,8 @@ function NewTradeForm(props) {
       openPrice: enteredOpenPrice,
       openDate: enteredOpenDate,
       expirationDate: enteredExpirationDate,
-      buyOrSell: buyOrSell
+      buyOrSell: buyOrSell,
+      notes: enteredNotes
     };
 
     // Send data
@@ -95,9 +99,23 @@ function NewTradeForm(props) {
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />
       </div>
+      <div>
+        <TextArea
+          label="Notes"
+          prompt="Why are you making this trade?"
+          rows="3"
+          ref={notesInputRef}>
+
+        </TextArea>
+      </div>
       
       <div>
-          <Button></Button>
+          <Button 
+            type="submit" 
+            name="Submit"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        
+          </Button>
       </div>
     </form>
   );
