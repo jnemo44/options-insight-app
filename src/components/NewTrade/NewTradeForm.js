@@ -6,6 +6,7 @@ import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
 import TextArea from '../UI/TextArea';
 import SelectBox from '../UI/SelectBox';
+import TradeLegs from '../NewTrade/TradeLegs';
 
 function NewTradeForm(props) {
   // Create reference objects for the form
@@ -60,7 +61,7 @@ function NewTradeForm(props) {
 
   return (
     <form onSubmit={submitFormHandler} class="space-y-4">
-      <div class="grid grid-rows-4 grid-flow-col gap-4">
+      <div class="grid grid-rows-4 grid-cols-2 gap-4">
       <div>
         <FormInput
           type="date"
@@ -82,22 +83,17 @@ function NewTradeForm(props) {
           placeholder="AAPL"
           ref={tickerInputRef} />
       </div>
-      <div>
+      <div class='col-start-2'>
         <FormInput
           type="number"
           label="Number of Contracts"
           placeholder="Number of Contracts"
+          //value={enabled ? -value : value}
           ref={numContractInputRef} />
       </div>
       <div>
         <SelectBox
           label="Spread"></SelectBox>
-      </div>
-      <div>
-        <BuySellToggle 
-          enabled={enabled} 
-          setEnabled={setEnabled}>  
-        </BuySellToggle>
       </div>
       <div>
         <FormInput
@@ -107,6 +103,16 @@ function NewTradeForm(props) {
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />
       </div>
+      <div class='flex justify-center col-span-2'>
+        <BuySellToggle 
+          enabled={enabled} 
+          setEnabled={setEnabled}>  
+        </BuySellToggle>
+      </div>
+      {/* <div class='row-start-4 col-span-2'>
+        <TradeLegs></TradeLegs>
+      </div> */}
+      
       </div>
       
       <div>
