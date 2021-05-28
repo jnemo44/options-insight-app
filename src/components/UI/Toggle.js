@@ -49,9 +49,9 @@ function BuySellToggle(props) {
           </span>
         </span>
       </Switch>
-      <Switch.Label as="span" className="ml-3">
-        <span className="text-sm font-medium text-gray-900">Buy/Sell </span>
-      </Switch.Label>
+      {/* <Switch.Label as="span" className="ml-3">
+        <span className="text-sm font-medium text-gray-900">Buy/Sell</span>
+      </Switch.Label> */}
     </Switch.Group>
   );
 }

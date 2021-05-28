@@ -5,6 +5,7 @@ import FormInput from '../UI/Input';
 import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
 import TextArea from '../UI/TextArea';
+import SelectBox from '../UI/SelectBox';
 
 function NewTradeForm(props) {
   // Create reference objects for the form
@@ -53,13 +54,13 @@ function NewTradeForm(props) {
     };
 
     // Send data
-    console.log(newTradeData);
     props.onAddTrade(newTradeData);
   }
 
 
   return (
-    <form onSubmit={submitFormHandler} class="space-y-3">
+    <form onSubmit={submitFormHandler} class="space-y-4">
+      <div class="grid grid-rows-4 grid-flow-col gap-4">
       <div>
         <FormInput
           type="date"
@@ -67,7 +68,7 @@ function NewTradeForm(props) {
           placeholder="Enter Open Date"
           ref={openDateInputRef} />
       </div>
-      <div>
+      <div class='col-start-2'>
         <FormInput
           type="date"
           label="Expiration Date"
@@ -89,7 +90,14 @@ function NewTradeForm(props) {
           ref={numContractInputRef} />
       </div>
       <div>
-        <BuySellToggle enabled={enabled} setEnabled={setEnabled}></BuySellToggle>
+        <SelectBox
+          label="Spread"></SelectBox>
+      </div>
+      <div>
+        <BuySellToggle 
+          enabled={enabled} 
+          setEnabled={setEnabled}>  
+        </BuySellToggle>
       </div>
       <div>
         <FormInput
@@ -99,6 +107,8 @@ function NewTradeForm(props) {
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />
       </div>
+      </div>
+      
       <div>
         <TextArea
           label="Notes"
@@ -113,8 +123,14 @@ function NewTradeForm(props) {
           <Button 
             type="submit" 
             name="Submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">   
+          </Button>
+      </div>
+      <div>
+          <Button 
+            type="button" 
+            name="Cancel"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">   
           </Button>
       </div>
     </form>
