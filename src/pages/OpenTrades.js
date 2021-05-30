@@ -1,14 +1,13 @@
-import Modal from "../components/UI/Modal";
 import NewTradeForm from "../components/NewTrade/NewTradeForm";
 import { useHistory } from "react-router-dom";
 
 
-
+//import Modal from "../components/UI/Modal";
+import { Modal } from "react-bootstrap";
 import Button from '../components/UI/Button';
 import { PlusIcon as PlusIconOutline } from '@heroicons/react/outline'
 import { useState, useEffect } from "react";
 import TradeList from "../components/Trade/TradeList";
-
 
 function OpenTradesPage() {
     const [displayModal, setDisplayModal] = useState(false);
@@ -91,14 +90,42 @@ function OpenTradesPage() {
         setNewTradeAdded(true);
     }
 
+    const ModalContent = () => {
+        return (
+          <Modal show={displayModal} onHide={newTradeFormHideHandler}>
+            <Modal.Header closeButton>
+              <Modal.Title>New Trade Form</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <NewTradeForm onAddTrade={addTradeHandler} onCancel={newTradeFormHideHandler}></NewTradeForm>
+            </Modal.Body>
+            {/* <Modal.Footer>
+              <Button
+                id='new-trade'
+                type="submit"
+                onClick={newTradeFormHideHandler}
+                name="Submit"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              ></Button>
+              <Button
+                type="button"
+                onClick={newTradeFormHideHandler}
+                name="Cancel"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              ></Button>
+            </Modal.Footer> */}
+          </Modal>
+        );
+      };
+
 
 
     return (
         <div>
-        {displayModal && <Modal onHide={newTradeFormHideHandler} modalAction={modalAction}>
+        {/* {displayModal && <Modal onHide={newTradeFormHideHandler} modalAction={modalAction}>
             <NewTradeForm onAddTrade={addTradeHandler}></NewTradeForm>     
-        </Modal>}
-        <section>
+        </Modal>} */}
+        {displayModal ? <ModalContent/> : null}
         <Button
             type='button'
             onClick={newTradeHandler}
@@ -106,14 +133,13 @@ function OpenTradesPage() {
         >
             <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
         </Button>
-        </section>
         {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             We've used 3xl here, but feel free to try other max-widths based on your needs
         <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
         </div>*/}
-        <div>
-            <TradeList trades={loadedTrades}></TradeList>
-        </div>
+
+        <TradeList trades={loadedTrades}></TradeList>
+        
         </div>
     )
 }

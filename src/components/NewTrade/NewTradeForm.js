@@ -60,7 +60,7 @@ function NewTradeForm(props) {
 
 
   return (
-    <form onSubmit={submitFormHandler} class="space-y-4">
+    <form id='new-trade' onSubmit={submitFormHandler} class="space-y-4">
       <div class="grid grid-rows-4 grid-cols-2 gap-4">
       <div>
         <FormInput
@@ -111,8 +111,7 @@ function NewTradeForm(props) {
       </div>
       {/* <div class='row-start-4 col-span-2'>
         <TradeLegs></TradeLegs>
-      </div> */}
-      
+      </div> */}  
       </div>
       
       <div>
@@ -124,7 +123,7 @@ function NewTradeForm(props) {
 
         </TextArea>
       </div>
-      
+      <div class='flex justify-center space-x-20'>
       <div>
           <Button 
             type="submit" 
@@ -134,10 +133,12 @@ function NewTradeForm(props) {
       </div>
       <div>
           <Button 
-            type="button" 
+            type="button"
+            onClick={props.onCancel}
             name="Cancel"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">   
           </Button>
+      </div>
       </div>
     </form>
   );
