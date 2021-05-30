@@ -8,6 +8,24 @@ import TextArea from '../UI/TextArea';
 import SelectBox from '../UI/SelectBox';
 import TradeLegs from '../NewTrade/TradeLegs';
 
+// Spreads List
+const spreads = [
+  { id: 1, name: "Single" },
+  { id: 2, name: "Vertical" },
+  { id: 3, name: "Back/Ratio" },
+  { id: 4, name: "Calendar" },
+  { id: 5, name: "Diagonal" },
+  { id: 6, name: "Straddle" },
+  { id: 7, name: "Strangle" },
+  { id: 8, name: "Butterfly" },
+  { id: 9, name: "Condor" },
+  { id: 10, name: "Iron Condor" },
+  { id: 11, name: "Vertical Roll" },
+  { id: 12, name: "Covered Stock" },
+  { id: 13, name: "Collar/Synthetic (Combo)" },
+  { id: 14, name: "Custom" },
+];
+
 function NewTradeForm(props) {
   // Create reference objects for the form
   const tickerInputRef = useRef();
@@ -19,6 +37,9 @@ function NewTradeForm(props) {
 
   // Default to Sell (true)
   const [enabled, setEnabled] = useState(true);
+
+  // Default Selected spread to Vertical
+  const [selected, setSelected] = useState(spreads[1]);
 
   // Set date to today
   //let today = new Date().toISOString().substr(0, 10);
@@ -37,6 +58,7 @@ function NewTradeForm(props) {
     const enteredOpenDate = openDateInputRef.current.value;
     const enteredExpirationDate = expirationDateInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
+    const enteredSpread = selected.name;
     const buyOrSell = enabled;
 
     // If sold display as negative number
@@ -51,7 +73,8 @@ function NewTradeForm(props) {
       openDate: enteredOpenDate,
       expirationDate: enteredExpirationDate,
       buyOrSell: buyOrSell,
-      notes: enteredNotes
+      notes: enteredNotes,
+      spread: enteredSpread,
     };
 
     // Send data
@@ -93,7 +116,10 @@ function NewTradeForm(props) {
       </div>
       <div>
         <SelectBox
-          label="Spread"></SelectBox>
+          label="Spread"
+          spreads={spreads}
+          selected={selected}
+          setSelected={setSelected}/>
       </div>
       <div>
         <FormInput

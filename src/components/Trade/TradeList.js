@@ -12,6 +12,7 @@ function TradeList(props) {
 
   const columns = [
     { dataField: "ticker", text: "Ticker" },
+    { dataField: "spread", text: "Spread" },
     { dataField: "dte", text: "DTE" },
     { dataField: "numContracts", text: "Number of Contracts" },
     { dataField: "openPrice", text: "Open Price" },
@@ -26,7 +27,6 @@ function TradeList(props) {
 
   const rowEvents = {
     onClick: (e, row) => {
-      console.log(row);
       setModalInfo(row);
       displayTradeHandler();
     },
