@@ -109,9 +109,10 @@ function NewTradeForm(props) {
       <div class='col-start-2'>
         <FormInput
           type="number"
+          min="1"
+          defaultValue="1"
           label="Number of Contracts"
           placeholder="Number of Contracts"
-          //value={enabled ? -value : value}
           ref={numContractInputRef} />
       </div>
       <div>
