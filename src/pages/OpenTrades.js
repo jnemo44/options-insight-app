@@ -94,7 +94,7 @@ function OpenTradesPage() {
         return (
           <Modal show={displayModal} onHide={newTradeFormHideHandler}>
             <Modal.Header closeButton>
-              <Modal.Title>New Trade Form</Modal.Title>
+              <Modal.Title>Enter New Trade Info</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <NewTradeForm onAddTrade={addTradeHandler} onCancel={newTradeFormHideHandler}></NewTradeForm>
