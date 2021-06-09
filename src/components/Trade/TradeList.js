@@ -9,7 +9,7 @@ import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 
 function TradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
-  const [tradeInfoModal, setTradeInfoModal] = useState();
+  const [tradeInfoModal, setTradeInfoModal] = useState([]);
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
   
 
