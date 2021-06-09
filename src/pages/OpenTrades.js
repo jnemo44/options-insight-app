@@ -1,5 +1,6 @@
 import NewTradeForm from "../components/NewTrade/NewTradeForm";
 import { useHistory } from "react-router-dom";
+import { supabase } from '../supabaseClient';
 
 
 //import Modal from "../components/UI/Modal";
@@ -63,6 +64,7 @@ function OpenTradesPage() {
     function newTradeHandler() {
         // Display Modal for New Trade entry
         setDisplayModal(true);
+        getOpenTrades();
     }
 
     function newTradeFormHideHandler () {
@@ -88,6 +90,20 @@ function OpenTradesPage() {
         // Close Modal after form submission
         newTradeFormHideHandler();
         setNewTradeAdded(true);
+    }
+
+    async function getOpenTrades() {
+      try {
+        let { data: OpenTrades, error } = await supabase
+          .from('OpenTrades')
+          .select('ticker')
+
+        console.log(OpenTrades[0].ticker)
+
+      } catch (error) {
+        alert(error.message)
+      }
+        
     }
 
     const ModalContent = () => {
