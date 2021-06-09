@@ -114,13 +114,13 @@ function TradeList(props) {
     return (
       <Modal show={displayCloseTradeForm} onHide={hideCloseTradeFormHandler}>
         <Modal.Header closeButton>
-          <Modal.Title>Test</Modal.Title>
+          <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CloseTradeForm></CloseTradeForm>
         </Modal.Body>
         <Modal.Footer>
-          <Button
+          {/* <Button
             type="button"
             onClick={hideCloseTradeFormHandler}
             name="Adjust Position"
@@ -131,7 +131,7 @@ function TradeList(props) {
             onClick={hideCloseTradeFormHandler}
             name="Cancel"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></Button>
+          ></Button> */}
         </Modal.Footer>
       </Modal>
     );
