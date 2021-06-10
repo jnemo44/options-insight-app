@@ -110,14 +110,14 @@ function TradeList(props) {
     );
   };
 
-  const CloseTradeModal = () => {
+  const CloseTradeModal = (props) => {
     return (
       <Modal show={displayCloseTradeForm} onHide={hideCloseTradeFormHandler}>
         <Modal.Header closeButton>
           <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CloseTradeForm></CloseTradeForm>
+          <CloseTradeForm tradeInfo={props.tradeInfo}></CloseTradeForm>
         </Modal.Body>
         <Modal.Footer>
           {/* <Button
@@ -147,7 +147,7 @@ function TradeList(props) {
         rowEvents={rowEvents}
         hover
       />
-      {displayCloseTradeForm ? <CloseTradeModal/> : <TradeInfoModal />}
+      {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}
     </div>
   );
 }

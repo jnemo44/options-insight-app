@@ -76,7 +76,7 @@ function NewTradeForm(props) {
       buyOrSell: buyOrSell,
       notes: enteredNotes,
       spread: enteredSpread,
-      closedTrade: closedTrade,
+      //closedTrade: closedTrade,
     };
 
     // Send data

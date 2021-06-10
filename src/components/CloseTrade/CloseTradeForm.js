@@ -45,9 +45,9 @@ function CloseTradeForm(props) {
       <div class="grid grid-rows-4 grid-cols-2 gap-4">
         <div>
           <FormInput
-            type="date"
+            type="text"
             label="Open Date"
-            placeholder="Enter Open Date"
+            value={props.tradeInfo.openDate}
             ref={openDateInputRef}
           />
         </div>
@@ -55,7 +55,6 @@ function CloseTradeForm(props) {
           <FormInput
             type="date"
             label="Expiration Date"
-            placeholder="Enter Expiration Date"
             ref={expirationDateInputRef}
           />
         </div>
@@ -63,7 +62,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="text"
             label="Ticker"
-            placeholder="AAPL"
+            value={props.tradeInfo.ticker}
             ref={tickerInputRef}
           />
         </div>
@@ -71,9 +70,8 @@ function CloseTradeForm(props) {
           <FormInput
             type="number"
             min="1"
-            defaultValue="1"
+            value={props.tradeInfo.numContracts}
             label="Number of Contracts"
-            placeholder="Number of Contracts"
             ref={numContractInputRef}
           />
         </div>
@@ -82,7 +80,7 @@ function CloseTradeForm(props) {
             type="number"
             step="0.01"
             label="Open Price"
-            placeholder="Enter Open Price"
+            value={props.tradeInfo.openPrice}
             ref={openPriceInputRef}
           />
         </div>
