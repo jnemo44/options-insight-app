@@ -9,6 +9,8 @@ import { PlusIcon as PlusIconOutline } from '@heroicons/react/outline'
 import { useState, useEffect } from "react";
 import TradeList from "../components/Trade/TradeList";
 
+//"https://tether-89676-default-rtdb.firebaseio.com/trades.json"
+
 function OpenTradesPage() {
     const [displayModal, setDisplayModal] = useState(false);
     const [newTradeAdded, setNewTradeAdded] = useState(false);
@@ -24,19 +26,31 @@ function OpenTradesPage() {
         var one_day = 1000 * 60 * 60 * 24;
         var currentDate = new Date();
 
+        //https://tether-89676-default-rtdb.firebaseio.com/trades
+        //"http://127.0.0.1:5000/open-orders"
+
         setIsLoading(true);
-        fetch("https://tether-89676-default-rtdb.firebaseio.com/trades.json")
+        fetch('http://127.0.0.1:5000/open-orders', {
+          method: "GET",
+          headers: { "Content-type": "application/json" },
+        })
         .then((response) => {
             return response.json();
         })
         .then((data) => {
+            console.log('Data.open_list',data.open_list);
             const trades = [];
 
-            for (const key in data) {
+            const convertedData = {...data.open_list};
+            console.log('TEST',convertedData);
+
+            for (const key in convertedData) {
+                console.log('Key',key)
                 const trade = {
                     id: key,
-                    ...data[key]
+                    ...convertedData[key],
                 };
+                console.log('trade',trade)
                 const convertedDte = new Date(trade.expirationDate)
                 var dte = (Math.round(Math.abs(convertedDte.getTime() - currentDate.getTime()) / (one_day))).toFixed(0);
                 const convertedDit = new Date(trade.openDate)
@@ -47,6 +61,7 @@ function OpenTradesPage() {
                 trades.push(trade);
             };
             setLoadedTrades(trades);
+            console.log("Trades Pushed",trades);
             setIsLoading(false);
             setNewTradeAdded(false);
         })

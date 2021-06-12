@@ -73,7 +73,7 @@ function NewTradeForm(props) {
       openDate: enteredOpenDate,
       expirationDate: enteredExpirationDate,
       buyOrSell: buyOrSell,
-      notes: enteredNotes,
+      openNotes: enteredNotes,
       spread: enteredSpread,
     };
 
