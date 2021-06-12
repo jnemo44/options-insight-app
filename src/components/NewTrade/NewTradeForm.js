@@ -75,6 +75,7 @@ function NewTradeForm(props) {
       buyOrSell: buyOrSell,
       openNotes: enteredNotes,
       spread: enteredSpread,
+      adjustment: false
     };
 
     // Send data

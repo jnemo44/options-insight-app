@@ -88,7 +88,7 @@ function OpenTradesPage() {
 
   function addTradeHandler(newTradeData) {
     // Post Trade to backend
-    fetch("https://tether-89676-default-rtdb.firebaseio.com/trades.json", {
+    fetch("http://127.0.0.1:5000/open-orders", {
       method: "POST",
       body: JSON.stringify(newTradeData),
       headers: {
