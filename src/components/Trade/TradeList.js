@@ -58,8 +58,8 @@ function TradeList(props) {
     displayCloseTradeFormHandler();
 
     // Patch Request
-    fetch("https://tether-89676-default-rtdb.firebaseio.com/trades/-MbaTBmnW-spbRACw_Jy.json", {
-      method: "PATCH",
+    fetch("http://127.0.0.1:5000/close-orders", {
+      method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify({
         closedTrade: true,
@@ -83,7 +83,7 @@ function TradeList(props) {
           <div>Days till Expiration: {tradeInfoModal.dte}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Open Price: {tradeInfoModal.openPrice}</div>
-          <div>Notes: {tradeInfoModal.notes}</div>
+          <div>Notes: {tradeInfoModal.openNotes}</div>
           <div>Closed?: {tradeInfoModal.closedTrade}</div>
         </Modal.Body>
         <Modal.Footer>
@@ -101,7 +101,7 @@ function TradeList(props) {
           ></Button>
           <Button
             type="button"
-            onClick={displayTradeInfoHandler}
+            onClick={hideTradeInfoHandler}
             name="Cancel"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           ></Button>
@@ -117,10 +117,10 @@ function TradeList(props) {
           <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CloseTradeForm tradeInfo={props.tradeInfo}></CloseTradeForm>
+          <CloseTradeForm tradeInfo={props.tradeInfo} onCancel={hideCloseTradeFormHandler}></CloseTradeForm>
         </Modal.Body>
-        <Modal.Footer>
-          {/* <Button
+        {/* <Modal.Footer>
+          <Button
             type="button"
             onClick={hideCloseTradeFormHandler}
             name="Adjust Position"
@@ -131,8 +131,8 @@ function TradeList(props) {
             onClick={hideCloseTradeFormHandler}
             name="Cancel"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></Button> */}
-        </Modal.Footer>
+          ></Button> 
+        </Modal.Footer>*/}
       </Modal>
     );
   };

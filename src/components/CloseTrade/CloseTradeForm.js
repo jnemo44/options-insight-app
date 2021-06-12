@@ -6,37 +6,35 @@ import TextArea from "../UI/TextArea";
 
 function CloseTradeForm(props) {
   // Create reference objects for the form
-  const tickerInputRef = useRef();
-  const numContractInputRef = useRef();
-  const openPriceInputRef = useRef();
-  const openDateInputRef = useRef();
-  const expirationDateInputRef = useRef();
+  const closePriceInputRef = useRef();
   const notesInputRef = useRef();
+
+  console.log(props.tradeInfo);
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
     event.preventDefault();
 
     // Get form values after submission
-    const enteredTicker = tickerInputRef.current.value;
-    let enteredNumContracts = numContractInputRef.current.value;
-    const enteredOpenPrice = openPriceInputRef.current.value;
-    const enteredOpenDate = openDateInputRef.current.value;
-    const enteredExpirationDate = expirationDateInputRef.current.value;
+    const enteredClosePrice = closePriceInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
-    const closedTrade = false;
+    const closedTrade = true;
 
     const closeTradeData = {
-      ticker: enteredTicker,
-      numContracts: enteredNumContracts,
-      openPrice: enteredOpenPrice,
-      openDate: enteredOpenDate,
-      expirationDate: enteredExpirationDate,
-      notes: enteredNotes,
+      openID: props.tradeInfo.id,
+      ticker: props.tradeInfo.ticker,
+      numContracts: props.tradeInfo.numContracts,
+      closePrice: enteredClosePrice,
+      openDate: props.tradeInfo.openDate,
+      expirationDate: props.tradeInfo.expirationDate,
+      buyOrSell: props.tradeInfo.buyOrSell,
+      adjustment: false,
+      closeNotes: enteredNotes,
       closedTrade: closedTrade,
     };
 
     // Send data
+    console.log(closeTradeData);
     //props.onAddTrade(newTradeData);
   }
 
@@ -48,14 +46,13 @@ function CloseTradeForm(props) {
             type="text"
             label="Open Date"
             value={props.tradeInfo.openDate}
-            ref={openDateInputRef}
           />
         </div>
         <div class="col-start-2">
           <FormInput
-            type="date"
+            type="text"
             label="Expiration Date"
-            ref={expirationDateInputRef}
+            value={props.tradeInfo.expirationDate}
           />
         </div>
         <div>
@@ -63,7 +60,6 @@ function CloseTradeForm(props) {
             type="text"
             label="Ticker"
             value={props.tradeInfo.ticker}
-            ref={tickerInputRef}
           />
         </div>
         <div class="col-start-2">
@@ -72,7 +68,6 @@ function CloseTradeForm(props) {
             min="1"
             value={props.tradeInfo.numContracts}
             label="Number of Contracts"
-            ref={numContractInputRef}
           />
         </div>
         <div>
@@ -81,7 +76,14 @@ function CloseTradeForm(props) {
             step="0.01"
             label="Open Price"
             value={props.tradeInfo.openPrice}
-            ref={openPriceInputRef}
+          />
+        </div>
+        <div>
+          <FormInput
+            type="number"
+            step="0.01"
+            label="Close Price"
+            ref={closePriceInputRef}
           />
         </div>
       </div>
@@ -89,7 +91,7 @@ function CloseTradeForm(props) {
       <div>
         <TextArea
           label="Notes"
-          prompt="Why are you making this trade?"
+          prompt="How did this trade go?"
           rows="3"
           ref={notesInputRef}
         ></TextArea>
