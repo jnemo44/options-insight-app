@@ -60,7 +60,6 @@ function NewTradeForm(props) {
     const enteredNotes = notesInputRef.current.value;
     const enteredSpread = selected.name;
     const buyOrSell = enabled;
-    const closedTrade = false;
 
     // If sold display as negative number
     if (enabled) {
@@ -74,9 +73,8 @@ function NewTradeForm(props) {
       openDate: enteredOpenDate,
       expirationDate: enteredExpirationDate,
       buyOrSell: buyOrSell,
-      notes: enteredNotes,
+      openNotes: enteredNotes,
       spread: enteredSpread,
-      //closedTrade: closedTrade,
     };
 
     // Send data
