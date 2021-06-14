@@ -9,7 +9,12 @@ function CloseTradeForm(props) {
   const closePriceInputRef = useRef();
   const notesInputRef = useRef();
 
-  console.log(props.tradeInfo);
+  var contractsClosed = props.tradeInfo.numContracts;
+
+  //Buy or Sell
+  if(props.tradeInfo.buyOrSell === "true") {
+    contractsClosed = props.tradeInfo.numContracts * -1
+  }
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
@@ -23,7 +28,7 @@ function CloseTradeForm(props) {
     const closeTradeData = {
       openID: props.tradeInfo.id,
       ticker: props.tradeInfo.ticker,
-      numContracts: props.tradeInfo.numContracts,
+      numContracts: contractsClosed,
       closePrice: enteredClosePrice,
       openDate: props.tradeInfo.openDate,
       expirationDate: props.tradeInfo.expirationDate,
@@ -45,6 +50,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="text"
             label="Open Date"
+            readonly={true}
             value={props.tradeInfo.openDate}
           />
         </div>
@@ -66,7 +72,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="number"
             min="1"
-            value={props.tradeInfo.numContracts}
+            value={contractsClosed}
             label="Number of Contracts"
           />
         </div>
@@ -83,6 +89,7 @@ function CloseTradeForm(props) {
             type="number"
             step="0.01"
             label="Close Price"
+            readonly = {true}
             ref={closePriceInputRef}
           />
         </div>

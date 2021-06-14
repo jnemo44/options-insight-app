@@ -45,7 +45,10 @@ function NewTradeForm(props) {
   //let today = new Date().toISOString().substr(0, 10);
   //document.querySelector("#today").value = today;
   let today = new Date();
-  console.log(today)
+
+  function setEnabledHandler() {
+
+  }
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
@@ -62,6 +65,7 @@ function NewTradeForm(props) {
     const buyOrSell = enabled;
 
     // If sold display as negative number
+    console.log(buyOrSell);
     if (enabled) {
       enteredNumContracts = -1 * enteredNumContracts;
     } 
