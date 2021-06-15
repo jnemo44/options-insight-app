@@ -56,21 +56,30 @@ function TradeList(props) {
     hideTradeInfoHandler();
     // Display Form Modal
     displayCloseTradeFormHandler();
+  }
 
-    // Patch Request
+  function submitCloseTradeHandler(closeTradeData) {
+    console.log('Close Trade', closeTradeData);
+
+    // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
       method: "POST",
-      headers: { "Content-type": "application/json" },
+      headers: { "Content-type": "application/json", 'Access-Control-Allow-Origin':'*' },
+      mode: 'cors',
       body: JSON.stringify({
-        closedTrade: true,
+        closeTradeData,
       }),
     })
       .then((response) => {
-        console.log(response.status);
+        console.log('Response Status', response.status);
         return response.json();
       })
       .then((data) => console.log(data));
+
   }
+
+    
+  
 
   const TradeInfoModal = () => {
     return (
@@ -117,7 +126,10 @@ function TradeList(props) {
           <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CloseTradeForm tradeInfo={props.tradeInfo} onCancel={hideCloseTradeFormHandler}></CloseTradeForm>
+          <CloseTradeForm 
+            tradeInfo={props.tradeInfo} 
+            onCancel={hideCloseTradeFormHandler}
+            onCloseTrade={submitCloseTradeHandler}></CloseTradeForm>
         </Modal.Body>
         {/* <Modal.Footer>
           <Button

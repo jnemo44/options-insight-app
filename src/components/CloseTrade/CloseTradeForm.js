@@ -8,6 +8,7 @@ function CloseTradeForm(props) {
   // Create reference objects for the form
   const closePriceInputRef = useRef();
   const notesInputRef = useRef();
+  const closeDateInputRef = useRef();
 
   var contractsClosed = props.tradeInfo.numContracts;
 
@@ -23,15 +24,16 @@ function CloseTradeForm(props) {
     // Get form values after submission
     const enteredClosePrice = closePriceInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
+    const enteredCloseDate = closeDateInputRef.current.value;
     const closedTrade = true;
 
     const closeTradeData = {
       openID: props.tradeInfo.id,
-      ticker: props.tradeInfo.ticker,
+      //ticker: props.tradeInfo.ticker,
       numContracts: contractsClosed,
       closePrice: enteredClosePrice,
-      openDate: props.tradeInfo.openDate,
-      expirationDate: props.tradeInfo.expirationDate,
+      closeDate: enteredCloseDate,
+      //expirationDate: props.tradeInfo.expirationDate,
       buyOrSell: props.tradeInfo.buyOrSell,
       adjustment: false,
       closeNotes: enteredNotes,
@@ -39,8 +41,8 @@ function CloseTradeForm(props) {
     };
 
     // Send data
-    console.log(closeTradeData);
-    //props.onAddTrade(newTradeData);
+    //console.log(closeTradeData);
+    props.onCloseTrade(closeTradeData);
   }
 
   return (
@@ -48,10 +50,9 @@ function CloseTradeForm(props) {
       <div class="grid grid-rows-4 grid-cols-2 gap-4">
         <div>
           <FormInput
-            type="text"
-            label="Open Date"
-            readonly={true}
-            value={props.tradeInfo.openDate}
+            type="date"
+            label="Close Date"
+            ref={closeDateInputRef}
           />
         </div>
         <div class="col-start-2">
