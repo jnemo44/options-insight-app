@@ -64,17 +64,19 @@ function TradeList(props) {
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
       method: "POST",
-      headers: { "Content-type": "application/json", 'Access-Control-Allow-Origin':'*' },
-      mode: 'cors',
-      body: JSON.stringify({
-        closeTradeData,
-      }),
+      headers: { "Content-type": "application/json"},
+      //mode: 'cors',
+      body: JSON.stringify(closeTradeData),
     })
       .then((response) => {
         console.log('Response Status', response.status);
         return response.json();
       })
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        hideCloseTradeFormHandler();
+      });
+
 
   }
 
