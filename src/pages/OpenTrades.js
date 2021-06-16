@@ -9,7 +9,7 @@ import TradeList from "../components/Trade/TradeList";
 
 function OpenTradesPage() {
   const [displayModal, setDisplayModal] = useState(false);
-  const [newTradeAdded, setNewTradeAdded] = useState(false);
+  const [tradeListModified, setTradeListModified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedTrades, setLoadedTrades] = useState([]);
 
@@ -58,9 +58,9 @@ function OpenTradesPage() {
         setLoadedTrades(trades);
         console.log("Trades Pushed", trades);
         setIsLoading(false);
-        setNewTradeAdded(false);
+        setTradeListModified(false);
       });
-  }, [newTradeAdded]);
+  }, [tradeListModified]);
 
   if (isLoading) {
     return (
@@ -80,6 +80,11 @@ function OpenTradesPage() {
     setDisplayModal(false);
   }
 
+  function tradeListModifiedHandler() {
+    // A new trade has been added or closed
+    setTradeListModified(true);
+  }
+
   function addTradeHandler(newTradeData) {
     // Post Trade to backend
     fetch("http://127.0.0.1:5000/open-orders", {
@@ -94,7 +99,7 @@ function OpenTradesPage() {
 
     // Close Modal after form submission
     newTradeFormHideHandler();
-    setNewTradeAdded(true);
+    setTradeListModified(true);
   }
 
   const ModalContent = () => {
@@ -146,7 +151,7 @@ function OpenTradesPage() {
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
       </div>*/}
 
-      <TradeList trades={loadedTrades}></TradeList>
+      <TradeList trades={loadedTrades} closed={tradeListModifiedHandler}></TradeList>
     </div>
   );
 }

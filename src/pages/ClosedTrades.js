@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import ClosedTradeList from '../components/Trade/ClosedTradeList';
 
 function ClosedTradesPage() {
     //const [displayModal, setDisplayModal] = useState(false);
@@ -45,7 +46,7 @@ function ClosedTradesPage() {
     }
     return (
         <div>
-            OUTPUT HERE
+            <ClosedTradeList trades={loadedTrades}></ClosedTradeList>
         </div>
     )
 }

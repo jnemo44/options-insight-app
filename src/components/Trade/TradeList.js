@@ -21,7 +21,6 @@ function TradeList(props) {
     { dataField: "openPrice", text: "Open Price" },
     { dataField: "currentPrice", text: "Current Price" },
     { dataField: "profitLoss", text: "P/L %" },
-    { dataField: "closedTrade", text: "Closed?" },
   ];
 
   const rowEvents = {
@@ -77,11 +76,27 @@ function TradeList(props) {
         hideCloseTradeFormHandler();
       });
 
+    // Patch Request (Set closed flag in open order table) 
+    const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
+    console.log(url);
+    fetch(url, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json"},
+      //mode: 'cors',
+      body: JSON.stringify({closed:true}),
+    })
+      .then((response) => {
+        console.log('Response Status', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        hideCloseTradeFormHandler();
+      });
 
+      // Trigger Page Reload
+      props.closed();
   }
-
-    
-  
 
   const TradeInfoModal = () => {
     return (
@@ -95,7 +110,6 @@ function TradeList(props) {
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Open Price: {tradeInfoModal.openPrice}</div>
           <div>Notes: {tradeInfoModal.openNotes}</div>
-          <div>Closed?: {tradeInfoModal.closedTrade}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button
