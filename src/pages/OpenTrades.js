@@ -1,5 +1,4 @@
 import NewTradeForm from "../components/NewTrade/NewTradeForm";
-import { useHistory } from "react-router-dom";
 
 //import Modal from "../components/UI/Modal";
 import { Modal } from "react-bootstrap";
@@ -13,11 +12,6 @@ function OpenTradesPage() {
   const [newTradeAdded, setNewTradeAdded] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedTrades, setLoadedTrades] = useState([]);
-
-  const modalAction = {
-    buttonTitle: "Submit",
-    buttonType: "submit",
-  };
 
   useEffect(() => {
     var one_day = 1000 * 60 * 60 * 24;

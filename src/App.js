@@ -1,7 +1,6 @@
 import  { Route, Switch} from 'react-router-dom';
 
 import Layout from "./components/Layout/Layout";
-import NewTradeForm from './components/NewTrade/NewTradeForm';
 import OpenTradesPage from "./pages/OpenTrades";
 import ClosedTradesPage from "./pages/ClosedTrades";
 import TradeStatsPage from "./pages/TradeStats";

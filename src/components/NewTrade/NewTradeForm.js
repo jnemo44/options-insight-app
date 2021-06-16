@@ -6,7 +6,7 @@ import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
 import TextArea from '../UI/TextArea';
 import SelectBox from '../UI/SelectBox';
-import TradeLegs from '../NewTrade/TradeLegs';
+//import TradeLegs from '../NewTrade/TradeLegs';
 
 // Spreads List
 const spreads = [
@@ -44,11 +44,7 @@ function NewTradeForm(props) {
   // Set date to today
   //let today = new Date().toISOString().substr(0, 10);
   //document.querySelector("#today").value = today;
-  let today = new Date();
-
-  function setEnabledHandler() {
-
-  }
+  //let today = new Date();
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically

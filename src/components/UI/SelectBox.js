@@ -1,7 +1,7 @@
-import { Fragment, useState } from "react";
+import { Fragment} from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
-import { propTypes } from "react-bootstrap/esm/Image";
+//import { propTypes } from "react-bootstrap/esm/Image";
 
 
 function classNames(...classes) {
