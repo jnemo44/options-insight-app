@@ -33,26 +33,22 @@ function OpenTradesPage() {
         const trades = [];
 
         const convertedData = { ...data.open_list };
-        console.log("TEST", convertedData);
-        //convertedData
+
         for (const key in convertedData) {
-          console.log("Key", key);
           const trade = {
             id: key,
             ...convertedData[key],
+            dte: Math.round(
+              Math.abs(new Date(convertedData[key].expirationDate).getTime() - currentDate.getTime()) / one_day
+            ).toFixed(0),
+            dit: Math.round(
+              Math.abs(currentDate.getTime() - new Date(convertedData[key].openDate).getTime()) / one_day
+            ).toFixed(0),
           };
-          console.log("trade", trade);
-          const convertedDte = new Date(trade.expirationDate);
-          var dte = Math.round(
-            Math.abs(convertedDte.getTime() - currentDate.getTime()) / one_day
-          ).toFixed(0);
-          const convertedDit = new Date(trade.openDate);
-          var dit = Math.round(
-            Math.abs(currentDate.getTime() - convertedDit.getTime()) / one_day
-          ).toFixed(0);
           // Subtract 1 so that DTE is 0 on the day it is set to expire
-          trade.dte = dte - 1;
-          trade.dit = dit;
+          trade.dte -= 1;
+          // Subtract 1 so that day 0 is the day you enter
+          trade.dit -= 1;
           trades.push(trade);
         }
         setLoadedTrades(trades);

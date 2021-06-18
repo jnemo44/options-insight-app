@@ -106,8 +106,12 @@ function TradeList(props) {
         </Modal.Header>
         <Modal.Body>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
-          <div>Days till Expiration: {tradeInfoModal.dte}</div>
-          <div>Days in Trade: {tradeInfoModal.dit}</div>
+          <div>Days till Expiration: {tradeInfoModal.dte}
+               Expires: {tradeInfoModal.expirationDate}      
+          </div>
+          <div>Days in Trade: {tradeInfoModal.dit}
+               Opened: {tradeInfoModal.openDate}  
+          </div>
           <div>Open Price: {tradeInfoModal.openPrice}</div>
           <div>Notes: {tradeInfoModal.openNotes}</div>
         </Modal.Body>

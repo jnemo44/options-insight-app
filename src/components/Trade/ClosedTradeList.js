@@ -10,11 +10,13 @@ function ClosedTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
 
+  console.log(tradeInfoModal);
+
   // Column Data Field has to match data name from backend!
   const columns = [
     { dataField: "ticker", text: "Ticker" },
     { dataField: "spread", text: "Spread" },
-    { dataField: "dte", text: "DTE" },
+    { dataField: "dit", text: "DIT" },
     { dataField: "numContracts", text: "Number of Contracts" },
     { dataField: "openPrice", text: "Open Price" },
     { dataField: "closePrice", text: "Close Price" },
@@ -48,7 +50,6 @@ function ClosedTradeList(props) {
         </Modal.Header>
         <Modal.Body>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
-          <div>Days till Expiration: {tradeInfoModal.dte}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>
           <div>Notes: {tradeInfoModal.closeNotes}</div>
