@@ -27,7 +27,7 @@ function ClosedTradesPage() {
                     const trade = {
                         id: key,
                         ...convertedData[key],
-                        dit: new Date(convertedData[key].openDate) - new Date(convertedData[key].closeDate),
+                        dit: (new Date(convertedData[key].openDate) - new Date(convertedData[key].closeDate)),
                         profitLoss: (parseFloat(convertedData[key].openPrice) - parseFloat(convertedData[key].closePrice)).toFixed(2),
                     };
                     trades.push(trade);

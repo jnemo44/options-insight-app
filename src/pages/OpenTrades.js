@@ -29,7 +29,7 @@ function OpenTradesPage() {
         return response.json();
       })
       .then((data) => {
-        //console.log("Data.open_list", data.open_list);
+        console.log("Data.open_list", data.open_list);
         const trades = [];
 
         const convertedData = { ...data.open_list };
@@ -52,9 +52,9 @@ function OpenTradesPage() {
           trades.push(trade);
         }
         setLoadedTrades(trades);
-        console.log("Trades Pushed", trades);
         setIsLoading(false);
         setTradeListModified(false);
+        console.log("GetRequest")
       });
   }, [tradeListModified]);
 
@@ -89,13 +89,15 @@ function OpenTradesPage() {
       headers: {
         "Content-Type": "application/json",
       },
-    }).then(() => {
-      //
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      // Trigger useEffect
+      setTradeListModified(true);
     });
 
     // Close Modal after form submission
     newTradeFormHideHandler();
-    setTradeListModified(true);
   }
 
   const ModalContent = () => {
@@ -135,13 +137,17 @@ function OpenTradesPage() {
           <NewTradeForm onAddTrade={addTradeHandler}></NewTradeForm>     
       </Modal>} */}
       {displayModal ? <ModalContent /> : null}
-      <Button
-        type="button"
-        onClick={newTradeHandler}
-        className="inline-flex items-center p-3 border border-transparent rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
+      <div className='py-3'>
+        <Button
+          type="button"
+          onClick={newTradeHandler}
+          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
+        Add New Trade
       </Button>
+      </div>
+
       {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           We've used 3xl here, but feel free to try other max-widths based on your needs
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 

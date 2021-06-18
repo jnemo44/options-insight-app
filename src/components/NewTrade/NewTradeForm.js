@@ -61,7 +61,7 @@ function NewTradeForm(props) {
     const buyOrSell = enabled;
 
     // If sold display as negative number
-    console.log(buyOrSell);
+    //console.log(buyOrSell);
     if (enabled) {
       enteredNumContracts = -1 * enteredNumContracts;
     } 

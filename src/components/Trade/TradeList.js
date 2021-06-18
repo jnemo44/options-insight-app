@@ -103,6 +103,10 @@ function TradeList(props) {
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+          <Button
+            type="button"
+            name="Delete Trade"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
         </Modal.Header>
         <Modal.Body>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
@@ -172,12 +176,14 @@ function TradeList(props) {
   return (
     <div>
       <BootStrapTable
-        keyField="name"
+        keyField="ticker"
         data={props.trades}
+        caption="Trade List"
         columns={columns}
         pagination={paginationFactory()}
         rowEvents={rowEvents}
         hover
+        striped
       />
       {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}
     </div>
