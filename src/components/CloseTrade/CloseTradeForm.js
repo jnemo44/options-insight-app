@@ -12,10 +12,17 @@ function CloseTradeForm(props) {
 
   var contractsClosed = props.tradeInfo.numContracts;
 
-  //Buy or Sell
+  // Buy or Sell
   if(props.tradeInfo.buyOrSell === "true") {
     contractsClosed = props.tradeInfo.numContracts * -1
   }
+
+  // Convert Date
+  console.log(props.tradeInfo.expirationDate)
+  var myDate = new Date(props.tradeInfo.expirationDate)
+  console.log(myDate)
+  var str = myDate.toDateString()
+  console.log(str)
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
@@ -29,11 +36,9 @@ function CloseTradeForm(props) {
 
     const closeTradeData = {
       openID: props.tradeInfo.id,
-      //ticker: props.tradeInfo.ticker,
       numContracts: contractsClosed,
       closePrice: enteredClosePrice,
       closeDate: enteredCloseDate,
-      //expirationDate: props.tradeInfo.expirationDate,
       buyOrSell: props.tradeInfo.buyOrSell,
       adjustment: false,
       closeNotes: enteredNotes,
@@ -59,7 +64,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="text"
             label="Expiration Date"
-            value={props.tradeInfo.expirationDate}
+            value={str}
           />
         </div>
         <div>
@@ -74,7 +79,7 @@ function CloseTradeForm(props) {
             type="number"
             min="1"
             value={contractsClosed}
-            label="Number of Contracts"
+            label="NUmber of Contracts"
           />
         </div>
         <div>

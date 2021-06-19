@@ -103,6 +103,9 @@ function TradeList(props) {
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
+            OPEN
+          </span>
           <Button
             type="button"
             name="Delete Trade"
