@@ -5,9 +5,7 @@ import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 
-//import Modal from "../UI/Modal";
-
-function TradeList(props) {
+function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
@@ -193,4 +191,4 @@ function TradeList(props) {
   );
 }
 
-export default TradeList;
+export default OpenTradeList;

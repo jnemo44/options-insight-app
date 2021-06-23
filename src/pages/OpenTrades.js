@@ -5,7 +5,7 @@ import { Modal } from "react-bootstrap";
 import Button from "../components/UI/Button";
 import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
-import TradeList from "../components/Trade/TradeList";
+import OpenTradeList from "../components/Trade/OpenTradeList";
 
 function OpenTradesPage() {
   const [displayModal, setDisplayModal] = useState(false);
@@ -153,7 +153,7 @@ function OpenTradesPage() {
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
       </div>*/}
 
-      <TradeList trades={loadedTrades} closed={tradeListModifiedHandler}></TradeList>
+      <OpenTradeList trades={loadedTrades} closed={tradeListModifiedHandler}></OpenTradeList>
     </div>
   );
 }
