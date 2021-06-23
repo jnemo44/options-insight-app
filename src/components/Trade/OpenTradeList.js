@@ -4,11 +4,13 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
+import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
+  const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
   
 
   const columns = [
@@ -53,6 +55,13 @@ function OpenTradeList(props) {
     hideTradeInfoHandler();
     // Display Form Modal
     displayCloseTradeFormHandler();
+  }
+
+  function adjustTradeHandler() {
+    // Hide Trade Info Modal
+    hideTradeInfoHandler();
+    // Display Form Modal
+    setDisplayAdjustTradeForm(true);
   }
 
   function submitCloseTradeHandler(closeTradeData) {
@@ -129,7 +138,7 @@ function OpenTradeList(props) {
           ></Button>
           <Button
             type="button"
-            onClick={displayTradeInfoHandler}
+            onClick={adjustTradeHandler}
             name="Adjust Position"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           ></Button>
@@ -156,23 +165,27 @@ function OpenTradeList(props) {
             onCancel={hideCloseTradeFormHandler}
             onCloseTrade={submitCloseTradeHandler}></CloseTradeForm>
         </Modal.Body>
-        {/* <Modal.Footer>
-          <Button
-            type="button"
-            onClick={hideCloseTradeFormHandler}
-            name="Adjust Position"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></Button>
-          <Button
-            type="button"
-            onClick={hideCloseTradeFormHandler}
-            name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></Button> 
-        </Modal.Footer>*/}
       </Modal>
     );
   };
+
+  const AdjustTradeModal = (props) => {
+    return (
+      <Modal show={setDisplayAdjustTradeForm(true)} onHide={setDisplayAdjustTradeForm(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Adjustment Trade Info</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <AdjustTradeForm 
+            tradeInfo={props.tradeInfo} 
+            onCancel={hideCloseTradeFormHandler}
+            onCloseTrade={submitCloseTradeHandler}></AdjustTradeForm>
+        </Modal.Body>
+      </Modal>
+    );
+  };
+
+
 
   return (
     <div>

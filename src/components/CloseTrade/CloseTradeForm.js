@@ -51,7 +51,7 @@ function CloseTradeForm(props) {
   }
 
   return (
-    <form id="new-trade" onSubmit={submitFormHandler} class="space-y-4">
+    <form id="close-trade" onSubmit={submitFormHandler} class="space-y-4">
       <div class="grid grid-rows-4 grid-cols-2 gap-4">
         <div>
           <FormInput

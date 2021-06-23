@@ -1,1 +1,0 @@
-// Adjust Trade will use adjust trade form with a modal

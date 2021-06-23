@@ -26,7 +26,7 @@ const spreads = [
   { id: 14, name: "Custom" },
 ];
 
-function NewTradeForm(props) {
+function OpenTradeForm(props) {
   // Create reference objects for the form
   const tickerInputRef = useRef();
   const numContractInputRef = useRef();
@@ -66,7 +66,7 @@ function NewTradeForm(props) {
       enteredNumContracts = -1 * enteredNumContracts;
     } 
 
-    const newTradeData = {
+    const openTradeData = {
       ticker: enteredTicker,
       numContracts: enteredNumContracts,
       openPrice: enteredOpenPrice,
@@ -80,7 +80,7 @@ function NewTradeForm(props) {
     };
 
     // Send data
-    props.onAddTrade(newTradeData);
+    props.onAddTrade(openTradeData);
   }
 
 
@@ -174,4 +174,4 @@ function NewTradeForm(props) {
 
 }
 
-export default NewTradeForm;
+export default OpenTradeForm;

@@ -1,4 +1,4 @@
-import NewTradeForm from "../components/NewTrade/NewTradeForm";
+import OpenTradeForm from "../components/OpenTrade/OpenTradeForm";
 
 //import Modal from "../components/UI/Modal";
 import { Modal } from "react-bootstrap";
@@ -81,11 +81,11 @@ function OpenTradesPage() {
     setTradeListModified(true);
   }
 
-  function addTradeHandler(newTradeData) {
+  function addTradeHandler(openTradeData) {
     // Post Trade to backend
     fetch("http://127.0.0.1:5000/open-orders", {
       method: "POST",
-      body: JSON.stringify(newTradeData),
+      body: JSON.stringify(openTradeData),
       headers: {
         "Content-Type": "application/json",
       },
@@ -107,10 +107,10 @@ function OpenTradesPage() {
           <Modal.Title>New Trade Form</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <NewTradeForm
+          <OpenTradeForm
             onAddTrade={addTradeHandler}
             onCancel={newTradeFormHideHandler}
-          ></NewTradeForm>
+          ></OpenTradeForm>
         </Modal.Body>
         {/* <Modal.Footer>
             <Button
