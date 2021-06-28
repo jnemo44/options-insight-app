@@ -50,6 +50,11 @@ function OpenTradeList(props) {
     setDisplayCloseTradeForm(false);
   }
 
+  function hideAdjustTradeFormHandler() {
+    // Hide Modal on cancel
+    setDisplayAdjustTradeForm(false);
+  }
+
   function closeTradeHandler() {
     // Hide Trade Info Modal
     hideTradeInfoHandler();
@@ -170,15 +175,16 @@ function OpenTradeList(props) {
   };
 
   const AdjustTradeModal = (props) => {
+    console.log("Display Adjust Form")
     return (
-      <Modal show={setDisplayAdjustTradeForm(true)} onHide={setDisplayAdjustTradeForm(false)}>
+      <Modal show={displayAdjustTradeForm} onHide={hideAdjustTradeFormHandler}>
         <Modal.Header closeButton>
           <Modal.Title>Enter Adjustment Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <AdjustTradeForm 
             tradeInfo={props.tradeInfo} 
-            onCancel={hideCloseTradeFormHandler}
+            onCancel={hideAdjustTradeFormHandler}
             onCloseTrade={submitCloseTradeHandler}></AdjustTradeForm>
         </Modal.Body>
       </Modal>
@@ -199,7 +205,12 @@ function OpenTradeList(props) {
         hover
         striped
       />
-      {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}
+      {
+        // if...else if...else to conditionaly render modals
+        displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
+        displayAdjustTradeForm ? <AdjustTradeModal tradeInfo={tradeInfoModal}/> :
+        <TradeInfoModal/>
+      }
     </div>
   );
 }
