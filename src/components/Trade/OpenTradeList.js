@@ -218,8 +218,10 @@ function OpenTradeList(props) {
         hover
         striped
       />
-      <FormDisplayed form={formDisplayed}/>
-      {/* {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />} */}
+      {/* <FormDisplayed form={formDisplayed}/> */}
+      {formDisplayed === 'close' ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
+       formDisplayed === 'adjust' ? <AdjustTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}
+      {/* {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}  */}
     </div>
   );
 }
