@@ -1,3 +1,6 @@
+// An Adjustment trade will simply be a combo of an open and a close trade, but will set an adjustment
+// flag. This will prevent creating a new adjustment table.
+
 import { useRef } from 'react';
 import FormInput from '../UI/Input';
 import TextArea from '../UI/TextArea';
@@ -11,6 +14,7 @@ function AdjustTradeForm (props) {
     const adjustmentNotesInputRef = useRef();
 
     let contractsClosed = props.tradeInfo.numContracts;
+    console.log(props.tradeInfo)
 
     // Submit Adjustment Data to Server
     function submitFormHandler(event) {
@@ -19,18 +23,33 @@ function AdjustTradeForm (props) {
 
         // Get data from inputs
         const enteredAdjustmentDate = adjustmentDateInputRef.current.value;
-        const enteredCAP = closeAdjustedPriceInputRef.current.value;
-        const enteredOAP = openAdjustedPriceInputRef.current.value;
+        const enteredClosedAdjustmentPrice = closeAdjustedPriceInputRef.current.value;
+        const enteredOpenAdjustmentPrice = openAdjustedPriceInputRef.current.value;
         const enteredAdjustmentNotes = adjustmentNotesInputRef.current.value;
 
-        const tradeAdjustmentData = {
-            adjustmentDate: enteredAdjustmentDate,
-            closeAdjustedPrice: enteredCAP,
-            openAdjustedPrice: enteredOAP,
-            adjustmentNotes: enteredAdjustmentNotes,
-        }
+        const closeTradeData = {
+            openID: props.tradeInfo.id,
+            numContracts: props.tradeInfo.numContracts,
+            closePrice: enteredClosedAdjustmentPrice,
+            closeDate: enteredAdjustmentDate,
+            buyOrSell: props.tradeInfo.buyOrSell,
+            adjustment: true,
+            closeNotes: enteredAdjustmentNotes,
+          };
 
-        console.log(tradeAdjustmentData);
+        const openTradeData = {
+            ticker: props.tradeInfo.ticker,
+            numContracts: props.tradeInfo.numContracts,
+            openPrice: enteredOpenAdjustmentPrice,
+            openDate: enteredAdjustmentDate,
+            expirationDate: props.tradeInfo.expirationDate,
+            buyOrSell: props.tradeInfo.buyOrSell,
+            //openNotes: enteredNotes,
+            spread: props.tradeInfo.spread,
+            adjustment: true,
+        };
+
+        //console.log(tradeAdjustmentData);
 
     }
 
