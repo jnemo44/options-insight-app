@@ -54,7 +54,6 @@ function OpenTradesPage() {
         setLoadedTrades(trades);
         setIsLoading(false);
         setTradeListModified(false);
-        console.log("GetRequest")
       });
   }, [tradeListModified]);
 

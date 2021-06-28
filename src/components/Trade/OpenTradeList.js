@@ -5,12 +5,14 @@ import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
+import FormDisplayed from "../Trade/FormDisplayed";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
   const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
+  const [formDisplayed, setFormDisplayed] = useState();
   
 
   const columns = [
@@ -63,6 +65,22 @@ function OpenTradeList(props) {
     // Display Form Modal
     setDisplayAdjustTradeForm(true);
   }
+
+  // function FormDisplayed(props) {
+  //   console.log ('Do I get here??')
+  //   const form = props.form
+  //   console.log(form)
+  //   if (form == "close") {
+  //     return <CloseTradeModal tradeInfo={tradeInfoModal}/> 
+  //   }
+  //   else if (form == "adjust") {
+  //     return <AdjustTradeModal tradeInfo={tradeInfoModal}/>
+  //   }
+  //   else {
+  //     console.log(formDisplayed)
+  //     return <TradeInfoModal />
+  //   }
+  // }
 
   function submitCloseTradeHandler(closeTradeData) {
     console.log('Close Trade', closeTradeData);
@@ -132,13 +150,13 @@ function OpenTradeList(props) {
         <Modal.Footer>
           <Button
             type="button"
-            onClick={closeTradeHandler}
+            onClick={setFormDisplayed('close')}
             name="Close Position"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           ></Button>
           <Button
             type="button"
-            onClick={adjustTradeHandler}
+            onClick={setFormDisplayed('adjust')}
             name="Adjust Position"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           ></Button>
@@ -155,14 +173,14 @@ function OpenTradeList(props) {
 
   const CloseTradeModal = (props) => {
     return (
-      <Modal show={displayCloseTradeForm} onHide={hideCloseTradeFormHandler}>
+      <Modal show={true} onHide={hideCloseTradeFormHandler}>
         <Modal.Header closeButton>
           <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CloseTradeForm 
             tradeInfo={props.tradeInfo} 
-            onCancel={hideCloseTradeFormHandler}
+            onCancel={setFormDisplayed('none')}
             onCloseTrade={submitCloseTradeHandler}></CloseTradeForm>
         </Modal.Body>
       </Modal>
@@ -171,15 +189,16 @@ function OpenTradeList(props) {
 
   const AdjustTradeModal = (props) => {
     return (
-      <Modal show={setDisplayAdjustTradeForm(true)} onHide={setDisplayAdjustTradeForm(false)}>
+      <Modal show={true} onHide={setFormDisplayed('none')}>
         <Modal.Header closeButton>
           <Modal.Title>Enter Adjustment Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <AdjustTradeForm 
             tradeInfo={props.tradeInfo} 
-            onCancel={hideCloseTradeFormHandler}
-            onCloseTrade={submitCloseTradeHandler}></AdjustTradeForm>
+            onCancel={setFormDisplayed('none')}
+            onCloseTrade={console.log('ADJUST!')}>
+          </AdjustTradeForm>
         </Modal.Body>
       </Modal>
     );
@@ -199,7 +218,8 @@ function OpenTradeList(props) {
         hover
         striped
       />
-      {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />}
+      <FormDisplayed form={formDisplayed}/>
+      {/* {displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : <TradeInfoModal />} */}
     </div>
   );
 }
