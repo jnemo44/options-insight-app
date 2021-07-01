@@ -183,7 +183,8 @@ function OpenTradeList(props) {
         </Modal.Header>
         <Modal.Body>
           <AdjustTradeForm 
-            tradeInfo={props.tradeInfo} 
+            tradeInfo={props.tradeInfo}
+            onAddTrade={props.adjustedOpen}
             onCancel={hideAdjustTradeFormHandler}
             onCloseTrade={submitCloseTradeHandler}></AdjustTradeForm>
         </Modal.Body>

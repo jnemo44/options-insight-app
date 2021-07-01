@@ -152,7 +152,7 @@ function OpenTradesPage() {
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
       </div>*/}
 
-      <OpenTradeList trades={loadedTrades} closed={tradeListModifiedHandler}></OpenTradeList>
+      <OpenTradeList trades={loadedTrades} closed={tradeListModifiedHandler} adjustedOpen={addTradeHandler}></OpenTradeList>
     </div>
   );
 }

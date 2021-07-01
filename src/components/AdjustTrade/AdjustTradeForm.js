@@ -38,6 +38,7 @@ function AdjustTradeForm (props) {
           };
 
         const openTradeData = {
+            openID: props.tradeInfo.id, // This openID will be used to track adjustments
             ticker: props.tradeInfo.ticker,
             numContracts: props.tradeInfo.numContracts,
             openPrice: enteredOpenAdjustmentPrice,
@@ -49,7 +50,7 @@ function AdjustTradeForm (props) {
             adjustment: true,
         };
 
-        //console.log(tradeAdjustmentData);
+        props.onAddTrade(openTradeData);
 
     }
 
