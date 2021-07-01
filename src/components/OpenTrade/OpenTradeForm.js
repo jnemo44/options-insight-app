@@ -76,6 +76,7 @@ function OpenTradeForm(props) {
       openNotes: enteredNotes,
       spread: enteredSpread,
       adjustment: false,
+      closed: false
     };
 
     // Send data

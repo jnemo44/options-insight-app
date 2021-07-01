@@ -42,6 +42,7 @@ function CloseTradeForm(props) {
       buyOrSell: props.tradeInfo.buyOrSell,
       adjustment: false,
       closeNotes: enteredNotes,
+      closeTrade: closedTrade,
     };
 
     // Send data
