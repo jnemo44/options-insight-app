@@ -34,6 +34,7 @@ function AdjustTradeForm (props) {
             closeDate: enteredAdjustmentDate,
             buyOrSell: props.tradeInfo.buyOrSell,
             adjustment: true,
+            adjustmentID: props.tradeInfo.adjustmentID,
             closeNotes: enteredAdjustmentNotes,
           };
 
@@ -49,6 +50,7 @@ function AdjustTradeForm (props) {
             spread: props.tradeInfo.spread,
             closed: false,
             adjustment: true,
+            adjustmentID: props.tradeInfo.adjustmentID,
         };
 
         props.onAdjustTrade(openTradeData, closeTradeData);

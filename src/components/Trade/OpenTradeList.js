@@ -119,10 +119,27 @@ function OpenTradeList(props) {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log(data)
+      console.log("Post" + data)
       // Trigger Page Reload
       props.modified();
     });
+
+    // Patch Request (Set closed flag in open order table) 
+    const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
+    console.log(url);
+    fetch(url, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json"},
+      //mode: 'cors',
+      body: JSON.stringify({closed:true}),
+    })
+      .then((response) => {
+        console.log('Response Status', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Patch" + data);
+      });
 
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
@@ -164,6 +181,8 @@ function OpenTradeList(props) {
           </div>
           <div>Open Price: {tradeInfoModal.openPrice}</div>
           <div>Notes: {tradeInfoModal.openNotes}</div>
+          <div>Adjusted? {tradeInfoModal.adjustment}</div>
+          <div>AdjustmentID: {tradeInfoModal.adjustmentID}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button

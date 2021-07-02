@@ -41,6 +41,7 @@ function CloseTradeForm(props) {
       closeDate: enteredCloseDate,
       buyOrSell: props.tradeInfo.buyOrSell,
       adjustment: false,
+      adjustmentID: props.tradeInfo.adjustmentID,
       closeNotes: enteredNotes,
       closeTrade: closedTrade,
     };
