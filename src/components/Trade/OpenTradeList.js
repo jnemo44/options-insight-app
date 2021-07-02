@@ -109,6 +109,9 @@ function OpenTradeList(props) {
   }
 
   function submitAdjustmentTradeHandler(openTradeData, closeTradeData){
+    let patchData = {};
+    console.log(openTradeData.adjustmentID)
+
     // Post Trade to backend
     fetch("http://127.0.0.1:5000/open-orders", {
       method: "POST",
@@ -124,14 +127,30 @@ function OpenTradeList(props) {
       props.modified();
     });
 
+    // Build JSON data for PATCH request
+    if (openTradeData.adjustmentID === null) {
+      patchData = {
+        // This is to link the original openID to all future adjustments
+        adjustmentID: closeTradeData.openID,
+        closed:true
+      }
+    } else {
+      patchData = {
+        //adjustmentID: closeTradeData.adjustmentID,
+        closed:true
+      }
+
+    } 
+
+    console.log("Patch Data", patchData)
+
     // Patch Request (Set closed flag in open order table) 
     const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
-    console.log(url);
     fetch(url, {
       method: "PATCH",
       headers: { "Content-type": "application/json"},
       //mode: 'cors',
-      body: JSON.stringify({closed:true}),
+      body: JSON.stringify(patchData),
     })
       .then((response) => {
         console.log('Response Status', response.status);
