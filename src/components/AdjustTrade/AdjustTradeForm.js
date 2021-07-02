@@ -47,10 +47,11 @@ function AdjustTradeForm (props) {
             buyOrSell: props.tradeInfo.buyOrSell,
             //openNotes: enteredNotes,
             spread: props.tradeInfo.spread,
+            closed: false,
             adjustment: true,
         };
 
-        props.onAddTrade(openTradeData);
+        props.onAdjustTrade(openTradeData, closeTradeData);
 
     }
 

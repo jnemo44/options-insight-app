@@ -92,7 +92,7 @@ function OpenTradesPage() {
       return response.json();
     }).then((data) => {
       // Trigger useEffect
-      setTradeListModified(true);
+      tradeListModifiedHandler();
     });
 
     // Close Modal after form submission
@@ -152,7 +152,7 @@ function OpenTradesPage() {
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
       </div>*/}
 
-      <OpenTradeList trades={loadedTrades} closed={tradeListModifiedHandler} adjustedOpen={addTradeHandler}></OpenTradeList>
+      <OpenTradeList trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
     </div>
   );
 }

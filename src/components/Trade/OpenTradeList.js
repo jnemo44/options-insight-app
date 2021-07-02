@@ -70,8 +70,6 @@ function OpenTradeList(props) {
   }
 
   function submitCloseTradeHandler(closeTradeData) {
-    console.log('Close Trade', closeTradeData);
-
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
       method: "POST",
@@ -107,7 +105,40 @@ function OpenTradeList(props) {
       });
 
       // Trigger Page Reload
-      props.closed();
+      props.modified();
+  }
+
+  function submitAdjustmentTradeHandler(openTradeData, closeTradeData){
+    // Post Trade to backend
+    fetch("http://127.0.0.1:5000/open-orders", {
+      method: "POST",
+      body: JSON.stringify(openTradeData),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((response) => {
+      return response.json();
+    }).then((data) => {
+      console.log(data)
+      // Trigger Page Reload
+      props.modified();
+    });
+
+    // Post Request
+    fetch("http://127.0.0.1:5000/close-orders", {
+      method: "POST",
+      headers: { "Content-type": "application/json"},
+      //mode: 'cors',
+      body: JSON.stringify(closeTradeData),
+    })
+      .then((response) => {
+        console.log('Response Status', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        hideAdjustTradeFormHandler();
+      });
   }
 
   const TradeInfoModal = () => {
@@ -175,7 +206,6 @@ function OpenTradeList(props) {
   };
 
   const AdjustTradeModal = (props) => {
-    console.log("Display Adjust Form")
     return (
       <Modal show={displayAdjustTradeForm} onHide={hideAdjustTradeFormHandler}>
         <Modal.Header closeButton>
@@ -184,9 +214,8 @@ function OpenTradeList(props) {
         <Modal.Body>
           <AdjustTradeForm 
             tradeInfo={props.tradeInfo}
-            onAddTrade={props.adjustedOpen}
-            onCancel={hideAdjustTradeFormHandler}
-            onCloseTrade={submitCloseTradeHandler}></AdjustTradeForm>
+            onAdjustTrade={submitAdjustmentTradeHandler}
+            onCancel={hideAdjustTradeFormHandler}></AdjustTradeForm>
         </Modal.Body>
       </Modal>
     );
