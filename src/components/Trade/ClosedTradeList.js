@@ -10,8 +10,6 @@ function ClosedTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
 
-  console.log(tradeInfoModal);
-
   // Column Data Field has to match data name from backend!
   const columns = [
     { dataField: "ticker", text: "Ticker" },
@@ -23,10 +21,9 @@ function ClosedTradeList(props) {
     { dataField: "profitLoss", text: "P/L" },
   ];
 
-  console.log(props.trades);
-
   const rowEvents = {
     onClick: (e, row) => {
+      console.log(row)
       setTradeInfoModal(row);
       displayTradeInfoHandler();
     },
@@ -49,6 +46,7 @@ function ClosedTradeList(props) {
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          <div>NEED TO ADD A COMPONENT THAT ACCEPTS AN ARRAY OF TRADES!!!!</div>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>

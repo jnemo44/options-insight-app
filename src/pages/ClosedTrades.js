@@ -12,7 +12,7 @@ function ClosedTradesPage() {
         var one_day = 1000 * 60 * 60 * 24;
         var currentDate = new Date();
 
-        //setIsLoading(true);
+        setIsLoading(true);
         fetch("http://127.0.0.1:5000/close-orders", {
             method: "GET",
             headers: { "Content-type": "application/json" },
@@ -22,23 +22,40 @@ function ClosedTradesPage() {
             })
             .then((data) => {
                 const trades = [];
-                const convertedData = { ...data.close_list };
+                const nonAdjustedTrades = { ...data.non_adjusted_list };
+                const adjustedTrades = {...data.adjusted_list};
+                const adjustmentInfo = {...data.adjustment_info};
                 var totalProfitLoss = 0;
-                console.log("TEST", convertedData);
-                for (const key in convertedData) {
+                for (const key in nonAdjustedTrades) {
                     const trade = {
-                        id: key,
-                        ...convertedData[key],
-                        dit: (new Date(convertedData[key].openDate) - new Date(convertedData[key].closeDate)),
-                        profitLoss: (parseFloat(convertedData[key].openPrice) - parseFloat(convertedData[key].closePrice)).toFixed(2),
+                        ...nonAdjustedTrades[key],
+                        dit: (new Date(nonAdjustedTrades[key].openDate) - new Date(nonAdjustedTrades[key].closeDate)),
+                        profitLoss: (parseFloat(nonAdjustedTrades[key].openPrice) - parseFloat(nonAdjustedTrades[key].closePrice)).toFixed(2),
                     };
                     totalProfitLoss+=parseFloat(trade.profitLoss);
                     trades.push(trade);
                     setTotalPL(totalProfitLoss);
                 }
+
+                for (const adjust_idx in adjustedTrades) {
+                    var adjustmentPL = 0
+                    for (const trade_idx in adjustedTrades[adjust_idx]) {
+                        adjustmentPL += (parseFloat(adjustedTrades[adjust_idx][trade_idx].openPrice) - parseFloat(adjustedTrades[adjust_idx][trade_idx].closePrice))
+                    }
+                    const trade = {
+                        // Trade stats for main table
+                        ticker:adjustedTrades[adjust_idx][0].ticker,
+                        numContracts:adjustedTrades[adjust_idx][0].numContracts,
+                        profitLoss: adjustmentPL.toFixed(2),
+                        // Pass all trade info
+                        ...adjustedTrades[adjust_idx]
+                    }
+                    trades.push(trade);
+                }
+
                 setLoadedTrades(trades);
                 console.log("Trades", trades);
-                //setIsLoading(false);
+                setIsLoading(false);
                 //setNewTradeAdded(false);
             });
     }, []);
