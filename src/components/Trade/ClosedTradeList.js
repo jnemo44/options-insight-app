@@ -3,6 +3,7 @@ import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
+import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
 
 //import Modal from "../UI/Modal";
 
@@ -23,9 +24,9 @@ function ClosedTradeList(props) {
 
   const rowEvents = {
     onClick: (e, row) => {
-      console.log(row)
       setTradeInfoModal(row);
       displayTradeInfoHandler();
+      console.log(Object.values(tradeInfoModal));
     },
   };
 
@@ -46,11 +47,12 @@ function ClosedTradeList(props) {
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div>NEED TO ADD A COMPONENT THAT ACCEPTS AN ARRAY OF TRADES!!!!</div>
+          <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>
           <div>Notes: {tradeInfoModal.closeNotes}</div>
+          
         </Modal.Body>
         <Modal.Footer>
           <Button
