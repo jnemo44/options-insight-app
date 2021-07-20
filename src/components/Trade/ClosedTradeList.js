@@ -24,9 +24,10 @@ function ClosedTradeList(props) {
 
   const rowEvents = {
     onClick: (e, row) => {
+      console.log(props.trades)
       setTradeInfoModal(row);
       displayTradeInfoHandler();
-      console.log(Object.values(tradeInfoModal));
+      console.table(Object.values({tradeInfoModal}));
     },
   };
 

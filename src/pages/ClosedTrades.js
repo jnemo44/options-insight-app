@@ -25,6 +25,7 @@ function ClosedTradesPage() {
                 const nonAdjustedTrades = { ...data.non_adjusted_list };
                 const adjustedTrades = {...data.adjusted_list};
                 const adjustmentInfo = {...data.adjustment_info};
+                console.log(adjustmentInfo)
                 var totalProfitLoss = 0;
                 for (const key in nonAdjustedTrades) {
                     const trade = {
@@ -54,7 +55,6 @@ function ClosedTradesPage() {
                 }
 
                 setLoadedTrades(trades);
-                console.log("Trades", trades);
                 setIsLoading(false);
                 //setNewTradeAdded(false);
             });

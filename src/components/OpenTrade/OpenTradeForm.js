@@ -85,8 +85,8 @@ function OpenTradeForm(props) {
 
 
   return (
-    <form id='new-trade' onSubmit={submitFormHandler} class="space-y-4">
-      <div class="grid grid-rows-4 grid-cols-2 gap-4">
+    <form id='new-trade' onSubmit={submitFormHandler} className="space-y-4">
+      <div className="grid grid-rows-4 grid-cols-2 gap-4">
       <div>
         <FormInput
           type="date"
@@ -94,7 +94,7 @@ function OpenTradeForm(props) {
           placeholder="Enter Open Date"
           ref={openDateInputRef} />
       </div>
-      <div class='col-start-2'>
+      <div className='col-start-2'>
         <FormInput
           type="date"
           label="Expiration Date"
@@ -108,7 +108,7 @@ function OpenTradeForm(props) {
           placeholder="AAPL"
           ref={tickerInputRef} />
       </div>
-      <div class='col-start-2'>
+      <div className='col-start-2'>
         <FormInput
           type="number"
           min="1"
@@ -132,7 +132,7 @@ function OpenTradeForm(props) {
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />
       </div>
-      <div class='flex justify-center col-span-2'>
+      <div className='flex justify-center col-span-2'>
         <BuySellToggle 
           enabled={enabled} 
           setEnabled={setEnabled}>  
@@ -152,7 +152,7 @@ function OpenTradeForm(props) {
 
         </TextArea>
       </div>
-      <div class='flex justify-center space-x-20'>
+      <div className='flex justify-center space-x-20'>
       <div>
           <Button 
             type="submit" 
