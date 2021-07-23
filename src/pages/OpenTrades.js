@@ -38,17 +38,13 @@ function OpenTradesPage() {
           const trade = {
             id: key,
             ...convertedData[key],
-            dte: Math.round(
-              Math.abs(new Date(convertedData[key].expirationDate).getTime() - currentDate.getTime()) / one_day
-            ).toFixed(0),
-            dit: Math.round(
-              Math.abs(currentDate.getTime() - new Date(convertedData[key].openDate).getTime()) / one_day
-            ).toFixed(0),
+            dte: Math.ceil((Math.abs(new Date(convertedData[key].expirationDate).getTime()-currentDate.getTime()) / one_day)),
+            dit: Math.ceil((Math.abs(currentDate.getTime()-new Date(convertedData[key].openDate).getTime()) / one_day)),
           };
           // Subtract 1 so that DTE is 0 on the day it is set to expire
           trade.dte -= 1;
           // Subtract 1 so that day 0 is the day you enter
-          trade.dit -= 1;
+          //trade.dit -= 1;
           trades.push(trade);
         }
         setLoadedTrades(trades);

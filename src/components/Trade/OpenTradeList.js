@@ -5,6 +5,7 @@ import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
+import Emoji from "../UI/Emoji";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
@@ -69,6 +70,26 @@ function OpenTradeList(props) {
     setDisplayAdjustTradeForm(true);
   }
 
+  function deleteTradeHandler() {
+    // Delete Request
+    const url = "http://127.0.0.1:5000/open-orders/"+ tradeInfoModal.id
+    fetch(url, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json"},
+    })
+      .then((response) => {
+        console.log('Response Status', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        hideCloseTradeFormHandler();
+      });
+
+      // Trigger Page Reload
+      props.modified();
+  }
+
   function submitCloseTradeHandler(closeTradeData) {
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
@@ -88,7 +109,6 @@ function OpenTradeList(props) {
 
     // Patch Request (Set closed flag in open order table) 
     const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
-    console.log(url);
     fetch(url, {
       method: "PATCH",
       headers: { "Content-type": "application/json"},
@@ -142,8 +162,6 @@ function OpenTradeList(props) {
 
     } 
 
-    console.log("Patch Data", patchData)
-
     // Patch Request (Set closed flag in open order table) 
     const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
     fetch(url, {
@@ -178,26 +196,32 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
+    console.log(tradeInfoModal)
+    let openDate = new Date(tradeInfoModal.openDate);
+    let expirationDate = new Date(tradeInfoModal.expirationDate);
+    let od = openDate.toDateString(openDate);
+    let ed = expirationDate.toDateString(expirationDate);
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+          <h1>{tradeInfoModal.dte} DTE</h1>
           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
             OPEN
           </span>
           <Button
             type="button"
+            onClick={deleteTradeHandler}
             name="Delete Trade"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
         </Modal.Header>
         <Modal.Body>
-          <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
-          <div>Days till Expiration: {tradeInfoModal.dte}
-               Expires: {tradeInfoModal.expirationDate}      
-          </div>
+          <div>Expires on  {ed}</div> 
+          <div>Opened on  {od}</div>     
           <div>Days in Trade: {tradeInfoModal.dit}
-               Opened: {tradeInfoModal.openDate}  
+                
           </div>
+          <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div>Open Price: {tradeInfoModal.openPrice}</div>
           <div>Notes: {tradeInfoModal.openNotes}</div>
           <div>Adjusted? {tradeInfoModal.adjustment}</div>
