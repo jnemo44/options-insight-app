@@ -4,7 +4,7 @@ function AdjustTradeItem (props) {
     let openDate = new Date(props.openDate);
     let closeDate = new Date(props.closeDate);
     var od = openDate.toDateString(openDate);
-    var cd = openDate.toDateString(closeDate);
+    var cd = closeDate.toDateString(closeDate);
     return (
         <li key={props.id} className="px-4 py-4 sm:px-0">
             <div><Emoji symbol='📅'/> Opened on { od}</div> 

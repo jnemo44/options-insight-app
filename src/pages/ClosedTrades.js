@@ -27,6 +27,7 @@ function ClosedTradesPage() {
                 const adjustmentInfo = {...data.adjustment_info};
                 console.log(adjustmentInfo)
                 var totalProfitLoss = 0;
+
                 for (const key in nonAdjustedTrades) {
                     const trade = {
                         ...nonAdjustedTrades[key],
@@ -39,15 +40,24 @@ function ClosedTradesPage() {
                 }
 
                 for (const adjust_idx in adjustedTrades) {
-                    var adjustmentPL = 0
+                    let adjustmentPL = 0;
+                    let totalDIT = 0;
                     for (const trade_idx in adjustedTrades[adjust_idx]) {
+                        var openTime = new Date(adjustedTrades[adjust_idx][trade_idx].openDate);
+                        //openTime = openTime.split(' ').slice(0, 4).join(' ');
+                        
+                        var closeTime = new Date(adjustedTrades[adjust_idx][trade_idx].closeDate);
+                        //closeTime = closeTime.split(' ').slice(0, 4).join(' ');
                         adjustmentPL += (parseFloat(adjustedTrades[adjust_idx][trade_idx].openPrice) - parseFloat(adjustedTrades[adjust_idx][trade_idx].closePrice))
+                        totalDIT += Math.ceil((Math.abs(closeTime-openTime) / (1000 * 60 * 60 * 24)))   
                     }
+                    
                     const trade = {
                         // Trade stats for main table
                         ticker:adjustedTrades[adjust_idx][0].ticker,
                         numContracts:adjustedTrades[adjust_idx][0].numContracts,
                         profitLoss: adjustmentPL.toFixed(2),
+                        dit: totalDIT,
                         // Pass all trade info
                         ...adjustedTrades[adjust_idx]
                     }

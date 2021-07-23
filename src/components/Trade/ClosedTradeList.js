@@ -48,12 +48,11 @@ function ClosedTradeList(props) {
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>
           <div>Notes: {tradeInfoModal.closeNotes}</div>
-          
+          <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
         </Modal.Body>
         <Modal.Footer>
           <Button
