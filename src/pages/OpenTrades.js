@@ -6,6 +6,7 @@ import Button from "../components/UI/Button";
 import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
 import OpenTradeList from "../components/Trade/OpenTradeList";
+import Emoji from "../components/UI/Emoji";
 
 function OpenTradesPage() {
   const [displayModal, setDisplayModal] = useState(false);
@@ -99,7 +100,7 @@ function OpenTradesPage() {
     return (
       <Modal show={displayModal} onHide={newTradeFormHideHandler}>
         <Modal.Header closeButton>
-          <Modal.Title>New Trade Form</Modal.Title>
+          <Modal.Title>Add New Trade <Emoji symbol='💸'/></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <OpenTradeForm
@@ -107,21 +108,6 @@ function OpenTradesPage() {
             onCancel={newTradeFormHideHandler}
           ></OpenTradeForm>
         </Modal.Body>
-        {/* <Modal.Footer>
-            <Button
-              id='new-trade'
-              type="submit"
-              onClick={newTradeFormHideHandler}
-              name="Submit"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            ></Button>
-            <Button
-              type="button"
-              onClick={newTradeFormHideHandler}
-              name="Cancel"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            ></Button>
-          </Modal.Footer> */}
       </Modal>
     );
   };
@@ -137,6 +123,7 @@ function OpenTradesPage() {
           type="button"
           onClick={newTradeHandler}
           className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          //inline-flex items-center         
         >
           <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
         Add New Trade

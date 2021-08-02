@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+//import cellEditFactory from 'react-bootstrap-table2-editor';
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
@@ -206,26 +207,18 @@ function OpenTradeList(props) {
         <Modal.Header closeButton>
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
           <h1>{tradeInfoModal.dte} DTE</h1>
-          <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
-            OPEN
-          </span>
           <Button
             type="button"
             onClick={deleteTradeHandler}
             name="Delete Trade"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
+            className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
         </Modal.Header>
         <Modal.Body>
-          <div>Expires on  {ed}</div> 
-          <div>Opened on  {od}</div>     
-          <div>Days in Trade: {tradeInfoModal.dit}
-                
-          </div>
-          <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
-          <div>Open Price: {tradeInfoModal.openPrice}</div>
-          <div>Notes: {tradeInfoModal.openNotes}</div>
-          <div>Adjusted? {tradeInfoModal.adjustment}</div>
-          <div>AdjustmentID: {tradeInfoModal.adjustmentID}</div>
+          <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on  {ed}</div> 
+          <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {od}</div>     
+          <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
+          <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
+          <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -290,7 +283,6 @@ function OpenTradeList(props) {
       <BootStrapTable
         keyField="ticker"
         data={props.trades}
-        caption="Trade List"
         columns={columns}
         pagination={paginationFactory()}
         rowEvents={rowEvents}
