@@ -1,6 +1,7 @@
 import { useState } from "react";
 import BootStrapTable from "react-bootstrap-table-next";
 import paginationFactory from "react-bootstrap-table2-paginator";
+import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
 //import cellEditFactory from 'react-bootstrap-table2-editor';
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
@@ -14,7 +15,7 @@ function OpenTradeList(props) {
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
   const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
   
-
+  const { ToggleList } = ColumnToggle;
   const columns = [
     { dataField: "ticker", text: "Ticker" },
     { dataField: "spread", text: "Spread" },
@@ -280,15 +281,31 @@ function OpenTradeList(props) {
 
   return (
     <div>
-      <BootStrapTable
-        keyField="ticker"
-        data={props.trades}
-        columns={columns}
-        pagination={paginationFactory()}
-        rowEvents={rowEvents}
-        hover
-        striped
-      />
+      <ToolkitProvider
+        keyField="id"
+        data={ props.trades }
+        columns={ columns }
+        columnToggle>
+      {
+        props => (
+          <div>
+            <ToggleList { ...props.columnToggleProps } />
+            <hr />
+            <BootStrapTable
+             {...props.baseProps}    
+              //keyField="ticker"
+              //data={props.trades}
+              //columns={columns}
+              //pagination={paginationFactory()}
+              //rowEvents={rowEvents}
+              //hover
+              //striped
+            />
+          </div>
+        )
+      }
+      </ToolkitProvider>
+      
       {
         // if...else if...else to conditionaly render modals
         displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
