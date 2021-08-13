@@ -5,6 +5,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 //import cellEditFactory from 'react-bootstrap-table2-editor';
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
+import OpenTradeForm from "../OpenTrade/OpenTradeForm";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
 import Emoji from "../UI/Emoji";
@@ -14,6 +15,7 @@ function OpenTradeList(props) {
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
   const [displayCloseTradeForm, setDisplayCloseTradeForm] = useState(false);
   const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
+  const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
   
   const columns = [
     { dataField: "ticker", text: "Ticker" },
@@ -57,6 +59,11 @@ function OpenTradeList(props) {
     setDisplayAdjustTradeForm(false);
   }
 
+  function hideEditTradeFormHandler() {
+    // Hide Modal on cancel
+    setDisplayEditTradeForm(false);
+  }
+
   function closeTradeHandler() {
     // Hide Trade Info Modal
     hideTradeInfoHandler();
@@ -69,6 +76,13 @@ function OpenTradeList(props) {
     hideTradeInfoHandler();
     // Display Form Modal
     setDisplayAdjustTradeForm(true);
+  }
+
+  function editTradeHandler() {
+    // Hide Trade Info Modal
+    hideTradeInfoHandler();
+    // Display Form Modal
+    setDisplayEditTradeForm(true);
   }
 
   function deleteTradeHandler() {
@@ -160,9 +174,7 @@ function OpenTradeList(props) {
         //adjustmentID: closeTradeData.adjustmentID,
         closed:true
       }
-
     } 
-
     // Patch Request (Set closed flag in open order table) 
     const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
     fetch(url, {
@@ -212,6 +224,11 @@ function OpenTradeList(props) {
             onClick={deleteTradeHandler}
             name="Delete Trade"
             className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
+          <Button
+            type="button"
+            onClick={editTradeHandler}
+            name="Edit Trade"
+            className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-black bg-white-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
         </Modal.Header>
         <Modal.Body>
           <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on  {ed}</div> 
@@ -276,6 +293,19 @@ function OpenTradeList(props) {
     );
   };
 
+  const EditTradeModal = (props) => {
+    return (
+      <Modal show={displayEditTradeForm} onHide={hideEditTradeFormHandler}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Trade Info</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <OpenTradeForm></OpenTradeForm>
+        </Modal.Body>
+      </Modal>
+    );
+  };
+
 
 
   return (
@@ -293,6 +323,7 @@ function OpenTradeList(props) {
         // if...else if...else to conditionaly render modals
         displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
         displayAdjustTradeForm ? <AdjustTradeModal tradeInfo={tradeInfoModal}/> :
+        displayEditTradeForm ? <EditTradeModal tradeInfo={tradeInfoModal}/> :
         <TradeInfoModal/>
       }
     </div>
