@@ -6,7 +6,7 @@ import Button from '../UI/Button';
 import BuySellToggle from "../UI/Toggle";
 import TextArea from '../UI/TextArea';
 import SelectBox from '../UI/SelectBox';
-//import TradeLegs from '../NewTrade/TradeLegs';
+import TradeLegs from '../OpenTrade/TradeLegs';
 
 // Spreads List
 const spreads = [
@@ -138,9 +138,15 @@ function OpenTradeForm(props) {
           setEnabled={setEnabled}>  
         </BuySellToggle>
       </div>
-      {/* <div class='row-start-4 col-span-2'>
-        <TradeLegs></TradeLegs>
-      </div> */}  
+      <div>     
+        <Button
+          type="button"
+          //Want to add trade leg info..Strike/Cost/CallorPut
+          //onClick={}
+          name="Add Leg"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        </Button>    
+      </div>  
       </div>
       
       <div>
