@@ -43,6 +43,32 @@ function OpenTradeForm(props) {
   // Default Selected spread to Vertical
   const [selected, setSelected] = useState(spreads[1]);
 
+  // Helper function for converting date into the format needed for HTML display
+  function formatDateToString(date) {
+    var DD = (date.getDate() < 10 ? '0' : '')
+            + date.getDate();
+              
+    var MM = ((date.getMonth() + 1) < 10 ? '0' : '')
+            + (date.getMonth() + 1);
+
+    var YYYY = date.getFullYear()
+              
+    return YYYY + "-" + MM + "-" + DD;
+  }
+
+  function search(nameKey, myArray){
+    for (var i=0; i < myArray.length; i++) {
+        if (myArray[i].name === nameKey) {
+            return myArray[i];
+        }
+    }
+  }
+
+  if (props.edit) {   
+    console.log(props.tradeInfo)
+  }
+  
+
   // Set date to today
   //let today = new Date().toISOString().substr(0, 10);
   //document.querySelector("#today").value = today;
@@ -93,14 +119,14 @@ function OpenTradeForm(props) {
         <FormInput
           type="date"
           label="Open Date"
-          defaultValue={props.edit ? props.tradeInfo.openDate : null}
+          defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.openDate)) : null}
           ref={openDateInputRef} />
       </div>
       <div className='col-start-2'>
         <FormInput
           type="date"
           label="Expiration Date"
-          defaultValue={props.edit ? props.tradeInfo.expirationDate : null}
+          defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.expirationDate)) : null}
           ref={expirationDateInputRef} />
       </div>
       <div>
@@ -124,7 +150,7 @@ function OpenTradeForm(props) {
         <SelectBox
           label="Spread"
           spreads={spreads}
-          selected={props.edit ? props.tradeInfo.spread : selected}
+          selected={props.edit ? search(props.tradeInfo.spread, spreads) : selected}
           setSelected={setSelected}/>
       </div>
       <div>
@@ -156,7 +182,7 @@ function OpenTradeForm(props) {
       <div>
         <TextArea
           label="Notes"
-          prompt="Why are you making this trade?"
+          prompt={props.edit ? props.tradeInfo.openNotes : "Why are you making this trade?"}
           rows="3"
           ref={notesInputRef}>
         </TextArea>

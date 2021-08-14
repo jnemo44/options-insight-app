@@ -209,7 +209,6 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
-    console.log(tradeInfoModal)
     let openDate = new Date(tradeInfoModal.openDate);
     let expirationDate = new Date(tradeInfoModal.expirationDate);
     let od = openDate.toDateString(openDate);
