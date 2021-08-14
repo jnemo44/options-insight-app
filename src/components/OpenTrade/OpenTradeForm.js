@@ -35,6 +35,8 @@ function OpenTradeForm(props) {
   const expirationDateInputRef = useRef();
   const notesInputRef = useRef();
 
+  //tickerInputRef.value = "Test";
+
   // Default to Sell (true)
   const [enabled, setEnabled] = useState(true);
 
@@ -91,20 +93,21 @@ function OpenTradeForm(props) {
         <FormInput
           type="date"
           label="Open Date"
-          placeholder="Enter Open Date"
+          defaultValue={props.edit ? props.tradeInfo.openDate : null}
           ref={openDateInputRef} />
       </div>
       <div className='col-start-2'>
         <FormInput
           type="date"
           label="Expiration Date"
-          placeholder="Enter Expiration Date"
+          defaultValue={props.edit ? props.tradeInfo.expirationDate : null}
           ref={expirationDateInputRef} />
       </div>
       <div>
         <FormInput
           type="text"
           label="Ticker"
+          defaultValue={props.edit ? props.tradeInfo.ticker : null}
           placeholder="AAPL"
           ref={tickerInputRef} />
       </div>
@@ -112,16 +115,16 @@ function OpenTradeForm(props) {
         <FormInput
           type="number"
           min="1"
-          defaultValue="1"
+          defaultValue={props.edit ? props.tradeInfo.numContracts : "1"}
           label="Number of Contracts"
-          placeholder="Number of Contracts"
+          //placeholder="Number of Contracts"
           ref={numContractInputRef} />
       </div>
       <div>
         <SelectBox
           label="Spread"
           spreads={spreads}
-          selected={selected}
+          selected={props.edit ? props.tradeInfo.spread : selected}
           setSelected={setSelected}/>
       </div>
       <div>
@@ -129,6 +132,7 @@ function OpenTradeForm(props) {
           type="number"
           step="0.01"
           label="Open Price"
+          defaultValue={props.edit ? props.tradeInfo.openPrice : null}
           placeholder="Enter Open Price"
           ref={openPriceInputRef} />
       </div>
@@ -155,7 +159,6 @@ function OpenTradeForm(props) {
           prompt="Why are you making this trade?"
           rows="3"
           ref={notesInputRef}>
-
         </TextArea>
       </div>
       <div className='flex justify-center space-x-20'>

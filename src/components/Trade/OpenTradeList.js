@@ -300,7 +300,10 @@ function OpenTradeList(props) {
           <Modal.Title>Edit Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <OpenTradeForm></OpenTradeForm>
+          <OpenTradeForm
+            tradeInfo={props.tradeInfo}
+            edit={true}>
+          </OpenTradeForm>
         </Modal.Body>
       </Modal>
     );
