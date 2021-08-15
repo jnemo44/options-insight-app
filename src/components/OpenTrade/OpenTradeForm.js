@@ -38,10 +38,10 @@ function OpenTradeForm(props) {
   //tickerInputRef.value = "Test";
 
   // Default to Sell (true)
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(props.edit ? props.tradeInfo.buyOrSell === 'true' : true);
 
   // Default Selected spread to Vertical
-  const [selected, setSelected] = useState(spreads[1]);
+  const [selected, setSelected] = useState(props.edit ? search(props.tradeInfo.spread, spreads) : spreads[1]);
 
   // Helper function for converting date into the format needed for HTML display
   function formatDateToString(date) {
@@ -141,7 +141,7 @@ function OpenTradeForm(props) {
         <FormInput
           type="number"
           min="1"
-          defaultValue={props.edit ? props.tradeInfo.numContracts : "1"}
+          defaultValue={props.edit ? (props.tradeInfo.numContracts < 0 ? (props.tradeInfo.numContracts * -1) : props.tradeInfo.numContracts) : "1"}
           label="Number of Contracts"
           //placeholder="Number of Contracts"
           ref={numContractInputRef} />
@@ -150,7 +150,7 @@ function OpenTradeForm(props) {
         <SelectBox
           label="Spread"
           spreads={spreads}
-          selected={props.edit ? search(props.tradeInfo.spread, spreads) : selected}
+          selected={selected}
           setSelected={setSelected}/>
       </div>
       <div>
