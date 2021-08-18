@@ -145,7 +145,6 @@ function OpenTradeList(props) {
 
   function submitAdjustmentTradeHandler(openTradeData, closeTradeData){
     let patchData = {};
-    console.log(openTradeData.adjustmentID)
 
     // Post Trade to backend
     fetch("http://127.0.0.1:5000/open-orders", {
@@ -206,6 +205,24 @@ function OpenTradeList(props) {
         console.log(data);
         hideAdjustTradeFormHandler();
       });
+  }
+
+  function submitEditTradeHandler (openTradeData) {
+    console.log(openTradeData)
+    const url = "http://127.0.0.1:5000/open-orders/"+ openTradeData.id
+    fetch(url, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json"},
+      body: JSON.stringify(openTradeData),
+    })
+      .then((response) => {
+        console.log('Response Status', response.status);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Patch" + data);
+      });
+    // I think I need to trigger a page refresh somehow...
   }
 
   const TradeInfoModal = () => {
@@ -301,7 +318,9 @@ function OpenTradeList(props) {
         <Modal.Body>
           <OpenTradeForm
             tradeInfo={props.tradeInfo}
-            edit={true}>
+            edit={true}
+            onAddTrade={submitEditTradeHandler}
+            onCancel={hideEditTradeFormHandler}>
           </OpenTradeForm>
         </Modal.Body>
       </Modal>

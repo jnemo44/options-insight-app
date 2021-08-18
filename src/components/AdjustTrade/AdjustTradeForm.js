@@ -67,8 +67,6 @@ function AdjustTradeForm (props) {
     var myDate = new Date(props.tradeInfo.expirationDate)
     console.log(myDate)
     var str = myDate.toDateString()
-    console.log(str)
-
 
     return(
         <form id="adjust-trade" onSubmit={submitFormHandler} class="space-y-4">

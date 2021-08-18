@@ -64,8 +64,8 @@ function OpenTradeForm(props) {
     }
   }
 
-  if (props.edit) {   
-    console.log(props.tradeInfo)
+  if (props.edit) {  
+    //Test Point
   }
   
 
@@ -104,10 +104,12 @@ function OpenTradeForm(props) {
       openNotes: enteredNotes,
       spread: enteredSpread,
       adjustment: false,
-      closed: false
+      closed: false,
+      id: props.tradeInfo.id
     };
 
     // Send data
+    console.log("Here")
     props.onAddTrade(openTradeData);
   }
 
