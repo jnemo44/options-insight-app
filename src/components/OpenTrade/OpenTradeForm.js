@@ -87,12 +87,17 @@ function OpenTradeForm(props) {
     const enteredNotes = notesInputRef.current.value;
     const enteredSpread = selected.name;
     const buyOrSell = enabled;
+    const id_value = null;
 
     // If sold display as negative number
     //console.log(buyOrSell);
     if (enabled) {
       enteredNumContracts = -1 * enteredNumContracts;
     } 
+
+    if (props.edit) {
+      id_value = props.tradeInfo.id;
+    }
 
     const openTradeData = {
       ticker: enteredTicker,
@@ -105,7 +110,7 @@ function OpenTradeForm(props) {
       spread: enteredSpread,
       adjustment: false,
       closed: false,
-      id: props.tradeInfo.id
+      editID: id_value
     };
 
     // Send data

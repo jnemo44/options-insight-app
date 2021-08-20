@@ -156,15 +156,16 @@ function OpenTradeList(props) {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log("Post" + data)
+      console.log(data)
       // Trigger Page Reload
       props.modified();
     });
 
-    // Build JSON data for PATCH request
+    // Build JSON data for PATCH request.
     if (openTradeData.adjustmentID === null) {
       patchData = {
-        // This is to link the original openID to all future adjustments
+        // This is to link the original openID to all future adjustments.
+        // It is sent to patch the original open trade with the adjustment ID.
         adjustmentID: closeTradeData.openID,
         closed:true
       }
@@ -183,11 +184,11 @@ function OpenTradeList(props) {
       body: JSON.stringify(patchData),
     })
       .then((response) => {
-        console.log('Response Status', response.status);
+        console.log(response.status);
         return response.json();
       })
       .then((data) => {
-        console.log("Patch" + data);
+        console.log(data);
       });
 
     // Post Request
@@ -209,18 +210,20 @@ function OpenTradeList(props) {
 
   function submitEditTradeHandler (openTradeData) {
     console.log(openTradeData)
-    const url = "http://127.0.0.1:5000/open-orders/"+ openTradeData.id
+    const url = "http://127.0.0.1:5000/open-orders/"+ openTradeData.editID
     fetch(url, {
       method: "PATCH",
       headers: { "Content-type": "application/json"},
       body: JSON.stringify(openTradeData),
     })
       .then((response) => {
-        console.log('Response Status', response.status);
+        console.log(response.status);
         return response.json();
       })
       .then((data) => {
-        console.log("Patch" + data);
+        console.log(data);
+        // Trigger Page Reload
+        props.modified();
       });
     // I think I need to trigger a page refresh somehow...
   }

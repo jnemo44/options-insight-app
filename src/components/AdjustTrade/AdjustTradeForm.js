@@ -90,7 +90,7 @@ function AdjustTradeForm (props) {
             type="number"
             min="1"
             value={contractsClosed}
-            label="NUmber of Contracts"
+            label="Number of Contracts"
           />
         </div>
         <div>

@@ -30,7 +30,7 @@ function OpenTradesPage() {
         return response.json();
       })
       .then((data) => {
-        console.log("Data.open_list", data.open_list);
+        console.log(data.open_list);
         const trades = [];
 
         const convertedData = { ...data.open_list };
