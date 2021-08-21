@@ -34,6 +34,7 @@ function OpenTradeForm(props) {
   const openDateInputRef = useRef();
   const expirationDateInputRef = useRef();
   const notesInputRef = useRef();
+  const strikeRef = useRef();
 
   //tickerInputRef.value = "Test";
 
@@ -42,6 +43,20 @@ function OpenTradeForm(props) {
 
   // Default Selected spread to Vertical
   const [selected, setSelected] = useState(props.edit ? search(props.tradeInfo.spread, spreads) : spreads[1]);
+
+  // Trade Legs State
+  const [tradeLegs, setTradeLegs] = useState([])
+
+  const addTradeLegHandler = () => {
+    setTradeLegs([...tradeLegs, {strike: "", price: ""}])
+  };
+
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
+    const list = [...tradeLegs];
+    list[index][name] = value;
+    setTradeLegs(list);
+  };
 
   // Helper function for converting date into the format needed for HTML display
   function formatDateToString(date) {
@@ -179,11 +194,35 @@ function OpenTradeForm(props) {
         <Button
           type="button"
           //Want to add trade leg info..Strike/Cost/CallorPut
-          //onClick={}
+          onClick={addTradeLegHandler}
           name="Add Leg"
           className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
         </Button>    
-      </div>  
+      </div>
+      {tradeLegs.map((tradeLeg) => {
+        return (
+          <div>
+          <div>
+            <FormInput
+            type="number"
+            label="Strike"
+            placeholder="Enter Strike"
+            ref={strikeRef}>
+            </FormInput>
+          </div>
+          <div>
+            <FormInput
+            type="number"
+            label="Price"
+            placeholder="Enter Price"
+            ref={strikeRef}>
+            </FormInput>     
+          </div>
+          </div>
+          
+        )
+      })
+      }
       </div>
       
       <div>
