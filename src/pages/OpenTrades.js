@@ -36,11 +36,14 @@ function OpenTradesPage() {
         const convertedData = { ...data.open_list };
 
         for (const key in convertedData) {
+          let expirationDate = new Date(convertedData[key].expirationDate).toUTCString()
+          let openDate = new Date(convertedData[key].openDate).toUTCString()
+          console.log(expirationDate)
           const trade = {
             id: key,
             ...convertedData[key],
-            dte: Math.ceil((Math.abs(new Date(convertedData[key].expirationDate).getTime()-currentDate.getTime()) / one_day)),
-            dit: Math.ceil((Math.abs(currentDate.getTime()-new Date(convertedData[key].openDate).getTime()) / one_day)),
+            dte: Math.ceil((Math.abs(expirationDate.getTime()-currentDate.getTime()) / one_day)),
+            dit: Math.ceil((Math.abs(currentDate.getTime()-openDate.getTime()) / one_day)),
           };
           // Subtract 1 so that DTE is 0 on the day it is set to expire
           trade.dte -= 1;

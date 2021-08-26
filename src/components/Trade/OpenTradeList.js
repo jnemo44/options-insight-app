@@ -31,6 +31,7 @@ function OpenTradeList(props) {
     onClick: (e, row) => {
       setTradeInfoModal(row);
       displayTradeInfoHandler();
+      console.log(tradeInfoModal)
     },
   };
 
@@ -231,8 +232,10 @@ function OpenTradeList(props) {
   const TradeInfoModal = () => {
     let openDate = new Date(tradeInfoModal.openDate);
     let expirationDate = new Date(tradeInfoModal.expirationDate);
+    console.log(expirationDate)
     let od = openDate.toDateString(openDate);
     let ed = expirationDate.toDateString(expirationDate);
+    console.log(ed)
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>

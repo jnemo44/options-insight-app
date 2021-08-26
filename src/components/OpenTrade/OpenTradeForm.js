@@ -95,14 +95,14 @@ function OpenTradeForm(props) {
 
     // Get form values after submission
     const enteredTicker = tickerInputRef.current.value;
-    let enteredNumContracts = numContractInputRef.current.value;
     const enteredOpenPrice = openPriceInputRef.current.value;
     const enteredOpenDate = openDateInputRef.current.value;
     const enteredExpirationDate = expirationDateInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
     const enteredSpread = selected.name;
     const buyOrSell = enabled;
-    const id_value = null;
+    let enteredNumContracts = numContractInputRef.current.value;
+    let id_value = null;
 
     // If sold display as negative number
     //console.log(buyOrSell);
