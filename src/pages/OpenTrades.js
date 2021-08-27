@@ -7,8 +7,11 @@ import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
 import OpenTradeList from "../components/Trade/OpenTradeList";
 import Emoji from "../components/UI/Emoji";
+import DayJS from "react-dayjs";
 
 function OpenTradesPage() {
+  var dayjs = require('dayjs');
+  var dte;
   const [displayModal, setDisplayModal] = useState(false);
   const [tradeListModified, setTradeListModified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +20,7 @@ function OpenTradesPage() {
   useEffect(() => {
     var one_day = 1000 * 60 * 60 * 24;
     var currentDate = new Date();
-
+    
     //https://tether-89676-default-rtdb.firebaseio.com/trades.json
     //"http://127.0.0.1:5000/open-orders"
 
@@ -30,25 +33,29 @@ function OpenTradesPage() {
         return response.json();
       })
       .then((data) => {
-        console.log(data.open_list);
         const trades = [];
 
         const convertedData = { ...data.open_list };
 
         for (const key in convertedData) {
-          let expirationDate = new Date(convertedData[key].expirationDate).toUTCString()
-          let openDate = new Date(convertedData[key].openDate).toUTCString()
-          console.log(expirationDate)
+          // Eliminate TZ offset and just use the date
+          var eDate = new Date(convertedData[key].expirationDate)
+          var oDate = new Date(convertedData[key].openDate)
+          let expirationDate = new Date(eDate.getTime() + Math.abs(eDate.getTimezoneOffset()*60000)) 
+          let openDate = new Date(oDate.getTime() + Math.abs(oDate.getTimezoneOffset()*60000)) 
+          
           const trade = {
             id: key,
             ...convertedData[key],
+            expirationDate: expirationDate.toDateString(),
+            openDate: openDate.toDateString(),
             dte: Math.ceil((Math.abs(expirationDate.getTime()-currentDate.getTime()) / one_day)),
             dit: Math.ceil((Math.abs(currentDate.getTime()-openDate.getTime()) / one_day)),
           };
           // Subtract 1 so that DTE is 0 on the day it is set to expire
           trade.dte -= 1;
           // Subtract 1 so that day 0 is the day you enter
-          //trade.dit -= 1;
+          trade.dit -= 1;
           trades.push(trade);
         }
         setLoadedTrades(trades);

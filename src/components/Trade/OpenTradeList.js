@@ -230,12 +230,6 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
-    let openDate = new Date(tradeInfoModal.openDate);
-    let expirationDate = new Date(tradeInfoModal.expirationDate);
-    console.log(expirationDate)
-    let od = openDate.toDateString(openDate);
-    let ed = expirationDate.toDateString(expirationDate);
-    console.log(ed)
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
@@ -253,8 +247,8 @@ function OpenTradeList(props) {
             className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-black bg-white-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
         </Modal.Header>
         <Modal.Body>
-          <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on  {ed}</div> 
-          <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {od}</div>     
+          <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on {tradeInfoModal.expirationDate}</div> 
+          <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {tradeInfoModal.openDate}</div>     
           <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
