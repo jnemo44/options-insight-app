@@ -7,10 +7,8 @@ import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
 import { useState, useEffect } from "react";
 import OpenTradeList from "../components/Trade/OpenTradeList";
 import Emoji from "../components/UI/Emoji";
-import DayJS from "react-dayjs";
 
 function OpenTradesPage() {
-  var dayjs = require('dayjs');
   var dte;
   const [displayModal, setDisplayModal] = useState(false);
   const [tradeListModified, setTradeListModified] = useState(false);
@@ -20,7 +18,7 @@ function OpenTradesPage() {
   useEffect(() => {
     var one_day = 1000 * 60 * 60 * 24;
     var currentDate = new Date();
-    
+
     //https://tether-89676-default-rtdb.firebaseio.com/trades.json
     //"http://127.0.0.1:5000/open-orders"
 

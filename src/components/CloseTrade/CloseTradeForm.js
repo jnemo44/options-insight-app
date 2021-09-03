@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import FormInput from '../UI/Input';
 import Button from '../UI/Button';
 import TextArea from "../UI/TextArea";
@@ -9,6 +9,7 @@ function CloseTradeForm(props) {
   const closePriceInputRef = useRef();
   const notesInputRef = useRef();
   const closeDateInputRef = useRef();
+  const [enteredClosePrice, setEnteredClosePrice] = useState(0);
 
   var contractsClosed = props.tradeInfo.numContracts;
 
@@ -23,6 +24,11 @@ function CloseTradeForm(props) {
   console.log(myDate)
   var str = myDate.toDateString()
   console.log(str)
+
+  function closePriceHandler (event) {
+    setEnteredClosePrice(event.target.value)
+    console.log('Close Price Keystroke')
+  }
 
   function submitFormHandler(event) {
     // Stop the page from reloading automatically
@@ -96,9 +102,17 @@ function CloseTradeForm(props) {
             type="number"
             step="0.01"
             label="Close Price"
-            readonly = {true}
+            //readonly = {true}
             ref={closePriceInputRef}
+            onChange={closePriceHandler}
           />
+        <div>
+          <FormInput
+            type="number"
+            label="Total P/L"
+            value={Math.round((props.tradeInfo.openPrice - enteredClosePrice) * 100) / 100}
+          />
+        </div>
         </div>
       </div>
 

@@ -18,6 +18,7 @@ const FormInput = React.forwardRef ((props, ref) => {
             defaultValue={props.defaultValue}
             value={props.value}
             min={props.min}
+            onChange={props.onChange}
           />
         </div>
         </div>
