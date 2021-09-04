@@ -55,11 +55,13 @@ function CloseTradeForm(props) {
     // Send data
     //console.log(closeTradeData);
     props.onCloseTrade(closeTradeData);
+    //"grid grid-rows-4 grid-cols-2 gap-2"
   }
 
   return (
-    <form id="close-trade" onSubmit={submitFormHandler} class="space-y-4">
-      <div class="grid grid-rows-4 grid-cols-2 gap-4">
+    <form id="close-trade" onSubmit={submitFormHandler}>
+      <div class="grid gap-2">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <FormInput
             type="date"
@@ -67,7 +69,7 @@ function CloseTradeForm(props) {
             ref={closeDateInputRef}
           />
         </div>
-        <div class="col-start-2">
+        <div>
           <FormInput
             type="text"
             label="Expiration Date"
@@ -81,12 +83,12 @@ function CloseTradeForm(props) {
             value={props.tradeInfo.ticker}
           />
         </div>
-        <div class="col-start-2">
+        <div>
           <FormInput
             type="number"
             min="1"
             value={contractsClosed}
-            label="NUmber of Contracts"
+            label="Number of Contracts"
           />
         </div>
         <div>
@@ -106,30 +108,27 @@ function CloseTradeForm(props) {
             ref={closePriceInputRef}
             onChange={closePriceHandler}
           />
-        <div>
-          <FormInput
-            type="number"
-            label="Total P/L"
-            value={Math.round((props.tradeInfo.openPrice - enteredClosePrice) * 100) / 100}
-          />
         </div>
+        <div class="grid col-span-1 md:col-span-2 justify-items-center text-2xl">
+            {Math.round((props.tradeInfo.openPrice - enteredClosePrice) * 100) / 100}
         </div>
-      </div>
-
-      <div>
+        <div class="grid col-span-1 md:col-span-2">
         <TextArea
           label="Notes"
           prompt="How did this trade go?"
           rows="3"
           ref={notesInputRef}
         ></TextArea>
+        </div>
       </div>
-      <div class="flex justify-center space-x-20">
+      <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
         <div>
           <Button
+            //
+            //"grid grid-cols-1 md:grid-cols-2 justify-items-end gap-4"
             type="submit"
             name="Submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="mb-3 w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mb-0 sm:ml-3 sm:w-auto sm:text-sm"
           ></Button>
         </div>
         <div>
@@ -137,10 +136,11 @@ function CloseTradeForm(props) {
             type="button"
             onClick={props.onCancel}
             name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
           ></Button>
         </div>
       </div>
+      </div>       
     </form>
   );
 }
