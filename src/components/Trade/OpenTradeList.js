@@ -327,12 +327,10 @@ function OpenTradeList(props) {
     );
   };
 
-
-
   return (
     <div>
       <BootStrapTable  
-        keyField="ticker"
+        keyField="id"
         data={props.trades}
         columns={columns}
         pagination={paginationFactory()}

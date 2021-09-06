@@ -41,7 +41,7 @@ function OpenTradesPage() {
           var oDate = new Date(convertedData[key].openDate)
           let expirationDate = new Date(eDate.getTime() + Math.abs(eDate.getTimezoneOffset()*60000)) 
           let openDate = new Date(oDate.getTime() + Math.abs(oDate.getTimezoneOffset()*60000)) 
-          
+
           const trade = {
             id: key,
             ...convertedData[key],
@@ -55,6 +55,7 @@ function OpenTradesPage() {
           // Subtract 1 so that day 0 is the day you enter
           trade.dit -= 1;
           trades.push(trade);
+          console.log(trade)
         }
         setLoadedTrades(trades);
         setIsLoading(false);
