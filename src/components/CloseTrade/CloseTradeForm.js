@@ -73,6 +73,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="text"
             label="Expiration Date"
+            readOnly = {true}
             value={str}
           />
         </div>
@@ -80,6 +81,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="text"
             label="Ticker"
+            readOnly = {true}
             value={props.tradeInfo.ticker}
           />
         </div>
@@ -88,6 +90,7 @@ function CloseTradeForm(props) {
             type="number"
             min="1"
             value={contractsClosed}
+            readOnly = {true}
             label="Number of Contracts"
           />
         </div>
@@ -95,6 +98,7 @@ function CloseTradeForm(props) {
           <FormInput
             type="number"
             step="0.01"
+            readOnly = {true}
             label="Open Price"
             value={props.tradeInfo.openPrice}
           />
@@ -104,7 +108,6 @@ function CloseTradeForm(props) {
             type="number"
             step="0.01"
             label="Close Price"
-            //readonly = {true}
             ref={closePriceInputRef}
             onChange={closePriceHandler}
           />
