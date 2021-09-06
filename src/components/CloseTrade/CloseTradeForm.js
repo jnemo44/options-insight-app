@@ -56,11 +56,11 @@ function CloseTradeForm(props) {
     //console.log(closeTradeData);
     props.onCloseTrade(closeTradeData);
     //"grid grid-rows-4 grid-cols-2 gap-2"
+    //class=grid gap-2
   }
 
   return (
     <form id="close-trade" onSubmit={submitFormHandler}>
-      <div class="grid gap-2">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <FormInput
@@ -121,26 +121,21 @@ function CloseTradeForm(props) {
         ></TextArea>
         </div>
       </div>
-      <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <div>
-          <Button
-            //
-            //"grid grid-cols-1 md:grid-cols-2 justify-items-end gap-4"
-            type="submit"
-            name="Submit"
-            className="mb-3 w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mb-0 sm:ml-3 sm:w-auto sm:text-sm"
-          ></Button>
-        </div>
-        <div>
-          <Button
+      <div class="px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
+        <Button
             type="button"
             onClick={props.onCancel}
             name="Cancel"
-            className="w-full inline-flex justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm"
-          ></Button>
-        </div>
-      </div>
-      </div>       
+            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+        ></Button>
+        <Button
+          //class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
+          //"grid grid-cols-1 md:grid-cols-2 justify-items-end gap-4"
+          type="submit"
+          name="Submit"
+          className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-black hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0 sm:w-auto sm:text-sm"
+        ></Button>
+      </div>   
     </form>
   );
 }
