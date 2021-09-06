@@ -19,15 +19,11 @@ function CloseTradeForm(props) {
   }
 
   // Convert Date
-  console.log(props.tradeInfo.expirationDate)
   var myDate = new Date(props.tradeInfo.expirationDate)
-  console.log(myDate)
   var str = myDate.toDateString()
-  console.log(str)
 
   function closePriceHandler (event) {
     setEnteredClosePrice(event.target.value)
-    console.log('Close Price Keystroke')
   }
 
   function submitFormHandler(event) {

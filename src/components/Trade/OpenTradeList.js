@@ -31,7 +31,6 @@ function OpenTradeList(props) {
     onClick: (e, row) => {
       setTradeInfoModal(row);
       displayTradeInfoHandler();
-      console.log(tradeInfoModal)
     },
   };
 
@@ -115,11 +114,9 @@ function OpenTradeList(props) {
       body: JSON.stringify(closeTradeData),
     })
       .then((response) => {
-        console.log('Response Status', response.status);
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         hideCloseTradeFormHandler();
       });
 
@@ -132,7 +129,6 @@ function OpenTradeList(props) {
       body: JSON.stringify({closed:true}),
     })
       .then((response) => {
-        console.log('Response Status', response.status);
         return response.json();
       })
       .then((data) => {
@@ -157,7 +153,6 @@ function OpenTradeList(props) {
     }).then((response) => {
       return response.json();
     }).then((data) => {
-      console.log(data)
       // Trigger Page Reload
       props.modified();
     });
@@ -200,7 +195,6 @@ function OpenTradeList(props) {
       body: JSON.stringify(closeTradeData),
     })
       .then((response) => {
-        console.log('Response Status', response.status);
         return response.json();
       })
       .then((data) => {
@@ -222,7 +216,6 @@ function OpenTradeList(props) {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
         // Trigger Page Reload
         props.modified();
       });

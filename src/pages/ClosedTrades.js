@@ -9,9 +9,6 @@ function ClosedTradesPage() {
     const [totalPL, setTotalPL] = useState();
 
     useEffect(() => {
-        var one_day = 1000 * 60 * 60 * 24;
-        var currentDate = new Date();
-
         setIsLoading(true);
         fetch("http://127.0.0.1:5000/close-orders", {
             method: "GET",

@@ -9,7 +9,6 @@ import OpenTradeList from "../components/Trade/OpenTradeList";
 import Emoji from "../components/UI/Emoji";
 
 function OpenTradesPage() {
-  var dte;
   const [displayModal, setDisplayModal] = useState(false);
   const [tradeListModified, setTradeListModified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
