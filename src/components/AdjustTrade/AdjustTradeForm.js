@@ -6,92 +6,93 @@ import FormInput from '../UI/Input';
 import TextArea from '../UI/TextArea';
 import Button from '../UI/Button';
 
-function AdjustTradeForm (props) {
-    // Create Reference Objects for any entered data
-    const adjustmentDateInputRef = useRef();
-    const openAdjustedPriceInputRef = useRef();
-    const closeAdjustedPriceInputRef = useRef();
-    const adjustmentNotesInputRef = useRef();
+function AdjustTradeForm(props) {
+  // Create Reference Objects for any entered data
+  const adjustmentDateInputRef = useRef();
+  const openAdjustedPriceInputRef = useRef();
+  const closeAdjustedPriceInputRef = useRef();
+  const adjustmentNotesInputRef = useRef();
 
-    let contractsClosed = props.tradeInfo.numContracts;
-    console.log(props.tradeInfo)
+  let contractsClosed = props.tradeInfo.numContracts;
+  console.log(props.tradeInfo)
 
-    // Submit Adjustment Data to Server
-    function submitFormHandler(event) {
-        // Stop the page from reloading automatically
-        event.preventDefault();
+  // Submit Adjustment Data to Server
+  function submitFormHandler(event) {
+    // Stop the page from reloading automatically
+    event.preventDefault();
 
-        // Get data from inputs
-        const enteredAdjustmentDate = adjustmentDateInputRef.current.value;
-        const enteredClosedAdjustmentPrice = closeAdjustedPriceInputRef.current.value;
-        const enteredOpenAdjustmentPrice = openAdjustedPriceInputRef.current.value;
-        const enteredAdjustmentNotes = adjustmentNotesInputRef.current.value;
+    // Get data from inputs
+    const enteredAdjustmentDate = adjustmentDateInputRef.current.value;
+    const enteredClosedAdjustmentPrice = closeAdjustedPriceInputRef.current.value;
+    const enteredOpenAdjustmentPrice = openAdjustedPriceInputRef.current.value;
+    const enteredAdjustmentNotes = adjustmentNotesInputRef.current.value;
 
-        const closeTradeData = {
-            openID: props.tradeInfo.id,
-            numContracts: props.tradeInfo.numContracts,
-            closePrice: enteredClosedAdjustmentPrice,
-            closeDate: enteredAdjustmentDate,
-            buyOrSell: props.tradeInfo.buyOrSell,
-            adjustment: true,
-            adjustmentID: props.tradeInfo.adjustmentID,
-            closeNotes: enteredAdjustmentNotes,
-          };
+    const closeTradeData = {
+      openID: props.tradeInfo.id,
+      numContracts: props.tradeInfo.numContracts,
+      closePrice: enteredClosedAdjustmentPrice,
+      closeDate: enteredAdjustmentDate,
+      buyOrSell: props.tradeInfo.buyOrSell,
+      adjustment: true,
+      adjustmentID: props.tradeInfo.adjustmentID,
+      closeNotes: enteredAdjustmentNotes,
+    };
 
-        const openTradeData = {
-            openID: props.tradeInfo.id, // This openID will be used to track adjustments
-            ticker: props.tradeInfo.ticker,
-            numContracts: props.tradeInfo.numContracts,
-            openPrice: enteredOpenAdjustmentPrice,
-            openDate: enteredAdjustmentDate,
-            expirationDate: props.tradeInfo.expirationDate,
-            buyOrSell: props.tradeInfo.buyOrSell,
-            //openNotes: enteredNotes,
-            spread: props.tradeInfo.spread,
-            closed: false,
-            adjustment: true,
-            adjustmentID: props.tradeInfo.adjustmentID,
-        };
+    const openTradeData = {
+      openID: props.tradeInfo.id, // This openID will be used to track adjustments
+      ticker: props.tradeInfo.ticker,
+      numContracts: props.tradeInfo.numContracts,
+      openPrice: enteredOpenAdjustmentPrice,
+      openDate: enteredAdjustmentDate,
+      expirationDate: props.tradeInfo.expirationDate,
+      buyOrSell: props.tradeInfo.buyOrSell,
+      //openNotes: enteredNotes,
+      spread: props.tradeInfo.spread,
+      closed: false,
+      adjustment: true,
+      adjustmentID: props.tradeInfo.adjustmentID,
+    };
 
-        props.onAdjustTrade(openTradeData, closeTradeData);
+    props.onAdjustTrade(openTradeData, closeTradeData);
 
-    }
+  }
 
-    // Buy or Sell
-    if(props.tradeInfo.buyOrSell === "true") {
-        contractsClosed = props.tradeInfo.numContracts * -1
-    }
+  // Buy or Sell
+  if (props.tradeInfo.buyOrSell === "true") {
+    contractsClosed = props.tradeInfo.numContracts * -1
+  }
 
-    // Convert Date
-    console.log(props.tradeInfo.expirationDate)
-    var myDate = new Date(props.tradeInfo.expirationDate)
-    console.log(myDate)
-    var str = myDate.toDateString()
+  // Convert Date
+  console.log(props.tradeInfo.expirationDate)
+  var myDate = new Date(props.tradeInfo.expirationDate)
+  console.log(myDate)
+  var str = myDate.toDateString()
 
-    return(
-        <form id="adjust-trade" onSubmit={submitFormHandler} class="space-y-4">
-      <div class="grid grid-rows-4 grid-cols-2 gap-4">
+  return (
+    // class="space-y-4"
+    <form id="adjust-trade" onSubmit={submitFormHandler} >
+      {/* class="grid grid-rows-4 grid-cols-2 gap-4" */}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" >
         <div>
           <FormInput
             type="date"
             label="Adjustment Date"
-            ref={adjustmentDateInputRef}
-          />
+            ref={adjustmentDateInputRef}/>
         </div>
-        <div class="col-start-2">
+        <div>
           <FormInput
             type="text"
             label="Expiration Date"
             value={str}
-          />
+            readOnly={true}/>
         </div>
-        <div class="col-start-2">
+        <div>
           <FormInput
             type="number"
             min="1"
             value={contractsClosed}
             label="Number of Contracts"
-          />
+            readOnly={true}/>
         </div>
         <div>
           <FormInput
@@ -99,6 +100,7 @@ function AdjustTradeForm (props) {
             step="0.01"
             label="Open Price"
             value={props.tradeInfo.openPrice}
+            readOnly={true}
           />
         </div>
         <div>
@@ -106,20 +108,16 @@ function AdjustTradeForm (props) {
             type="number"
             step="0.01"
             label="Close Adjusted Price"
-            ref={closeAdjustedPriceInputRef}
-          />
+            ref={closeAdjustedPriceInputRef}/>
         </div>
         <div>
           <FormInput
             type="number"
             step="0.01"
             label="Open Adjusted Price"
-            ref={openAdjustedPriceInputRef}
-          />
+            ref={openAdjustedPriceInputRef}/>
         </div>
-      </div>
-
-      <div>
+        <div class="grid col-span-1 md:col-span-2">
         <TextArea
           label="Notes"
           prompt="Why are you adjusting?"
@@ -127,12 +125,17 @@ function AdjustTradeForm (props) {
           ref={adjustmentNotesInputRef}
         ></TextArea>
       </div>
-      <div class="flex justify-center space-x-20">
+      </div>
+
+      <div class="sm:flex sm:justify-end">
         <div>
           <Button
             type="submit"
             name="Submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="mt-4 mr-4 w-full inline-flex justify-center rounded-md border border-transparent 
+            shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0 
+            sm:w-auto sm:text-sm"
           ></Button>
         </div>
         <div>
@@ -140,12 +143,15 @@ function AdjustTradeForm (props) {
             type="button"
             onClick={props.onCancel}
             name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="mt-4 w-full inline-flex justify-center rounded-md border border-gray-300 
+            shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 
+            sm:w-auto sm:text-sm"
           ></Button>
         </div>
       </div>
     </form>
-    )
+  )
 }
 
 export default AdjustTradeForm;

@@ -9,12 +9,14 @@ function CloseTradeForm(props) {
   const closePriceInputRef = useRef();
   const notesInputRef = useRef();
   const closeDateInputRef = useRef();
-  const [enteredClosePrice, setEnteredClosePrice] = useState(0);
+  const [PLResult, setPLResult] = useState(0);
+  const positivePL = "grid col-span-1 md:col-span-2 justify-items-center text-2xl text-green-600";
+  const negativePL = "grid col-span-1 md:col-span-2 justify-items-center text-2xl text-red-600";
 
   var contractsClosed = props.tradeInfo.numContracts;
 
   // Buy or Sell
-  if(props.tradeInfo.buyOrSell === "true") {
+  if (props.tradeInfo.buyOrSell === "true") {
     contractsClosed = props.tradeInfo.numContracts * -1
   }
 
@@ -22,8 +24,9 @@ function CloseTradeForm(props) {
   var myDate = new Date(props.tradeInfo.expirationDate)
   var str = myDate.toDateString()
 
-  function closePriceHandler (event) {
-    setEnteredClosePrice(event.target.value)
+  function closePriceHandler(event) {
+    //Dynamically calculate PL Result
+    setPLResult(Math.round((props.tradeInfo.openPrice - event.target.value) * 100) / 100)
   }
 
   function submitFormHandler(event) {
@@ -62,42 +65,35 @@ function CloseTradeForm(props) {
           <FormInput
             type="date"
             label="Close Date"
-            ref={closeDateInputRef}
-          />
+            ref={closeDateInputRef} />
         </div>
         <div>
           <FormInput
             type="text"
             label="Expiration Date"
-            readOnly = {true}
-            value={str}
-          />
+            readOnly={true}
+            value={str} />
         </div>
         <div>
           <FormInput
             type="text"
             label="Ticker"
-            readOnly = {true}
-            value={props.tradeInfo.ticker}
-          />
+            readOnly={true}
+            value={props.tradeInfo.ticker} />
         </div>
         <div>
           <FormInput
             type="number"
-            min="1"
-            value={contractsClosed}
-            readOnly = {true}
             label="Number of Contracts"
-          />
+            value={contractsClosed}
+            readOnly={true} />
         </div>
         <div>
           <FormInput
             type="number"
-            step="0.01"
-            readOnly = {true}
             label="Open Price"
             value={props.tradeInfo.openPrice}
-          />
+            readOnly={true} />
         </div>
         <div>
           <FormInput
@@ -108,33 +104,37 @@ function CloseTradeForm(props) {
             onChange={closePriceHandler}
           />
         </div>
-        <div class="grid col-span-1 md:col-span-2 justify-items-center text-2xl">
-            {Math.round((props.tradeInfo.openPrice - enteredClosePrice) * 100) / 100}
+        <div class={PLResult > 0 ? positivePL : negativePL}>
+          P/L = {PLResult} x {Math.abs(props.tradeInfo.numContracts)} x 100 = ${PLResult * 100 * Math.abs(props.tradeInfo.numContracts)}
         </div>
         <div class="grid col-span-1 md:col-span-2">
-        <TextArea
-          label="Notes"
-          prompt="How did this trade go?"
-          rows="3"
-          ref={notesInputRef}
-        ></TextArea>
+          <TextArea
+            label="Notes"
+            prompt="How did this trade go?"
+            rows="3"
+            ref={notesInputRef}
+          ></TextArea>
         </div>
       </div>
-      <div class="px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
+      <div class="sm:flex sm:justify-end">
         <Button
-            type="button"
-            onClick={props.onCancel}
-            name="Cancel"
-            className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-        ></Button>
-        <Button
-          //class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse"
-          //"grid grid-cols-1 md:grid-cols-2 justify-items-end gap-4"
           type="submit"
           name="Submit"
-          className="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-black hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0 sm:w-auto sm:text-sm"
-        ></Button>
-      </div>   
+          className="mt-4 mr-4 w-full inline-flex justify-center rounded-md border border-transparent 
+          shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 
+          focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0 
+          sm:w-auto sm:text-sm">
+        </Button>
+        <Button
+          type="button"
+          onClick={props.onCancel}
+          name="Cancel"
+          className="mt-4 w-full inline-flex justify-center rounded-md border border-gray-300 
+            shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500
+            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 
+            sm:w-auto sm:text-sm">
+        </Button>
+      </div>
     </form>
   );
 }
