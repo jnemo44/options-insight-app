@@ -199,27 +199,29 @@ function OpenTradeForm(props) {
             className="btn-action">
           </Button>
         </div>
-        <div className="grid col-span-1 sm:col-span-2">
           {tradeLegs.map((tradeLeg) => {
             return (
-              <div>
+              <div className="grid grid-cols-2">
+                <div>
                 <FormInput
                   type="number"
                   label="Strike"
                   placeholder="Enter Strike"
                   ref={strikeRef}>
                 </FormInput>
+                </div>
+                <div> 
                 <FormInput
                   type="number"
                   label="Price"
                   placeholder="Enter Price"
                   ref={strikeRef}>
                 </FormInput>
+                </div>
               </div>
             )
           })
           }
-        </div>
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
             label="Notes"
