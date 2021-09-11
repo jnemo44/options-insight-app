@@ -250,11 +250,11 @@ function OpenTradeList(props) {
           <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
-          <div>{tradeInfoModal.tradeLegs.map((leg, index) => {
+          <div>{displayTradeInfo ? tradeInfoModal.tradeLegs.map((leg, index) => {
               return(
-                <div>Leg #{index + 1} Strike {leg.legStrike} Price {leg.legPrice}</div>
+                <div><Emoji symbol='🦵'/> #{index + 1} Strike {leg.legStrike} Price {leg.legPrice}</div>
               ) 
-          })}</div>
+          }): null}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button
