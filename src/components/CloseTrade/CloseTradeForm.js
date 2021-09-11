@@ -10,8 +10,8 @@ function CloseTradeForm(props) {
   const notesInputRef = useRef();
   const closeDateInputRef = useRef();
   const [PLResult, setPLResult] = useState(0);
-  const positivePL = "grid col-span-1 md:col-span-2 justify-items-center text-2xl text-green-600";
-  const negativePL = "grid col-span-1 md:col-span-2 justify-items-center text-2xl text-red-600";
+  const positivePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-green-600";
+  const negativePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-red-600";
 
   var contractsClosed = props.tradeInfo.numContracts;
 
@@ -60,7 +60,7 @@ function CloseTradeForm(props) {
 
   return (
     <form id="close-trade" onSubmit={submitFormHandler}>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <FormInput
             type="date"
@@ -107,7 +107,7 @@ function CloseTradeForm(props) {
         <div class={PLResult > 0 ? positivePL : negativePL}>
           P/L = {PLResult} x {Math.abs(props.tradeInfo.numContracts)} x 100 = ${PLResult * 100 * Math.abs(props.tradeInfo.numContracts)}
         </div>
-        <div class="grid col-span-1 md:col-span-2">
+        <div className="grid col-span-1 sm:col-span-2">
           <TextArea
             label="Notes"
             prompt="How did this trade go?"
@@ -115,19 +115,23 @@ function CloseTradeForm(props) {
             ref={notesInputRef}
           ></TextArea>
         </div>
-      </div>
-      <div class="sm:flex sm:justify-end">
-        <Button
-          type="submit"
-          name="Submit"
-          className="btn-action mt-4 mr-4 sm:ml-0">
-        </Button>
-        <Button
-          type="button"
-          onClick={props.onCancel}
-          name="Cancel"
-          className="btn-cancel mt-4 sm:ml-3">
-        </Button>
+        <div className="btn-resize sm:col-span-2">
+          <div>
+            <Button
+              type="submit"
+              name="Submit"
+              className="btn-action">
+            </Button>
+          </div>
+          <div>
+            <Button
+              type="button"
+              onClick={props.onCancel}
+              name="Cancel"
+              className="btn-cancel">
+            </Button>
+          </div>
+        </div>
       </div>
     </form>
   );

@@ -226,22 +226,22 @@ function OpenTradeList(props) {
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
-          <div class="sm:flex sm:justify-end">
+        <div className="space-y-2 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0">
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
           <h1>{tradeInfoModal.dte} DTE</h1>
           <Button
             type="button"
             onClick={deleteTradeHandler}
             name="Delete Trade"
-            className="btn-delete sm:mt-0"></Button>
+            className="btn-delete"></Button>
           <Button
             type="button"
             onClick={editTradeHandler}
             name="Edit Trade"
-            className="btn-action sm:ml-4"></Button>
-          </div>
+            className="btn-action"></Button>
+             </div>
             </Modal.Header>
-          
+           
         <Modal.Body>
           <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on {tradeInfoModal.expirationDate}</div> 
           <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {tradeInfoModal.openDate}</div>     
@@ -254,19 +254,19 @@ function OpenTradeList(props) {
             type="button"
             onClick={closeTradeHandler}
             name="Close Position"
-            className="btn-action mt-2 sm:mt-0"
+            className="btn-action"
           ></Button>
           <Button
             type="button"
             onClick={adjustTradeHandler}
             name="Adjust Position"
-            className="btn-action mt-2 sm:mt-0"
+            className="btn-action"
           ></Button>
           <Button
             type="button"
             onClick={hideTradeInfoHandler}
             name="Cancel"
-            className="btn-cancel mt-2 sm:mt-0"
+            className="btn-cancel"
           ></Button>
         </Modal.Footer>
       </Modal>

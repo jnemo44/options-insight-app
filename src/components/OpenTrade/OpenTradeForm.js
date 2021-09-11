@@ -48,7 +48,7 @@ function OpenTradeForm(props) {
   const [tradeLegs, setTradeLegs] = useState([])
 
   const addTradeLegHandler = () => {
-    setTradeLegs([...tradeLegs, {strike: "", price: ""}])
+    setTradeLegs([...tradeLegs, { strike: "", price: "" }])
   };
 
   const handleInputChange = (e, index) => {
@@ -61,28 +61,28 @@ function OpenTradeForm(props) {
   // Helper function for converting date into the format needed for HTML display
   function formatDateToString(date) {
     var DD = (date.getDate() < 10 ? '0' : '')
-            + date.getDate();
-              
+      + date.getDate();
+
     var MM = ((date.getMonth() + 1) < 10 ? '0' : '')
-            + (date.getMonth() + 1);
+      + (date.getMonth() + 1);
 
     var YYYY = date.getFullYear()
-              
+
     return YYYY + "-" + MM + "-" + DD;
   }
 
-  function search(nameKey, myArray){
-    for (var i=0; i < myArray.length; i++) {
-        if (myArray[i].name === nameKey) {
-            return myArray[i];
-        }
+  function search(nameKey, myArray) {
+    for (var i = 0; i < myArray.length; i++) {
+      if (myArray[i].name === nameKey) {
+        return myArray[i];
+      }
     }
   }
 
-  if (props.edit) {  
+  if (props.edit) {
     //Test Point
   }
-  
+
 
   // Set date to today
   //let today = new Date().toISOString().substr(0, 10);
@@ -108,7 +108,7 @@ function OpenTradeForm(props) {
     //console.log(buyOrSell);
     if (enabled) {
       enteredNumContracts = -1 * enteredNumContracts;
-    } 
+    }
 
     if (props.edit) {
       id_value = props.tradeInfo.id;
@@ -129,126 +129,122 @@ function OpenTradeForm(props) {
     };
 
     // Send data
-    console.log("Here")
+    // "grid grid-rows-4 grid-cols-2 gap-4"
     props.onAddTrade(openTradeData);
   }
 
 
   return (
-    <form id='new-trade' onSubmit={submitFormHandler} className="space-y-4">
-      <div className="grid grid-rows-4 grid-cols-2 gap-4">
-      <div>
-        <FormInput
-          type="date"
-          label="Open Date"
-          defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.openDate)) : null}
-          ref={openDateInputRef} />
-      </div>
-      <div className='col-start-2'>
-        <FormInput
-          type="date"
-          label="Expiration Date"
-          defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.expirationDate)) : null}
-          ref={expirationDateInputRef} />
-      </div>
-      <div>
-        <FormInput
-          type="text"
-          label="Ticker"
-          defaultValue={props.edit ? props.tradeInfo.ticker : null}
-          placeholder="AAPL"
-          ref={tickerInputRef} />
-      </div>
-      <div className='col-start-2'>
-        <FormInput
-          type="number"
-          min="1"
-          defaultValue={props.edit ? (props.tradeInfo.numContracts < 0 ? (props.tradeInfo.numContracts * -1) : props.tradeInfo.numContracts) : "1"}
-          label="Number of Contracts"
-          //placeholder="Number of Contracts"
-          ref={numContractInputRef} />
-      </div>
-      <div>
-        <SelectBox
-          label="Spread"
-          spreads={spreads}
-          selected={selected}
-          setSelected={setSelected}/>
-      </div>
-      <div>
-        <FormInput
-          type="number"
-          step="0.01"
-          label="Open Price"
-          defaultValue={props.edit ? props.tradeInfo.openPrice : null}
-          placeholder="Enter Open Price"
-          ref={openPriceInputRef} />
-      </div>
-      <div className='flex justify-center col-span-2'>
-        <BuySellToggle 
-          enabled={enabled} 
-          setEnabled={setEnabled}>  
-        </BuySellToggle>
-      </div>
-      <div>     
-        <Button
-          type="button"
-          //Want to add trade leg info..Strike/Cost/CallorPut
-          onClick={addTradeLegHandler}
-          name="Add Leg"
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        </Button>    
-      </div>
-      {tradeLegs.map((tradeLeg) => {
-        return (
-          <div>
-          <div>
-            <FormInput
+    <form id='new-trade' onSubmit={submitFormHandler}>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <FormInput
+            type="date"
+            label="Open Date"
+            defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.openDate)) : null}
+            ref={openDateInputRef} />
+        </div>
+        <div>
+          <FormInput
+            type="date"
+            label="Expiration Date"
+            defaultValue={props.edit ? formatDateToString(new Date(props.tradeInfo.expirationDate)) : null}
+            ref={expirationDateInputRef} />
+        </div>
+        <div>
+          <FormInput
+            type="text"
+            label="Ticker"
+            defaultValue={props.edit ? props.tradeInfo.ticker : null}
+            placeholder="AAPL"
+            ref={tickerInputRef} />
+        </div>
+        <div>
+          <FormInput
             type="number"
-            label="Strike"
-            placeholder="Enter Strike"
-            ref={strikeRef}>
-            </FormInput>
-          </div>
-          <div>
-            <FormInput
+            min="1"
+            defaultValue={props.edit ? (props.tradeInfo.numContracts < 0 ? (props.tradeInfo.numContracts * -1) : props.tradeInfo.numContracts) : "1"}
+            label="Number of Contracts"
+            //placeholder="Number of Contracts"
+            ref={numContractInputRef} />
+        </div>
+        <div>
+          <SelectBox
+            label="Spread"
+            spreads={spreads}
+            selected={selected}
+            setSelected={setSelected} />
+        </div>
+        <div>
+          <FormInput
             type="number"
-            label="Price"
-            placeholder="Enter Price"
-            ref={strikeRef}>
-            </FormInput>     
-          </div>
-          </div>
-          
-        )
-      })
-      }
-      </div>
-      
-      <div>
-        <TextArea
-          label="Notes"
-          prompt={props.edit ? props.tradeInfo.openNotes : "Why are you making this trade?"}
-          rows="3"
-          ref={notesInputRef}>
-        </TextArea>
-      </div>
-      <div className='flex justify-center space-x-20'>
-      <div>
-          <Button 
-            type="submit" 
-            name="Submit"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">   
-          </Button>
-      </div>
-      <div>
-          <Button 
+            step="0.01"
+            label="Open Price"
+            defaultValue={props.edit ? props.tradeInfo.openPrice : null}
+            placeholder="Enter Open Price"
+            ref={openPriceInputRef} />
+        </div>
+        <div className="grid col-span-1 justify-center sm:col-span-2">
+          <BuySellToggle
+            enabled={enabled}
+            setEnabled={setEnabled}>
+          </BuySellToggle>
+        </div>
+        <div className="grid col-span-1 justify-center sm:col-span-2">
+          <Button
             type="button"
-            onClick={props.onCancel}
-            name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">   
+            //Want to add trade leg info..Strike/Cost/CallorPut
+            onClick={addTradeLegHandler}
+            name="Add Leg"
+            className="btn-action">
           </Button>
-      </div>
+        </div>
+        <div className="grid col-span-1 sm:col-span-2">
+          {tradeLegs.map((tradeLeg) => {
+            return (
+              <div>
+                <FormInput
+                  type="number"
+                  label="Strike"
+                  placeholder="Enter Strike"
+                  ref={strikeRef}>
+                </FormInput>
+                <FormInput
+                  type="number"
+                  label="Price"
+                  placeholder="Enter Price"
+                  ref={strikeRef}>
+                </FormInput>
+              </div>
+            )
+          })
+          }
+        </div>
+        <div className="grid col-span-1 sm:col-span-2">
+          <TextArea
+            label="Notes"
+            prompt={props.edit ? props.tradeInfo.openNotes : "Why are you making this trade?"}
+            rows="3"
+            ref={notesInputRef}>
+          </TextArea>
+        </div>
+        <div className="btn-resize sm:col-span-2">
+          <div>
+            <Button
+              type="submit"
+              name="Submit"
+              className="btn-action">
+            </Button>
+          </div>
+          <div>
+            <Button
+              type="button"
+              onClick={props.onCancel}
+              name="Cancel"
+              className="btn-cancel">
+            </Button>
+          </div>
+        </div>
       </div>
     </form>
   );

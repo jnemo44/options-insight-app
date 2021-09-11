@@ -35,4 +35,8 @@
       @apply w-full inline-flex justify-center text-3xl 
       font-bold text-gray-900 sm:w-auto;
     }
+
+    .btn-resize {
+      @apply space-y-4 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0;
+    }
 }

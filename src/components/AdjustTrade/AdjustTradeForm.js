@@ -71,20 +71,19 @@ function AdjustTradeForm(props) {
   return (
     // class="space-y-4"
     <form id="adjust-trade" onSubmit={submitFormHandler} >
-      {/* class="grid grid-rows-4 grid-cols-2 gap-4" */}
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" >
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" >
         <div>
           <FormInput
             type="date"
             label="Adjustment Date"
-            ref={adjustmentDateInputRef}/>
+            ref={adjustmentDateInputRef} />
         </div>
         <div>
           <FormInput
             type="text"
             label="Expiration Date"
             value={str}
-            readOnly={true}/>
+            readOnly={true} />
         </div>
         <div>
           <FormInput
@@ -92,7 +91,7 @@ function AdjustTradeForm(props) {
             min="1"
             value={contractsClosed}
             label="Number of Contracts"
-            readOnly={true}/>
+            readOnly={true} />
         </div>
         <div>
           <FormInput
@@ -108,46 +107,39 @@ function AdjustTradeForm(props) {
             type="number"
             step="0.01"
             label="Close Adjusted Price"
-            ref={closeAdjustedPriceInputRef}/>
+            ref={closeAdjustedPriceInputRef} />
         </div>
         <div>
           <FormInput
             type="number"
             step="0.01"
             label="Open Adjusted Price"
-            ref={openAdjustedPriceInputRef}/>
+            ref={openAdjustedPriceInputRef} />
         </div>
-        <div class="grid col-span-1 md:col-span-2">
-        <TextArea
-          label="Notes"
-          prompt="Why are you adjusting?"
-          rows="3"
-          ref={adjustmentNotesInputRef}
-        ></TextArea>
-      </div>
-      </div>
-
-      <div class="sm:flex sm:justify-end">
-        <div>
-          <Button
-            type="submit"
-            name="Submit"
-            className="mt-4 mr-4 w-full inline-flex justify-center rounded-md border border-transparent 
-            shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 
-            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:ml-0 
-            sm:w-auto sm:text-sm"
-          ></Button>
+        <div class="grid col-span-1 sm:col-span-2">
+          <TextArea
+            label="Notes"
+            prompt="Why are you adjusting?"
+            rows="3"
+            ref={adjustmentNotesInputRef}
+          ></TextArea>
         </div>
-        <div>
-          <Button
-            type="button"
-            onClick={props.onCancel}
-            name="Cancel"
-            className="mt-4 w-full inline-flex justify-center rounded-md border border-gray-300 
-            shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500
-            focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 
-            sm:w-auto sm:text-sm"
-          ></Button>
+        <div className="btn-resize sm:col-span-2">
+          <div>
+            <Button
+              type="submit"
+              name="Submit"
+              className="btn-action"
+            ></Button>
+          </div>
+          <div>
+            <Button
+              type="button"
+              onClick={props.onCancel}
+              name="Cancel"
+              className="btn-cancel"
+            ></Button>
+          </div>
         </div>
       </div>
     </form>
