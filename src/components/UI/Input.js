@@ -10,6 +10,7 @@ const FormInput = React.forwardRef ((props, ref) => {
         <input
             type={props.type}
             id={props.name}
+            name={props.name}
             readOnly={props.readOnly ? true : false}
             required
             ref={ref}

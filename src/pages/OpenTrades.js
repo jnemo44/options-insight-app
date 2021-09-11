@@ -99,7 +99,6 @@ function OpenTradesPage() {
       // Trigger useEffect
       tradeListModifiedHandler();
     });
-
     // Close Modal after form submission
     newTradeFormHideHandler();
   }

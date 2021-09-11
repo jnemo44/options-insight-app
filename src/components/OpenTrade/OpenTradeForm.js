@@ -34,9 +34,6 @@ function OpenTradeForm(props) {
   const openDateInputRef = useRef();
   const expirationDateInputRef = useRef();
   const notesInputRef = useRef();
-  const strikeRef = useRef();
-
-  //tickerInputRef.value = "Test";
 
   // Default to Sell (true)
   const [enabled, setEnabled] = useState(props.edit ? props.tradeInfo.buyOrSell === 'true' : true);
@@ -48,14 +45,13 @@ function OpenTradeForm(props) {
   const [tradeLegs, setTradeLegs] = useState([])
 
   const addTradeLegHandler = () => {
-    setTradeLegs([...tradeLegs, { strike: "", price: "" }])
+    setTradeLegs([...tradeLegs, { legStrike: "", legPrice: "" }])
   };
 
-  const handleInputChange = (e, index) => {
-    const { name, value } = e.target;
-    const list = [...tradeLegs];
-    list[index][name] = value;
-    setTradeLegs(list);
+  const handleInputChange = (index, e) => {
+    let newTradeLegs = [...tradeLegs];
+    newTradeLegs[index][e.target.name] = e.target.value
+    setTradeLegs(newTradeLegs);
   };
 
   // Helper function for converting date into the format needed for HTML display
@@ -125,11 +121,11 @@ function OpenTradeForm(props) {
       spread: enteredSpread,
       adjustment: false,
       closed: false,
-      editID: id_value
+      editID: id_value,
+      tradeLegs: tradeLegs,
     };
 
     // Send data
-    // "grid grid-rows-4 grid-cols-2 gap-4"
     props.onAddTrade(openTradeData);
   }
 
@@ -199,29 +195,31 @@ function OpenTradeForm(props) {
             className="btn-action">
           </Button>
         </div>
-          {tradeLegs.map((tradeLeg) => {
-            return (
-              <div className="grid grid-cols-2">
-                <div>
+        {tradeLegs.map((element, index) => {
+          return (
+            <div className="grid grid-cols-2">
+              <div>
                 <FormInput
                   type="number"
                   label="Strike"
+                  name="legStrike"
                   placeholder="Enter Strike"
-                  ref={strikeRef}>
+                  onChange={e => handleInputChange(index, e)}>
                 </FormInput>
-                </div>
-                <div> 
+              </div>
+              <div>
                 <FormInput
                   type="number"
                   label="Price"
+                  name="legPrice"
                   placeholder="Enter Price"
-                  ref={strikeRef}>
+                  onChange={e => handleInputChange(index, e)}>
                 </FormInput>
-                </div>
               </div>
-            )
-          })
-          }
+            </div>
+          )
+        })
+        }
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
             label="Notes"

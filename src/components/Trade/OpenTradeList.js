@@ -9,6 +9,7 @@ import OpenTradeForm from "../OpenTrade/OpenTradeForm";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
 import Emoji from "../UI/Emoji";
+import Dropdown from "../UI/Dropdown";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
@@ -31,6 +32,7 @@ function OpenTradeList(props) {
     onClick: (e, row) => {
       setTradeInfoModal(row);
       displayTradeInfoHandler();
+      console.log(tradeInfoModal)
     },
   };
 
@@ -248,6 +250,11 @@ function OpenTradeList(props) {
           <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
+          <div>{tradeInfoModal.tradeLegs.map((leg, index) => {
+              return(
+                <div>Leg #{index + 1} Strike {leg.legStrike} Price {leg.legPrice}</div>
+              ) 
+          })}</div>
         </Modal.Body>
         <Modal.Footer>
           <Button
