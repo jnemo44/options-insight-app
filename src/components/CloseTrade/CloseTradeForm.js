@@ -120,13 +120,13 @@ function CloseTradeForm(props) {
         <Button
           type="submit"
           name="Submit"
-          className="btn-submit">
+          className="btn-action mt-4 mr-4 sm:ml-0">
         </Button>
         <Button
           type="button"
           onClick={props.onCancel}
           name="Cancel"
-          className="btn-cancel">
+          className="btn-cancel mt-4 sm:ml-3">
         </Button>
       </div>
     </form>

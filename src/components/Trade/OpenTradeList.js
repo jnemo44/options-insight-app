@@ -226,19 +226,22 @@ function OpenTradeList(props) {
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
-          <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+          <div class="sm:flex sm:justify-end">
+          <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
           <h1>{tradeInfoModal.dte} DTE</h1>
           <Button
             type="button"
             onClick={deleteTradeHandler}
             name="Delete Trade"
-            className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
+            className="btn-delete sm:mt-0"></Button>
           <Button
             type="button"
             onClick={editTradeHandler}
             name="Edit Trade"
-            className="inline-flex items-right px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-black bg-white-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"></Button>
-        </Modal.Header>
+            className="btn-action sm:ml-4"></Button>
+          </div>
+            </Modal.Header>
+          
         <Modal.Body>
           <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on {tradeInfoModal.expirationDate}</div> 
           <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {tradeInfoModal.openDate}</div>     
@@ -251,19 +254,19 @@ function OpenTradeList(props) {
             type="button"
             onClick={closeTradeHandler}
             name="Close Position"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="btn-action mt-2 sm:mt-0"
           ></Button>
           <Button
             type="button"
             onClick={adjustTradeHandler}
             name="Adjust Position"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="btn-action mt-2 sm:mt-0"
           ></Button>
           <Button
             type="button"
             onClick={hideTradeInfoHandler}
             name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="btn-cancel mt-2 sm:mt-0"
           ></Button>
         </Modal.Footer>
       </Modal>
