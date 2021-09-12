@@ -42,7 +42,7 @@ function OpenTradeForm(props) {
   const [selected, setSelected] = useState(props.edit ? search(props.tradeInfo.spread, spreads) : spreads[1]);
 
   // Trade Legs State
-  const [tradeLegs, setTradeLegs] = useState([])
+  const [tradeLegs, setTradeLegs] = useState(props.edit ? props.tradeInfo.tradeLegs : [])
 
   const addTradeLegHandler = () => {
     setTradeLegs([...tradeLegs, { legStrike: "", legPrice: "" }])
@@ -76,6 +76,7 @@ function OpenTradeForm(props) {
   }
 
   if (props.edit) {
+    console.log(tradeLegs)
     //Test Point
   }
 
@@ -109,6 +110,8 @@ function OpenTradeForm(props) {
     if (props.edit) {
       id_value = props.tradeInfo.id;
     }
+
+    
 
     const openTradeData = {
       ticker: enteredTicker,
@@ -204,15 +207,18 @@ function OpenTradeForm(props) {
                   label="Strike"
                   name="legStrike"
                   placeholder="Enter Strike"
+                  defaultValue={props.edit ? props.tradeInfo.tradeLegs[index].legStrike : null}
                   onChange={e => handleInputChange(index, e)}>
                 </FormInput>
               </div>
               <div>
                 <FormInput
                   type="number"
+                  step="0.01"
                   label="Price"
                   name="legPrice"
                   placeholder="Enter Price"
+                  defaultValue={props.edit ? props.tradeInfo.tradeLegs[index].legPrice : null}
                   onChange={e => handleInputChange(index, e)}>
                 </FormInput>
               </div>
