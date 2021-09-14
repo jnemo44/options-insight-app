@@ -9,7 +9,6 @@ function classNames(...classes) {
 }
 
 function SelectBox(props) {
-
   return (
     <Listbox value={props.selected} onChange={props.setSelected}>
       {({ open }) => (
