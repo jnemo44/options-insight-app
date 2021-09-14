@@ -226,23 +226,13 @@ function OpenTradeList(props) {
 
   const TradeInfoModal = () => {
     return (
-      <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
+      <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="lg">
         <Modal.Header closeButton>
         <div className="space-y-2 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0">
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
           <h1>{tradeInfoModal.dte} DTE</h1>
-          <Button
-            type="button"
-            onClick={deleteTradeHandler}
-            name="Delete Trade"
-            className="btn-delete"></Button>
-          <Button
-            type="button"
-            onClick={editTradeHandler}
-            name="Edit Trade"
-            className="btn-action"></Button>
-             </div>
-            </Modal.Header>
+        </div>
+        </Modal.Header>
            
         <Modal.Body>
           <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on {tradeInfoModal.expirationDate}</div> 
@@ -269,6 +259,10 @@ function OpenTradeList(props) {
             name="Adjust Position"
             className="btn-action"
           ></Button>
+          <Dropdown
+            edit={editTradeHandler}
+            delete={deleteTradeHandler}
+          />
           <Button
             type="button"
             onClick={hideTradeInfoHandler}

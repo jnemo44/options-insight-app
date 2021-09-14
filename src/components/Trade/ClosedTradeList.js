@@ -70,7 +70,6 @@ function ClosedTradeList(props) {
     <div>
       <BootStrapTable
         keyField="name"
-        caption="Closed Trade List"
         classes="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
         data={props.trades}
         noDataIndication="You havn't closed any trades yet!"
