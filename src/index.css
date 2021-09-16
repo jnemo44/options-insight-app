@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-bootstrap-table table {
+  table-layout: auto;
+}
+
 
 @layer base {
   h1 {
     @apply w-full inline-flex justify-center text-xl px-4 py-2 sm:w-auto sm:text-sm;
   }
+
 }
 
 @layer components {

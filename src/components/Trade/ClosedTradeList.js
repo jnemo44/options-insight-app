@@ -70,8 +70,9 @@ function ClosedTradeList(props) {
     <div>
       <BootStrapTable
         keyField="name"
-        classes="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8 shadow overflow-hidden border-b border-gray-200 sm:rounded-lg"
         data={props.trades}
+        wrapperClasses="table-responsive"
+        rowClasses="text-nowrap"
         noDataIndication="You havn't closed any trades yet!"
         columns={columns}
         pagination={paginationFactory()}

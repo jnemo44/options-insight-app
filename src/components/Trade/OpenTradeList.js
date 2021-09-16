@@ -329,6 +329,7 @@ function OpenTradeList(props) {
       <BootStrapTable  
         keyField="id"
         data={props.trades}
+        noDataIndication="Click the Add New Trade button to get started!"
         columns={columns}
         pagination={paginationFactory()}
         rowEvents={rowEvents}
