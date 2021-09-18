@@ -48,6 +48,15 @@ function OpenTradeForm(props) {
     setTradeLegs([...tradeLegs, { legStrike: "", legPrice: "" }])
   };
 
+  const removeTradeLegHandler = (i) => {
+    console.log(i)
+    let newTradeLegs = [...tradeLegs];
+    console.log(newTradeLegs)
+    newTradeLegs.splice(i, 1)
+    console.log(newTradeLegs)
+    setTradeLegs(newTradeLegs)
+  }
+
   const handleInputChange = (index, e) => {
     let newTradeLegs = [...tradeLegs];
     newTradeLegs[index][e.target.name] = e.target.value
@@ -200,7 +209,7 @@ function OpenTradeForm(props) {
         </div>
         {tradeLegs.map((element, index) => {
           return (
-            <div className="grid grid-cols-2">
+            <div className="inline-flex">
               <div>
                 <FormInput
                   type="number"
@@ -222,6 +231,15 @@ function OpenTradeForm(props) {
                   onChange={e => handleInputChange(index, e)}>
                 </FormInput>
               </div>
+              <div>
+                <Button
+                  type="button"
+                  onClick={() => removeTradeLegHandler(index)}
+                  name="Delete"
+                  className="btn-delete"
+                  >
+                </Button> 
+              </div> 
             </div>
           )
         })
