@@ -44,16 +44,17 @@ function OpenTradeForm(props) {
   // Trade Legs State
   const [tradeLegs, setTradeLegs] = useState(props.edit ? props.tradeInfo.tradeLegs : [])
 
+  // Trade Leg Price Summation
+  const [totalOpenPrice, setTotalOpenPrice] = useState(props.edit ? props.tradeInfo.openPrice : null)
+
   const addTradeLegHandler = () => {
     setTradeLegs([...tradeLegs, { legStrike: "", legPrice: "" }])
+    console.log(tradeLegs)
   };
 
   const removeTradeLegHandler = (i) => {
-    console.log(i)
     let newTradeLegs = [...tradeLegs];
-    console.log(newTradeLegs)
     newTradeLegs.splice(i, 1)
-    console.log(newTradeLegs)
     setTradeLegs(newTradeLegs)
   }
 
@@ -61,6 +62,13 @@ function OpenTradeForm(props) {
     let newTradeLegs = [...tradeLegs];
     newTradeLegs[index][e.target.name] = e.target.value
     setTradeLegs(newTradeLegs);
+    if (e.target.name === "legPrice") {
+      var total = 0
+      for (const leg of tradeLegs) {
+        isNaN(parseFloat(leg.legPrice)) ? total += 0 : total += parseFloat(leg.legPrice)    
+      }
+      setTotalOpenPrice(total.toFixed(2))
+    }
   };
 
   // Helper function for converting date into the format needed for HTML display
@@ -85,7 +93,6 @@ function OpenTradeForm(props) {
   }
 
   if (props.edit) {
-    console.log(tradeLegs)
     //Test Point
   }
 
@@ -188,7 +195,8 @@ function OpenTradeForm(props) {
             type="number"
             step="0.01"
             label="Open Price"
-            defaultValue={props.edit ? props.tradeInfo.openPrice : null}
+            //defaultValue={props.edit ? props.tradeInfo.openPrice : null}
+            value={totalOpenPrice}
             placeholder="Enter Open Price"
             ref={openPriceInputRef} />
         </div>
@@ -209,8 +217,46 @@ function OpenTradeForm(props) {
         </div>
         {tradeLegs.map((element, index) => {
           return (
-            <div className="inline-flex">
-              <div>
+            <div className="grid">        
+              <div className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+              <label htmlFor="legStrike" className="block text-xs font-medium text-gray-900">
+              Strike
+              </label>
+              <input
+                type="text"
+                name="legStrike"
+                id={"Strike" + index}
+                className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                placeholder="Enter Strike"
+                defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legStrike : null}
+                onChange={e => handleInputChange(index, e)}
+              />
+              </div>
+              <div className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+              <label htmlFor="legPrice" className="block text-xs font-medium text-gray-900">
+              Price
+              </label>
+              <input
+                type="number"
+                name="legPrice"
+                step="0.01"
+                id={"Price" + index}
+                className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                placeholder="Enter Price"
+                defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legPrice : null}
+                onChange={e => handleInputChange(index, e)}
+              />
+              </div>
+              <div className="flex content-center">
+                <Button
+                  type="button"
+                  onClick={() => removeTradeLegHandler(index)}
+                  name="Delete"
+                  className="btn-delete"
+                  >
+                </Button> 
+              </div>
+              {/* <div>
                 <FormInput
                   type="number"
                   label="Strike"
@@ -239,7 +285,7 @@ function OpenTradeForm(props) {
                   className="btn-delete"
                   >
                 </Button> 
-              </div> 
+              </div>  */}
             </div>
           )
         })
