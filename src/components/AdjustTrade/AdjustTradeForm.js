@@ -66,7 +66,7 @@ function AdjustTradeForm(props) {
   console.log(props.tradeInfo.expirationDate)
   var myDate = new Date(props.tradeInfo.expirationDate)
   console.log(myDate)
-  var str = myDate.toDateString()
+  var dateStr = myDate.toDateString()
 
   return (
     // class="space-y-4"
@@ -82,7 +82,7 @@ function AdjustTradeForm(props) {
           <FormInput
             type="text"
             label="Expiration Date"
-            value={str}
+            value={dateStr}
             readOnly={true} />
         </div>
         <div>
@@ -115,6 +115,9 @@ function AdjustTradeForm(props) {
             step="0.01"
             label="Open Adjusted Price"
             ref={openAdjustedPriceInputRef} />
+        </div>
+        <div>
+          Placeholder
         </div>
         <div class="grid col-span-1 sm:col-span-2">
           <TextArea
