@@ -4,6 +4,7 @@
 
 .react-bootstrap-table table {
   table-layout: auto;
+  white-space: nowrap;
 }
 
 
