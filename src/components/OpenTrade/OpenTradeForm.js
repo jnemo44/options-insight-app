@@ -215,7 +215,7 @@ function OpenTradeForm(props) {
             className="btn-action">
           </Button>
         </div>
-        {tradeLegs.map((element, index) => {
+        {Array.isArray(tradeLegs) ? tradeLegs.map((element, index) => {
           return (
             <div className="grid">        
               <div className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
@@ -256,40 +256,10 @@ function OpenTradeForm(props) {
                   >
                 </Button> 
               </div>
-              {/* <div>
-                <FormInput
-                  type="number"
-                  label="Strike"
-                  name="legStrike"
-                  placeholder="Enter Strike"
-                  defaultValue={props.edit ? props.tradeInfo.tradeLegs[index].legStrike : null}
-                  onChange={e => handleInputChange(index, e)}>
-                </FormInput>
-              </div>
-              <div>
-                <FormInput
-                  type="number"
-                  step="0.01"
-                  label="Price"
-                  name="legPrice"
-                  placeholder="Enter Price"
-                  defaultValue={props.edit ? props.tradeInfo.tradeLegs[index].legPrice : null}
-                  onChange={e => handleInputChange(index, e)}>
-                </FormInput>
-              </div>
-              <div>
-                <Button
-                  type="button"
-                  onClick={() => removeTradeLegHandler(index)}
-                  name="Delete"
-                  className="btn-delete"
-                  >
-                </Button> 
-              </div>  */}
             </div>
           )
         })
-        }
+        : null}
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
             label="Notes"

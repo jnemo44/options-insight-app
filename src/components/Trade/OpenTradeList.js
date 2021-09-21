@@ -32,7 +32,6 @@ function OpenTradeList(props) {
     onClick: (e, row) => {
       setTradeInfoModal(row);
       displayTradeInfoHandler();
-      console.log(tradeInfoModal)
     },
   };
 
@@ -225,6 +224,9 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
+    console.log("loop")
+    console.log(tradeInfoModal)
+    console.log(Array.isArray(tradeInfoModal.tradeLegs))
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="lg">
         <Modal.Header closeButton>
@@ -240,7 +242,7 @@ function OpenTradeList(props) {
           <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
-          <div>{displayTradeInfo ? tradeInfoModal.tradeLegs.map((leg, index) => {
+          <div>{Array.isArray(tradeInfoModal.tradeLegs) ? tradeInfoModal.tradeLegs.map((leg, index) => {
               return(
                 <div><Emoji symbol='🦵'/> #{index + 1} Strike {leg.legStrike} Price {leg.legPrice}</div>
               ) 
