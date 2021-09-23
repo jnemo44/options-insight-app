@@ -105,7 +105,7 @@ function CloseTradeForm(props) {
           />
         </div>
         <div class={PLResult > 0 ? positivePL : negativePL}>
-          P/L = {PLResult} x {Math.abs(props.tradeInfo.numContracts)} x 100 = ${PLResult * 100 * Math.abs(props.tradeInfo.numContracts)}
+          P/L = {PLResult} x {Math.abs(props.tradeInfo.numContracts)} x 100 = ${(PLResult * 100 * Math.abs(props.tradeInfo.numContracts)).toFixed(2)}
         </div>
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
