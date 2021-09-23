@@ -53,6 +53,7 @@ function AdjustTradeForm(props) {
       adjustmentID: props.tradeInfo.adjustmentID,
     };
 
+    // Function passed from OpenTradeList
     props.onAdjustTrade(openTradeData, closeTradeData);
 
   }

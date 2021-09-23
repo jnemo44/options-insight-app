@@ -20,6 +20,7 @@ function OpenTradesPage() {
 
     //https://tether-89676-default-rtdb.firebaseio.com/trades.json
     //"http://127.0.0.1:5000/open-orders"
+    console.log("Trade List Modified Triggered")
 
     setIsLoading(true);
     fetch("http://127.0.0.1:5000/open-orders", {
@@ -81,7 +82,7 @@ function OpenTradesPage() {
   }
 
   function tradeListModifiedHandler() {
-    // A new trade has been added or closed
+    // A new trade has been added, closed, or adjusted
     setTradeListModified(true);
   }
 

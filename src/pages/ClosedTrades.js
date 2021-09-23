@@ -70,9 +70,9 @@ function ClosedTradesPage() {
                         // Pass all trade info
                         ...adjustedTrades[adjust_idx]
                     }
+                    console.log(trade)
                     trades.push(trade);
                 }
-
                 setLoadedTrades(trades);
                 setIsLoading(false);
                 //setNewTradeAdded(false);

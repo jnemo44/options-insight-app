@@ -37,6 +37,7 @@ function CloseTradeForm(props) {
     const enteredClosePrice = closePriceInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
     const enteredCloseDate = closeDateInputRef.current.value;
+    // This flag is used to prevent it from showing up on the open trades page
     const closedTrade = true;
 
     const closeTradeData = {
