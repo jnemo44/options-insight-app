@@ -32,7 +32,7 @@ function ClosedTradesPage() {
             .then((data) => {
                 const trades = [];
                 const nonAdjustedTrades = { ...data.non_adjusted_list };
-                const adjustedTrades = { ...data.adjusted_list };
+                const adjustedTrades = { ...data.closed_adjusted_list };
                 const adjustmentInfo = { ...data.adjustment_info };
                 console.log(adjustmentInfo)
                 var totalProfitLoss = 0;
