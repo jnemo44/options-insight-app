@@ -13,7 +13,7 @@ function BuySellToggle(props) {
         className={classNames(
           props.enabled ? "bg-red-600" : "bg-green-600",
           //'relative inline-flex flex-shrink-0 h-7 w-13 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500'
-          "relative inline-flex h-7 w-20 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500"
+          "relative inline-flex h-7 w-20 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
         )}
       >
         <span className="sr-only">Use setting</span>
