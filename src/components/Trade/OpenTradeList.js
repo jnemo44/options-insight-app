@@ -10,6 +10,7 @@ import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
 import Emoji from "../UI/Emoji";
 import Dropdown from "../UI/Dropdown";
+import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
@@ -19,18 +20,20 @@ function OpenTradeList(props) {
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
   
   const columns = [
+    { dataField: "openDate", text: "Open Date"},
     { dataField: "ticker", text: "Ticker" },
     { dataField: "spread", text: "Spread" },
     { dataField: "dte", text: "DTE" },
     { dataField: "numContracts", text: "Number of Contracts" },
     { dataField: "openPrice", text: "Open Price" },
-    { dataField: "currentPrice", text: "Current Price" },
-    { dataField: "profitLoss", text: "P/L %" },
+    //{ dataField: "currentPrice", text: "Current Price" },
+    //{ dataField: "profitLoss", text: "P/L %" },
   ];
 
   const rowEvents = {
-    onClick: (e, row) => {
-      setTradeInfoModal(row);
+    onClick: (e, trade) => {
+      console.log(trade)
+      setTradeInfoModal(trade);
       displayTradeInfoHandler();
     },
   };
@@ -224,9 +227,6 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
-    console.log("loop")
-    console.log(tradeInfoModal)
-    console.log(Array.isArray(tradeInfoModal.tradeLegs))
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="lg">
         <Modal.Header closeButton>
@@ -247,6 +247,7 @@ function OpenTradeList(props) {
                 <div><Emoji symbol='🦵'/> #{index + 1} Strike {leg.legStrike} Price {leg.legPrice}</div>
               ) 
           }): null}</div>
+          <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
         </Modal.Body>
         <Modal.Footer>
           <Button

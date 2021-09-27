@@ -34,7 +34,11 @@ function OpenTradesPage() {
         const trades = [];
 
         const convertedData = { ...data.open_list };
+        console.log("convertedData")
+        console.log(convertedData)
         const openAdjustedTrades = {...data.open_adjusted_trades};
+        console.log("openAdjustedTrades")
+        console.log(openAdjustedTrades)
 
         for (const key in convertedData) {
           // Eliminate TZ offset and just use the date

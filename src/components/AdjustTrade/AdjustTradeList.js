@@ -4,9 +4,14 @@ import AdjustTradeItem from './AdjustTradeItem';
 function AdjustTradeList(props) {
     // Get rid of anything BUT adjusted trade info
     const adjustedTradesOnly = []
-    for (const key in props.trades) {
-        if(!Number.isNaN(parseInt(key))) {
-            adjustedTradesOnly.push(props.trades[parseInt(key)])
+    for (let key in props.trades) {
+        let intKey = parseInt(key);
+        console.log(props.trades)
+        console.log(key)
+        // NaN's are made by extra data/calculations (DIT, P/L, ect.) passed to trades
+        // I only want to look at adjusted trades (adjustment = true)
+        if(!Number.isNaN(intKey) && props.trades[intKey].adjustment) {
+            adjustedTradesOnly.push(props.trades[intKey])
         }
     }
     return (
