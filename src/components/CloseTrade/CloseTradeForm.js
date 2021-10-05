@@ -25,8 +25,16 @@ function CloseTradeForm(props) {
   var str = myDate.toDateString()
 
   function closePriceHandler(event) {
-    //Dynamically calculate PL Result
-    setPLResult(Math.round((props.tradeInfo.openPrice - event.target.value) * 100) / 100)
+    // Buy or Sell (false is buy)
+    if (props.tradeInfo.buyOrSell === "false") {
+      //Dynamically calculate PL Result
+      setPLResult(Math.round((event.target.value - props.tradeInfo.openPrice) * 100) / 100)
+    }
+    else {
+      //Dynamically calculate PL Results
+      setPLResult(Math.round((props.tradeInfo.openPrice - event.target.value) * 100) / 100)
+    }
+    
   }
 
   function submitFormHandler(event) {
@@ -55,8 +63,6 @@ function CloseTradeForm(props) {
     // Send data
     //console.log(closeTradeData);
     props.onCloseTrade(closeTradeData);
-    //"grid grid-rows-4 grid-cols-2 gap-2"
-    //class=grid gap-2
   }
 
   return (
