@@ -7,13 +7,18 @@
   white-space: nowrap;
 }
 
+.table-column-group {
+  display: table-column-group;
+}
+
 
 @layer base {
   h1 {
     @apply w-full inline-flex justify-center text-xl px-4 py-2 sm:w-auto sm:text-sm;
   }
-
 }
+
+
 
 @layer components {
     .btn-action {

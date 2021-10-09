@@ -1,5 +1,5 @@
 
-function TradeList(props) {
+function TradeListTable(props) {
     return (
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -14,7 +14,7 @@ function TradeList(props) {
                     >
                       Ticker
                     </th>
-                    {/* <th
+                    <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
@@ -25,7 +25,7 @@ function TradeList(props) {
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                     >
                       Expiration Date
-                    </th> */}
+                    </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -52,23 +52,13 @@ function TradeList(props) {
                 </thead>
                 <tbody>
                   {props.trades.map((trade, tradeIdx) => (
-                    <tr key={trade.id} className={tradeIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                      <a href="#" className="block hover:bg-gray-50">
+                    <tr key={trade.id} className={tradeIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>  
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{trade.ticker}</td>
-                      {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openDate}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.expirationDate}</td> */}
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openDate}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.expirationDate}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.dte}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.numContracts}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openPrice}</td>      
-                      <td className="px-2 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <a href="#" className="text-indigo-600 hover:text-indigo-900 px-2">
-                          Adjust
-                        </a>
-                        <a href="#" className="text-red-600 hover:text-indigo-900 px-2">
-                          Delete
-                        </a>
-                      </td>
-                      </a>
                     </tr>
                   ))}
                 </tbody>

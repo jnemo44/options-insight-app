@@ -1,8 +1,5 @@
 import { useState } from "react";
-import BootStrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
-//import ToolkitProvider, { ColumnToggle } from 'react-bootstrap-table2-toolkit';
-//import cellEditFactory from 'react-bootstrap-table2-editor';
+import TradeListTable from "../Trade/TradeListDivTable";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Button";
 import OpenTradeForm from "../OpenTrade/OpenTradeForm";
@@ -19,24 +16,11 @@ function OpenTradeList(props) {
   const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
   
-  const columns = [
-    { dataField: "openDate", text: "Open Date"},
-    { dataField: "ticker", text: "Ticker" },
-    { dataField: "spread", text: "Spread" },
-    { dataField: "dte", text: "DTE" },
-    { dataField: "numContracts", text: "Number of Contracts" },
-    { dataField: "openPrice", text: "Open Price" },
-    //{ dataField: "currentPrice", text: "Current Price" },
-    //{ dataField: "profitLoss", text: "P/L %" },
-  ];
 
-  const rowEvents = {
-    onClick: (e, trade) => {
-      console.log(trade)
-      setTradeInfoModal(trade);
-      displayTradeInfoHandler();
-    },
-  };
+  function onRowSelectHandler(trade, event) {
+    setTradeInfoModal(trade);
+    displayTradeInfoHandler();
+  }
 
   function displayTradeInfoHandler() {
     // Display Modal to view trade details
@@ -334,16 +318,7 @@ function OpenTradeList(props) {
 
   return (
     <div>
-      <BootStrapTable  
-        keyField="id"
-        data={props.trades}
-        noDataIndication="Add a New Trade to get started!"
-        columns={columns}
-        pagination={paginationFactory()}
-        rowEvents={rowEvents}
-        hover
-        striped
-      />    
+      <TradeListTable trades={props.trades} onRowSelect={onRowSelectHandler}/>
       {
         // if...else if...else to conditionaly render modals
         displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
