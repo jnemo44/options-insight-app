@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.react-bootstrap-table table {
-  table-layout: auto;
-  white-space: nowrap;
-}
-
-.table-column-group {
-  display: table-column-group;
-}
-
 
 @layer base {
   h1 {
@@ -49,5 +40,13 @@
 
     .btn-resize {
       @apply space-y-4 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0;
+    }
+
+    .table-header {
+      @apply table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider
+    }
+
+    .tbl-row {
+      @apply table-cell px-6 py-4 whitespace-nowrap text-sm
     }
 }

@@ -11,22 +11,22 @@ function TradeListTable(props) {
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                         <div className="table min-w-full divide-y divide-gray-200">
                             <div className="table-header-group">
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ticker</div>
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Open Date</div>
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Spread</div>
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DTE</div>
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contracts</div>
-                                <div className="table-cell px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Open Price</div>
+                                <div className="table-header">Ticker</div>
+                                <div className="table-header">Open Date</div>
+                                <div className="table-header">Spread</div>
+                                <div className="table-header">DTE</div>
+                                <div className="table-header">Contracts</div>
+                                <div className="table-header whitespace-nowrap">Open Price</div>
                             </div>
                             <div class="table-row-group">
                                 {props.trades.map((trade, tradeIdx) => (
                                     <div id={trade.id} className="table-row hover:bg-gray-100" onClick={(e) => props.onRowSelect(trade, e)}>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{trade.ticker}</div>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openDate}</div>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.spread}</div>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.dte}</div>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.numContracts}</div>
-                                        <div className="table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-500">{trade.openPrice}</div>
+                                        <div className="tbl-row px-6 py-4 font-medium text-gray-900">{trade.ticker}</div>
+                                        <div className="tbl-row text-gray-500">{trade.openDate}</div>
+                                        <div className="tbl-row text-gray-500">{trade.spread}</div>
+                                        <div className="tbl-row text-gray-500">{trade.dte}</div>
+                                        <div className="tbl-row text-gray-500">{trade.numContracts}</div>
+                                        <div className="tbl-row text-gray-500">{trade.openPrice}</div>
                                     </div>
                                 ))}
                             </div>
