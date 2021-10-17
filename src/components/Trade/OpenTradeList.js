@@ -16,36 +16,6 @@ function OpenTradeList(props) {
   const [displayAdjustTradeForm, setDisplayAdjustTradeForm] = useState(false);
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Ticker",
-        accessor: "ticker",
-      },
-      {
-        Header: "Open Date",
-        accessor: "openDate",
-      },
-      {
-        Header: "Spread",
-        accessor: "spread",
-      },
-      {
-        Header: "DTE",
-        accessor: "dte",
-      },
-      {
-        Header: "Contract",
-        accessor: "numContracts",
-      },
-      {
-        Header: "Open Price",
-        accessor: "openPrice",
-      },
-    ],
-    []
-  );
-
   function onRowSelectHandler(trade, event) {
     setTradeInfoModal(trade);
     displayTradeInfoHandler();
@@ -348,7 +318,7 @@ function OpenTradeList(props) {
   return (
     <div>
       {/* <TradeListTable trades={props.trades} onRowSelect={onRowSelectHandler}/> */}
-      <TradeListTable data={props.trades} columns={columns}></TradeListTable>
+      <TradeListTable columns={props.columns} data={props.trades}></TradeListTable>
       {
         // if...else if...else to conditionaly render modals
         displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 

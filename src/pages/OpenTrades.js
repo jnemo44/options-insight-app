@@ -4,11 +4,12 @@ import OpenTradeForm from "../components/OpenTrade/OpenTradeForm";
 import { Modal } from "react-bootstrap";
 import Button from "../components/UI/Button";
 import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import OpenTradeList from "../components/Trade/OpenTradeList";
 import Emoji from "../components/UI/Emoji";
 
-function OpenTradesPage() {
+
+function OpenTradesPage(props) {
   const [displayModal, setDisplayModal] = useState(false);
   const [tradeListModified, setTradeListModified] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -36,7 +37,7 @@ function OpenTradesPage() {
         const convertedData = { ...data.open_list };
         console.log("convertedData")
         console.log(convertedData)
-        const openAdjustedTrades = {...data.open_adjusted_trades};
+        const openAdjustedTrades = { ...data.open_adjusted_trades };
         console.log("openAdjustedTrades")
         console.log(openAdjustedTrades)
 
@@ -44,16 +45,16 @@ function OpenTradesPage() {
           // Eliminate TZ offset and just use the date
           var eDate = new Date(convertedData[key].expirationDate)
           var oDate = new Date(convertedData[key].openDate)
-          let expirationDate = new Date(eDate.getTime() + Math.abs(eDate.getTimezoneOffset()*60000)) 
-          let openDate = new Date(oDate.getTime() + Math.abs(oDate.getTimezoneOffset()*60000)) 
+          let expirationDate = new Date(eDate.getTime() + Math.abs(eDate.getTimezoneOffset() * 60000))
+          let openDate = new Date(oDate.getTime() + Math.abs(oDate.getTimezoneOffset() * 60000))
 
           const trade = {
             id: key,
             ...convertedData[key],
             expirationDate: expirationDate.toDateString(),
             openDate: openDate.toDateString(),
-            dte: Math.ceil((Math.abs(expirationDate.getTime()-currentDate.getTime()) / one_day)),
-            dit: Math.ceil((Math.abs(currentDate.getTime()-openDate.getTime()) / one_day)),
+            dte: Math.ceil((Math.abs(expirationDate.getTime() - currentDate.getTime()) / one_day)),
+            dit: Math.ceil((Math.abs(currentDate.getTime() - openDate.getTime()) / one_day)),
           };
           // Subtract 1 so that DTE is 0 on the day it is set to expire
           trade.dte -= 1;
@@ -113,7 +114,7 @@ function OpenTradesPage() {
     return (
       <Modal show={displayModal} onHide={newTradeFormHideHandler}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Trade <Emoji symbol='💸'/></Modal.Title>
+          <Modal.Title>Add New Trade <Emoji symbol='💸' /></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <OpenTradeForm
@@ -136,7 +137,7 @@ function OpenTradesPage() {
           type="button"
           onClick={newTradeHandler}
           className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          //inline-flex items-center         
+        //inline-flex items-center         
         >
           <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
         Add New Trade
@@ -148,7 +149,7 @@ function OpenTradesPage() {
       <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
       </div>*/}
 
-      <OpenTradeList trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
+      <OpenTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
     </div>
   );
 }
