@@ -318,7 +318,7 @@ function OpenTradeList(props) {
   return (
     <div>
       {/* <TradeListTable trades={props.trades} onRowSelect={onRowSelectHandler}/> */}
-      <TradeListTable columns={props.columns} data={props.trades}></TradeListTable>
+      <TradeListTable columns={props.columns} data={[...props.trades,...props.trades,...props.trades]}></TradeListTable>
       {
         // if...else if...else to conditionaly render modals
         displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 

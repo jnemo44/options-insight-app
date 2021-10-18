@@ -127,29 +127,26 @@ function OpenTradesPage(props) {
   };
 
   return (
-    <div>
-      {/* {displayModal && <Modal onHide={newTradeFormHideHandler} modalAction={modalAction}>
-          <NewTradeForm onAddTrade={addTradeHandler}></NewTradeForm>     
-      </Modal>} */}
-      {displayModal ? <ModalContent /> : null}
-      <div className='py-3'>
-        <Button
-          type="button"
-          onClick={newTradeHandler}
-          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        //inline-flex items-center         
-        >
-          <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
-        Add New Trade
-      </Button>
-      </div>
+    <div className="min-h-screen bg-gray-100 text-gray-900">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="">
+          <h1 className="text-xl font-semibold">Open Trades</h1>
+        </div>
+        <div className="mt-4">
+          {displayModal ? <ModalContent /> : null}
+          <div className='py-3'>
+            <Button
+              type="button"
+              onClick={newTradeHandler}
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
+              Add New Trade
+            </Button>
+          </div>
 
-      {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          We've used 3xl here, but feel free to try other max-widths based on your needs
-      <div className="max-w-7xl mx-auto"><TradeList trades={loadedTrades}></TradeList></div> 
-      </div>*/}
-
-      <OpenTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
+          <OpenTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
+        </div>
+      </main>
     </div>
   );
 }
