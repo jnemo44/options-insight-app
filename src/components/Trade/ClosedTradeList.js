@@ -1,8 +1,8 @@
 import { useState } from "react";
 import BootStrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
+//import paginationFactory from "react-bootstrap-table2-paginator";
 import { Modal } from "react-bootstrap";
-import Button from "../UI/Button";
+import Button from "../UI/Buttons";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
 
 //import Modal from "../UI/Modal";
@@ -75,7 +75,7 @@ function ClosedTradeList(props) {
         rowClasses="text-nowrap"
         noDataIndication="You havn't closed any trades yet!"
         columns={columns}
-        pagination={paginationFactory()}
+        //pagination={paginationFactory()}
         rowEvents={rowEvents}
         hover
         striped

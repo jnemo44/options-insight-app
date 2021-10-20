@@ -2,7 +2,7 @@
 //Ticker/#Contracts/SellorBuy/OpenPrice/OpenDate/Type
 import { useRef, useState } from 'react';
 import FormInput from '../UI/Input';
-import Button from '../UI/Button';
+import Button from '../UI/Buttons';
 import BuySellToggle from "../UI/Toggle";
 import TextArea from '../UI/TextArea';
 import SelectBox from '../UI/SelectBox';

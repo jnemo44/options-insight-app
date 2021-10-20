@@ -2,7 +2,7 @@ import OpenTradeForm from "../components/OpenTrade/OpenTradeForm";
 
 //import Modal from "../components/UI/Modal";
 import { Modal } from "react-bootstrap";
-import Button from "../components/UI/Button";
+import Button from "../components/UI/Buttons";
 import { PlusIcon as PlusIconOutline } from "@heroicons/react/outline";
 import { React, useState, useEffect } from "react";
 import OpenTradeList from "../components/Trade/OpenTradeList";

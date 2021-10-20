@@ -1,5 +1,5 @@
 import { PlusIcon as PlusIconSolid, MinusIcon as MinusIconSolid } from '@heroicons/react/solid'
-import Button from '../UI/Button';
+import Button from '../UI/Buttons';
 import FormInput from '../UI/Input';
 import BuySellToggle from '../UI/Toggle';
 

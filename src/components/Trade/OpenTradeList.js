@@ -1,7 +1,7 @@
 import { React, useState} from "react";
 import TradeListTable from "../Trade/Table";
 import { Modal } from "react-bootstrap";
-import Button from "../UI/Button";
+import Button from "../UI/Buttons";
 import OpenTradeForm from "../OpenTrade/OpenTradeForm";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";

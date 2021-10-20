@@ -1,8 +1,7 @@
 import React from "react";
 import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from 'react-table'
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
-import { PageButton } from "../UI/PaginationButton";
-import Button from "../UI/Button";
+import Button, { PageButton } from "../UI/Buttons";
 
 export function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id },
@@ -174,8 +173,8 @@ function TradeListTable({ columns, data }) {
       </div>
       <div className="py-3 flex items-center justify-between">
         <div className="flex-1 flex justify-between sm:hidden">
-          <Button className="" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
-          <Button className="" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
+          <Button className="btn-table-page-select" onClick={() => previousPage()} disabled={!canPreviousPage}>Previous</Button>
+          <Button className="btn-table-page-select" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
           <div className="flex gap-x-2">

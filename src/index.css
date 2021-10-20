@@ -33,6 +33,11 @@
       sm:w-auto sm:text-sm;
     }
 
+    .btn-table-page-select {
+      @apply relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md 
+      text-gray-700 bg-white hover:bg-gray-50
+    }
+
     .modal-title {
       @apply w-full inline-flex justify-center text-3xl 
       font-bold text-gray-900 sm:w-auto;

@@ -4,7 +4,7 @@
 import { useRef } from 'react';
 import FormInput from '../UI/Input';
 import TextArea from '../UI/TextArea';
-import Button from '../UI/Button';
+import Button from '../UI/Buttons';
 
 function AdjustTradeForm(props) {
   // Create Reference Objects for any entered data
