@@ -128,17 +128,18 @@ function OpenTradesPage(props) {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900">
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-        <div className="">
+      {/* This is where you can change the table width */}
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        {/* <div className="">
           <h1 className="text-xl font-semibold">Open Trades</h1>
-        </div>
+        </div> */}
         <div className="mt-4">
           {displayModal ? <ModalContent /> : null}
           <div className='py-3'>
             <Button
               type="button"
               onClick={newTradeHandler}
-              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
               <PlusIconOutline className="h-6 w-6" aria-hidden="true" />
               Add New Trade
             </Button>

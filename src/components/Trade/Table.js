@@ -3,6 +3,10 @@ import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, use
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Button, { PageButton } from "../UI/Buttons";
 
+function tradeSelectedHandler(row, event) {
+  console.log(row)
+}
+
 export function SelectColumnFilter({
   column: { filterValue, setFilter, preFilteredRows, id, render },
 }) {
@@ -64,7 +68,6 @@ function GlobalFilter({
         }}
         placeholder={`${count} trades...`}
       />
-
     </label>
   )
 }
@@ -159,7 +162,7 @@ function TradeListTable({ columns, data }) {
                   {page.map((row, i) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
+                      <tr {...row.getRowProps()} onClick={(e) => tradeSelectedHandler(row, e)}  className="hover:bg-gray-100">
                         {row.cells.map((cell) => {
                           return (
                             <td
