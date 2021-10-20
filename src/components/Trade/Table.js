@@ -4,7 +4,7 @@ import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDouble
 import Button, { PageButton } from "../UI/Buttons";
 
 export function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { filterValue, setFilter, preFilteredRows, id, render },
 }) {
   // Calculate the options for filtering
   // using the preFilteredRows
@@ -18,21 +18,25 @@ export function SelectColumnFilter({
 
   // Render a multi-select box
   return (
-    <select
-      name={id}
-      id={id}
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <label className="flex gap-x-4 items-baseline whitespace-nowrap">
+      <span className="text-gray-700">{render("Header")}:</span>
+      <select
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-600 focus:ring focus:ring-green-600 focus:ring-opacity-50"
+        name={id}
+        id={id}
+        value={filterValue}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -48,17 +52,20 @@ function GlobalFilter({
   }, 200)
 
   return (
-    <span>
-      Search:{' '}
+    <label className="flex gap-x-2 items-baseline">
+      <span className="text-gray-700">Search: </span>
       <input
+        type='text'
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-600 focus:ring focus:ring-green-600 focus:ring-opacity-50"
         value={value || ""}
         onChange={e => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} records...`}
+        placeholder={`${count} trades...`}
       />
-    </span>
+
+    </label>
   )
 }
 
@@ -97,24 +104,25 @@ function TradeListTable({ columns, data }) {
   return (
     <>
       <div className="flex gap-x-2">
+        {/* Search Filter */}
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
-      </div>
-      <div className="mt-2 flex flex-col">
+        {/* Column Filter */}
         {headerGroups.map((headerGroup) =>
           headerGroup.headers.map((column) =>
             column.Filter ? (
               <div key={column.id}>
-                <label for={column.id}>{column.render("Header")}: </label>
+                {/* <label for={column.id}>{column.render("Header")}: </label> */}
                 {column.render("Filter")}
               </div>
             ) : null
           )
         )}
       </div>
+      {/* Table */}
       <div className="mt-2 flex flex-col">
         <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -177,22 +185,26 @@ function TradeListTable({ columns, data }) {
           <Button className="btn-table-page-select" onClick={() => nextPage()} disabled={!canNextPage}>Next</Button>
         </div>
         <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div className="flex gap-x-2">
+          <div className="flex items-center gap-x-2">
             <span className="text-sm text-gray-700">
               Page <span className="font-medium">{state.pageIndex + 1}</span> of <span className="font-medium">{pageOptions.length}</span>
             </span>
-            <select
-              value={state.pageSize}
-              onChange={e => {
-                setPageSize(Number(e.target.value))
-              }}
-            >
-              {[5, 10, 20].map(pageSize => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+            <label>
+              <span className="sr-only">Items Per Page</span>
+              <select
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-green-600 focus:ring focus:ring-green-600 focus:ring-opacity-50"
+                value={state.pageSize}
+                onChange={e => {
+                  setPageSize(Number(e.target.value))
+                }}
+              >
+                {[5, 10, 20].map(pageSize => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
           {/* Pagination */}
           <div>

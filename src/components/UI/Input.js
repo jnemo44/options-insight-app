@@ -15,7 +15,7 @@ const FormInput = React.forwardRef ((props, ref) => {
             required
             ref={ref}
             step={props.step}   
-            className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+            className="shadow-sm focus:ring-green-600 focus:border-green-600 block w-full sm:text-sm border-gray-300 rounded-md"
             placeholder={props.placeholder}
             defaultValue={props.defaultValue}
             value={props.value}
