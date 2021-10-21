@@ -6,8 +6,6 @@ function AdjustTradeList(props) {
     const adjustedTradesOnly = []
     for (let key in props.trades) {
         let intKey = parseInt(key);
-        console.log(props.trades)
-        console.log(key)
         // NaN's are made by extra data/calculations (DIT, P/L, ect.) passed to trades
         // I only want to look at adjusted trades (adjustment = true)
         if(!Number.isNaN(intKey) && props.trades[intKey].adjustment) {

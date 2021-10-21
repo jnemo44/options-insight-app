@@ -17,7 +17,8 @@ function OpenTradeList(props) {
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
 
   function onRowSelectHandler(trade, event) {
-    setTradeInfoModal(trade);
+    console.log(props.trades)
+    setTradeInfoModal(trade.original);
     displayTradeInfoHandler();
   }
 
@@ -319,8 +320,9 @@ function OpenTradeList(props) {
     <div>
       {/* <TradeListTable trades={props.trades} onRowSelect={onRowSelectHandler}/> */}
       <TradeListTable 
+        onRowSelect={onRowSelectHandler}
         columns={props.columns} 
-        data={[...props.trades,...props.trades,...props.trades]}
+        data={props.trades}
       >
       </TradeListTable>
       {
