@@ -32,11 +32,16 @@ function ClosedTradesPage() {
             .then((data) => {
                 const trades = [];
                 const nonAdjustedTrades = { ...data.non_adjusted_list };
+                console.log("nonAdjustedTrades")
+                console.log(nonAdjustedTrades)
                 const adjustedTrades = { ...data.closed_adjusted_list };
+                console.log("adjustedTrades")
+                console.log(adjustedTrades)
                 const adjustmentInfo = { ...data.adjustment_info };
-                console.log(adjustmentInfo)
+                
                 var totalProfitLoss = 0;
 
+                // This is a trade that had no adjustments
                 for (const key in nonAdjustedTrades) {
                     const trade = {
                         ...nonAdjustedTrades[key],
@@ -48,6 +53,7 @@ function ClosedTradesPage() {
                     setTotalPL(totalProfitLoss);
                 }
 
+                // This is any trade that had adjustments
                 for (const adjust_idx in adjustedTrades) {
                     let adjustmentPL = 0;
                     let totalDIT = 0;
@@ -70,6 +76,7 @@ function ClosedTradesPage() {
                         // Pass all trade info
                         ...adjustedTrades[adjust_idx]
                     }
+                    console.log('trade')
                     console.log(trade)
                     trades.push(trade);
                 }

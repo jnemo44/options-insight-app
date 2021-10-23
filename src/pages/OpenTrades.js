@@ -1,4 +1,5 @@
 import OpenTradeForm from "../components/OpenTrade/OpenTradeForm";
+import {convertDate} from "../components/UI/Utils";
 
 //import Modal from "../components/UI/Modal";
 import { Modal } from "react-bootstrap";
@@ -33,28 +34,41 @@ function OpenTradesPage(props) {
       })
       .then((data) => {
         const trades = [];
+        const openList = { ...data.open_list};
+        console.log("openList")
+        console.log(openList)
+        const tradeHistory = data.trade_history;
+        const adjustedTradeID = {...data.adjusted_trade_IDs[1]};
+        console.log("tradeHistory")
+        console.log(tradeHistory)
+        console.log("adjustedTradeID")
+        console.log(adjustedTradeID)
 
-        const convertedData = { ...data.open_list };
-        console.log("convertedData")
-        console.log(convertedData)
-        const openAdjustedTrades = { ...data.open_adjusted_trades };
-        console.log("openAdjustedTrades")
-        console.log(openAdjustedTrades)
-
-        for (const key in convertedData) {
+        for (const key in openList) {
           // Eliminate TZ offset and just use the date
-          var eDate = new Date(convertedData[key].expirationDate)
-          var oDate = new Date(convertedData[key].openDate)
-          let expirationDate = new Date(eDate.getTime() + Math.abs(eDate.getTimezoneOffset() * 60000))
-          let openDate = new Date(oDate.getTime() + Math.abs(oDate.getTimezoneOffset() * 60000))
+          let currentTradeHistory = []
+          let openDate = convertDate(openList[key].openDate)
+          let expirationDate = convertDate(openList[key].expirationDate)
+          // If something in the Open List has an adjustment ID get ALL trades with that ID from tradeHistory
+          if (Object.values(adjustedTradeID).indexOf(openList[key].adjustmentID) > -1) {
+              for(const index in tradeHistory) {
+                for (const adjustment in tradeHistory[index])
+                  if (tradeHistory[index][0].adjustmentID === openList[key].adjustmentID) {
+                    currentTradeHistory.push(tradeHistory[index][adjustment])
+                    console.log("currentTradeHistory")
+                    console.log(currentTradeHistory)
+                }
+              }
+          }
 
           const trade = {
             id: key,
-            ...convertedData[key],
+            ...openList[key],
             expirationDate: expirationDate.toDateString(),
             openDate: openDate.toDateString(),
             dte: Math.ceil((Math.abs(expirationDate.getTime() - currentDate.getTime()) / one_day)),
             dit: Math.ceil((Math.abs(currentDate.getTime() - openDate.getTime()) / one_day)),
+            tradeHistory: currentTradeHistory,
           };
           // Subtract 1 so that DTE is 0 on the day it is set to expire
           trade.dte -= 1;

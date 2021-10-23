@@ -8,6 +8,7 @@ import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
 import Emoji from "../UI/Emoji";
 import Dropdown from "../UI/Dropdown";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
+import TradeHistory from "../TradeHistory/TradeHistory";
 
 function OpenTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
@@ -17,7 +18,7 @@ function OpenTradeList(props) {
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
 
   function onRowSelectHandler(trade, event) {
-    console.log(props.trades)
+    console.log(trade.original)
     setTradeInfoModal(trade.original);
     displayTradeInfoHandler();
   }
@@ -236,7 +237,8 @@ function OpenTradeList(props) {
                 </div>
               ) 
           }): null}</div>
-          <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
+          {/* <AdjustTradeList trades={tradeInfoModal.tradeHistory}></AdjustTradeList> */}
+          <TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory>
         </Modal.Body>
         <Modal.Footer>
           <Button
