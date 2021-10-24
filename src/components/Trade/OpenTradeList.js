@@ -213,7 +213,7 @@ function OpenTradeList(props) {
 
   const TradeInfoModal = () => {
     return (
-      <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="lg">
+      <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="xl">
         <Modal.Header closeButton>
         <div className="space-y-2 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0">
           <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
@@ -238,7 +238,7 @@ function OpenTradeList(props) {
               ) 
           }): null}</div>
           {/* <AdjustTradeList trades={tradeInfoModal.tradeHistory}></AdjustTradeList> */}
-          <TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory>
+          <div><TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory></div>
         </Modal.Body>
         <Modal.Footer>
           <Button
