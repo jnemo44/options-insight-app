@@ -47,12 +47,21 @@ function OpenTradeForm(props) {
   // Trade Leg Price Summation
   const [totalOpenPrice, setTotalOpenPrice] = useState(props.edit ? props.tradeInfo.openPrice : null)
 
-   // Trade Leg Call or Put Side
-   const [callSide, setCallSide] = useState(true)
+  // Trade Leg Call or Put Side
+  const [callSide, setCallSide] = useState([])
+
+  const onToggle = (index) => {
+    let newToggle = !callSide[index] 
+    setCallSide([
+      ...callSide.slice(0, index),
+      newToggle,
+      ...callSide.slice(index + 1)
+    ]
+    )
+  };
 
   const addTradeLegHandler = () => {
     setTradeLegs([...tradeLegs, { legStrike: "", legPrice: "", legExpiration: "", legSide: "" }])
-    console.log(tradeLegs)
   };
 
   const removeTradeLegHandler = (i) => {
@@ -68,7 +77,7 @@ function OpenTradeForm(props) {
     if (e.target.name === "legPrice") {
       var total = 0
       for (const leg of tradeLegs) {
-        isNaN(parseFloat(leg.legPrice)) ? total += 0 : total += parseFloat(leg.legPrice)    
+        isNaN(parseFloat(leg.legPrice)) ? total += 0 : total += parseFloat(leg.legPrice)
       }
       setTotalOpenPrice(total.toFixed(2))
     }
@@ -130,7 +139,7 @@ function OpenTradeForm(props) {
       id_value = props.tradeInfo.id;
     }
 
-    
+
 
     const openTradeData = {
       ticker: enteredTicker,
@@ -220,56 +229,57 @@ function OpenTradeForm(props) {
         </div>
         {Array.isArray(tradeLegs) ? tradeLegs.map((element, index) => {
           return (
-            <div className="grid gap-2">        
+            <div className="grid gap-2">
+              <div>Leg #{index+1}</div>
               <div className="border border-gray-300 rounded-md px-2 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-              <label htmlFor="legStrike" className="block text-xs font-medium text-gray-900">
-              Strike
+                <label htmlFor="legStrike" className="block text-xs font-medium text-gray-900">
+                  Strike
               </label>
-              <input
-                type="text"
-                name="legStrike"
-                id={"Strike" + index}
-                className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-                placeholder="Enter Strike"
-                defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legStrike : null}
-                onChange={e => handleInputChange(index, e)}
-              />
+                <input
+                  type="text"
+                  name="legStrike"
+                  id={"Strike" + index}
+                  className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  placeholder="Enter Strike"
+                  defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legStrike : null}
+                  onChange={e => handleInputChange(index, e)}
+                />
               </div>
               <div className="border border-gray-300 rounded-md px-2 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-              <label htmlFor="legExpiration" className="block text-xs font-medium text-gray-900">
-              Expiration
+                <label htmlFor="legExpiration" className="block text-xs font-medium text-gray-900">
+                  Expiration
               </label>
-              <input
-                type="date"
-                name="legExpiration"
-                id={"Expiration" + index}
-                className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-                placeholder="Enter Expiration Date"
-                defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legExpiration : null}
-                onChange={e => handleInputChange(index, e)}
-              />
+                <input
+                  type="date"
+                  name="legExpiration"
+                  id={"Expiration" + index}
+                  className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  placeholder="Enter Expiration Date"
+                  defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legExpiration : null}
+                  onChange={e => handleInputChange(index, e)}
+                />
               </div>
               {/* Call or Put Side */}
               <div className="grid col-span-1 justify-center">
-              <CallPutToggle
-                enabled={callSide} 
-                setEnabled={setCallSide}>
-              </CallPutToggle>
+                <CallPutToggle
+                  enabled={callSide[index]}
+                  setEnabled={e => onToggle(index)}>
+                </CallPutToggle>
               </div>
               <div className="border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
-              <label htmlFor="legPrice" className="block text-xs font-medium text-gray-900">
-              Price
+                <label htmlFor="legPrice" className="block text-xs font-medium text-gray-900">
+                  Price
               </label>
-              <input
-                type="number"
-                name="legPrice"
-                step="0.01"
-                id={"Price" + index}
-                className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-                placeholder="Enter Price"
-                defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legPrice : null}
-                onChange={e => handleInputChange(index, e)}
-              />
+                <input
+                  type="number"
+                  name="legPrice"
+                  step="0.01"
+                  id={"Price" + index}
+                  className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
+                  placeholder="Enter Price"
+                  defaultValue={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legPrice : null}
+                  onChange={e => handleInputChange(index, e)}
+                />
               </div>
               <div className="grid col-span-1 justify-center">
                 <Button
@@ -277,13 +287,13 @@ function OpenTradeForm(props) {
                   onClick={() => removeTradeLegHandler(index)}
                   name="Delete"
                   className="btn-delete"
-                  >
-                </Button> 
+                >
+                </Button>
               </div>
             </div>
           )
         })
-        : null}
+          : null}
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
             label="Notes"
