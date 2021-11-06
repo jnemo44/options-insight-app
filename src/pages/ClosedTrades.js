@@ -3,22 +3,12 @@ import ClosedTradeList from '../components/Trade/ClosedTradeList';
 import BootStrapTable from "react-bootstrap-table-next";
 import BootstrapTable from 'react-bootstrap-table-next';
 
-function ClosedTradesPage() {
+function ClosedTradesPage(props) {
     //const [displayModal, setDisplayModal] = useState(false);
     //const [newTradeAdded, setNewTradeAdded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [loadedTrades, setLoadedTrades] = useState([]);
     const [totalPL, setTotalPL] = useState();
-
-    const columns = [
-        { dataField: "ticker", text: "Ticker" },
-        { dataField: "spread", text: "Spread" },
-        { dataField: "dit", text: "DIT" },
-        { dataField: "numContracts", text: "Number of Contracts" },
-        { dataField: "openPrice", text: "Open Price" },
-        { dataField: "closePrice", text: "Close Price" },
-        { dataField: "profitLoss", text: "P/L" },
-      ];
 
     useEffect(() => {
         setIsLoading(true);
@@ -38,7 +28,7 @@ function ClosedTradesPage() {
                 console.log("adjustedTrades")
                 console.log(adjustedTrades)
                 const adjustmentInfo = { ...data.adjustment_info };
-                
+
                 var totalProfitLoss = 0;
 
                 // This is a trade that had no adjustments
@@ -71,6 +61,7 @@ function ClosedTradesPage() {
                         // Trade stats for main table
                         ticker: adjustedTrades[adjust_idx][0].ticker,
                         numContracts: adjustedTrades[adjust_idx][0].numContracts,
+                        spread: adjustedTrades[adjust_idx][0].spread,
                         profitLoss: adjustmentPL.toFixed(2),
                         dit: totalDIT,
                         // Pass all trade info
@@ -94,14 +85,16 @@ function ClosedTradesPage() {
         );
     }
     return (
-
-        <div className="bg-white shadow rounded-lg">
+        <div className="min-h-screen bg-gray-100 text-gray-900">
+            {/* This is where you can change the table width */}
+            <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
             <div className="px-4 py-5 sm:px-6">
-                Total P/L: {totalPL}
+                <h1>Total P/L: {totalPL}</h1>
             </div>
             <div>
-                <ClosedTradeList trades={loadedTrades}></ClosedTradeList>
+                <ClosedTradeList columns={props.columns} trades={loadedTrades}></ClosedTradeList>
             </div>
+            </main>
         </div>
 
     )

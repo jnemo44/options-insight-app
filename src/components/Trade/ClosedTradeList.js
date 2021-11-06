@@ -1,6 +1,6 @@
 import { useState } from "react";
-import BootStrapTable from "react-bootstrap-table-next";
-//import paginationFactory from "react-bootstrap-table2-paginator";
+//import BootStrapTable from "react-bootstrap-table-next";
+import TradeListTable from "../Trade/Table";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Buttons";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
@@ -11,25 +11,13 @@ function ClosedTradeList(props) {
   const [displayTradeInfo, setDisplayTradeInfo] = useState(false);
   const [tradeInfoModal, setTradeInfoModal] = useState([]);
 
-  // Column Data Field has to match data name from backend!
-  const columns = [
-    { dataField: "ticker", text: "Ticker" },
-    { dataField: "spread", text: "Spread" },
-    { dataField: "dit", text: "DIT" },
-    { dataField: "numContracts", text: "Number of Contracts" },
-    { dataField: "openPrice", text: "Open Price" },
-    { dataField: "closePrice", text: "Close Price" },
-    { dataField: "profitLoss", text: "P/L" },
-  ];
+  console.log(props.trades)
 
-  const rowEvents = {
-    onClick: (e, row) => {
-      console.log(props.trades)
-      setTradeInfoModal(row);
-      displayTradeInfoHandler();
-      console.table(Object.values({tradeInfoModal}));
-    },
-  };
+  function onRowSelectHandler(trade, event) {
+    console.log(trade.original)
+    setTradeInfoModal(trade.original);
+    displayTradeInfoHandler();
+  }
 
   function displayTradeInfoHandler() {
     // Display Modal to view trade details
@@ -68,18 +56,11 @@ function ClosedTradeList(props) {
 
   return (
     <div>
-      <BootStrapTable
-        keyField="name"
-        data={props.trades}
-        wrapperClasses="table-responsive"
-        rowClasses="text-nowrap"
-        noDataIndication="You havn't closed any trades yet!"
-        columns={columns}
-        //pagination={paginationFactory()}
-        rowEvents={rowEvents}
-        hover
-        striped
-      />
+      <TradeListTable 
+        onRowSelect={onRowSelectHandler}
+        columns={props.columns} 
+        data={props.trades}>
+      </TradeListTable>
       {displayTradeInfo ? <TradeInfoModal />: null}
     </div>
   );
