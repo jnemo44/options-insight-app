@@ -51,7 +51,9 @@ function OpenTradeForm(props) {
   const [callSide, setCallSide] = useState([])
 
   const onToggle = (index) => {
-    let newToggle = !callSide[index] 
+    let newTradeLegs = [...tradeLegs];
+    let newToggle = !callSide[index];
+    newTradeLegs[index]["legSide"] = newToggle
     setCallSide([
       ...callSide.slice(0, index),
       newToggle,
@@ -230,7 +232,7 @@ function OpenTradeForm(props) {
         {Array.isArray(tradeLegs) ? tradeLegs.map((element, index) => {
           return (
             <div className="grid gap-2">
-              <div>Leg #{index+1}</div>
+              <div>Leg #{index + 1}</div>
               <div className="border border-gray-300 rounded-md px-2 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
                 <label htmlFor="legStrike" className="block text-xs font-medium text-gray-900">
                   Strike
@@ -262,7 +264,7 @@ function OpenTradeForm(props) {
               {/* Call or Put Side */}
               <div className="grid col-span-1 justify-center">
                 <CallPutToggle
-                  enabled={callSide[index]}
+                  enabled={(props.edit && index in props.tradeInfo.tradeLegs) ? props.tradeInfo.tradeLegs[index].legSide : callSide[index]}
                   setEnabled={e => onToggle(index)}>
                 </CallPutToggle>
               </div>

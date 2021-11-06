@@ -56,12 +56,12 @@ function BuySellToggle(props) {
 
 export function CallPutToggle(props) {
   return (
-    <Switch.Group as="div" className="flex flex-col">
+    <Switch.Group as="div" className="flex flex-col" name={props.name}>
       <Switch
         checked={props.enabled}
         onChange={props.setEnabled}
         className={classNames(
-          props.enabled ? "bg-blue-500" : "bg-gray-600",
+          props.enabled ? "bg-gray-400" : "bg-gray-700",
           //'relative inline-flex flex-shrink-0 h-7 w-13 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-grey-500'
           "relative inline-flex h-7 w-20 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900"
         )}
@@ -82,7 +82,7 @@ export function CallPutToggle(props) {
             )}
             aria-hidden="true"
           >
-            <p>CALL</p>
+            <p>PUT</p>
           </span>
           <span
             className={classNames(
@@ -93,7 +93,7 @@ export function CallPutToggle(props) {
             )}
             aria-hidden="true"
           >
-            <p>PUT</p>
+            <p>CALL</p>
           </span>
         </span>
       </Switch>
