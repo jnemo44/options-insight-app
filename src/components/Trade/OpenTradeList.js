@@ -18,7 +18,6 @@ function OpenTradeList(props) {
   const [displayEditTradeForm, setDisplayEditTradeForm] = useState(false);
 
   function onRowSelectHandler(trade, event) {
-    console.log(trade.original)
     setTradeInfoModal(trade.original);
     displayTradeInfoHandler();
   }
@@ -212,6 +211,10 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
+    let tradeInfo = {...tradeInfoModal};
+    delete tradeInfo.tradeHistory;
+    delete tradeInfo.tradeLegs;
+    
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="xl">
         <Modal.Header closeButton>
@@ -222,12 +225,43 @@ function OpenTradeList(props) {
         </Modal.Header>
            
         <Modal.Body>
-          <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} days on {tradeInfoModal.expirationDate}</div> 
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">Open Date</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openDate}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">Expiration Date</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.expirationDate}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">DIT</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.dit}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">Number of Contracts</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.numContracts}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">Open Price</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openPrice}</dd>
+                </div>
+                <div className="sm:col-span-1">
+                  <dt className="text-sm font-medium text-gray-500">Spread</dt>
+                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.spread}</dd>
+                </div>
+                {tradeInfoModal.openNotes == null ? null : tradeInfoModal.openNotes.length === 0 ? null :
+                  <div className="sm:col-span-2">
+                    <dt className="text-sm font-medium text-gray-500">Open Notes</dt>
+                    <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openNotes}</dd>
+                  </div>}
+          </dl>
+          {/* <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} {tradeInfoModal.dte<2 ? "day": "days"} on {tradeInfoModal.expirationDate}</div> 
           <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {tradeInfoModal.openDate}</div>     
           <div><Emoji symbol='🔢'/> Number of Contracts: {tradeInfoModal.numContracts}</div>
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
-          <div><Emoji symbol='🦵'/> Trade Legs</div>
+          <div><Emoji symbol='🦵'/> Trade Legs</div> */}
           <div>{Array.isArray(tradeInfoModal.tradeLegs) ? tradeInfoModal.tradeLegs.map((leg, index) => {
               console.log(leg)
               return(
