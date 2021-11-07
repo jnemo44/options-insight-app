@@ -12,7 +12,7 @@ const TextArea = React.forwardRef((props, ref) => {
           name={props.label}
           ref={ref}
           rows={props.rows}
-          className="max-w-lg shadow-sm block w-full focus:ring-gray-900 focus:border-gray-900 sm:text-sm border-gray-300 rounded-md"
+          className="max-w-lg shadow-sm block w-full focus:ring-green-600 focus:border-green-600 sm:text-sm border-gray-300 rounded-md"
           placeholder={props.prompt}
         />
       </div>

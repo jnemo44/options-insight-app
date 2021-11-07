@@ -17,7 +17,7 @@ function SelectBox(props) {
             {props.label}
           </Listbox.Label>
           <div className="mt-1 relative">
-            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-green-600 focus:border-green-600 sm:text-sm">
               <span className="block truncate">{props.selected.name}</span>
               <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
                 <SelectorIcon
@@ -43,7 +43,7 @@ function SelectBox(props) {
                     key={spread.id}
                     className={({ active }) =>
                       classNames(
-                        active ? "text-white bg-indigo-600" : "text-gray-900",
+                        active ? "text-white bg-green-600" : "text-gray-900",
                         "cursor-default select-none relative py-2 pl-8 pr-4"
                       )
                     }
@@ -63,7 +63,7 @@ function SelectBox(props) {
                         {selected ? (
                           <span
                             className={classNames(
-                              active ? "text-white" : "text-indigo-600",
+                              active ? "text-white" : "text-green-600",
                               "absolute inset-y-0 left-0 flex items-center pl-1.5"
                             )}
                           >
