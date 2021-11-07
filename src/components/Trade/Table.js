@@ -2,6 +2,7 @@ import React from "react";
 import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from 'react-table'
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Button, { PageButton } from "../UI/Buttons";
+import { SortIcon, SortUpIcon, SortDownIcon } from "../UI/Icons";
 
 
 export function SelectColumnFilter({
@@ -69,7 +70,7 @@ function GlobalFilter({
   )
 }
 
-function TradeListTable({onRowSelect, columns, data }) {
+function TradeListTable({ onRowSelect, columns, data }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -136,18 +137,22 @@ function TradeListTable({onRowSelect, columns, data }) {
                         // we can add them into the header props
                         <th
                           scope="col"
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          className="group px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           {...column.getHeaderProps(column.getSortByToggleProps())}
                         >
-                          {column.render('Header')}
-                          {/* Add a sort direction indicator */}
-                          <span>
-                            {column.isSorted
-                              ? column.isSortedDesc
-                                ? ' ▼'
-                                : ' ▲'
-                              : ''}
-                          </span>
+                          <div className="flex items-center justify-between">
+                            {column.render('Header')}
+                            {/* Add a sort direction indicator */}
+                            <span>
+                              {column.isSorted
+                                ? column.isSortedDesc
+                                  ? <SortDownIcon className="w-4 h-4 text-gray-400" />
+                                  : <SortUpIcon className="w-4 h-4 text-gray-400" />
+                                : (
+                                  <SortIcon className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100" />
+                                )}
+                            </span>
+                          </div>
                         </th>
                       ))}
                     </tr>
@@ -159,7 +164,7 @@ function TradeListTable({onRowSelect, columns, data }) {
                   {page.map((row, i) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()} onClick={(e) => onRowSelect(row, e, data)}  className="hover:bg-gray-100">
+                      <tr {...row.getRowProps()} onClick={(e) => onRowSelect(row, e, data)} className="hover:bg-gray-100">
                         {row.cells.map((cell) => {
                           return (
                             <td
@@ -167,6 +172,10 @@ function TradeListTable({onRowSelect, columns, data }) {
                               className="px-6 py-4 whitespace-nowrap"
                             >
                               {cell.render("Cell")}
+                              {/* <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                Badge
+                              </span>
+                              {console.log(cell.row.cells[0])} */}
                             </td>
                           )
                         })}
