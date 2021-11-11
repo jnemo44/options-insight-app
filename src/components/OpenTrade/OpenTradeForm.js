@@ -141,8 +141,6 @@ function OpenTradeForm(props) {
       id_value = props.tradeInfo.id;
     }
 
-
-
     const openTradeData = {
       ticker: enteredTicker,
       numContracts: enteredNumContracts,
@@ -192,7 +190,7 @@ function OpenTradeForm(props) {
           <FormInput
             type="number"
             min="1"
-            defaultValue={props.edit ? (props.tradeInfo.numContracts < 0 ? (props.tradeInfo.numContracts * -1) : props.tradeInfo.numContracts) : "1"}
+            defaultValue={props.edit ? (props.tradeInfo.numContracts < 0 ? (props.tradeInfo.numContracts * -1) : parseInt(props.tradeInfo.numContracts)) : "1"}
             label="Number of Contracts"
             //placeholder="Number of Contracts"
             ref={numContractInputRef} />

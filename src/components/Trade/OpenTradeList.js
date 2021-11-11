@@ -1,4 +1,4 @@
-import { React, useState} from "react";
+import { React, useState } from "react";
 import TradeListTable from "../Trade/Table";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Buttons";
@@ -75,10 +75,10 @@ function OpenTradeList(props) {
 
   function deleteTradeHandler() {
     // Delete Request
-    const url = "http://127.0.0.1:5000/open-orders/"+ tradeInfoModal.id
+    const url = "http://127.0.0.1:5000/open-orders/" + tradeInfoModal.id
     fetch(url, {
       method: "DELETE",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
     })
       .then((response) => {
         console.log('Response Status', response.status);
@@ -89,15 +89,15 @@ function OpenTradeList(props) {
         hideCloseTradeFormHandler();
       });
 
-      // Trigger Page Reload
-      props.modified();
+    // Trigger Page Reload
+    props.modified();
   }
 
   function submitCloseTradeHandler(closeTradeData) {
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
       method: "POST",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
       //mode: 'cors',
       body: JSON.stringify(closeTradeData),
     })
@@ -109,12 +109,12 @@ function OpenTradeList(props) {
       });
 
     // Patch Request (Set closed flag in open order table) 
-    const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
+    const url = "http://127.0.0.1:5000/open-orders/" + closeTradeData.openID
     fetch(url, {
       method: "PATCH",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
       //mode: 'cors',
-      body: JSON.stringify({closed:true}),
+      body: JSON.stringify({ closed: true }),
     })
       .then((response) => {
         return response.json();
@@ -124,11 +124,11 @@ function OpenTradeList(props) {
         hideCloseTradeFormHandler();
       });
 
-      // Trigger Page Reload
-      props.modified();
+    // Trigger Page Reload
+    props.modified();
   }
 
-  function submitAdjustmentTradeHandler(openTradeData, closeTradeData){
+  function submitAdjustmentTradeHandler(openTradeData, closeTradeData) {
     let patchData = {};
 
     // Post Trade to backend
@@ -151,19 +151,19 @@ function OpenTradeList(props) {
         // This is to link the original openID to all future adjustments.
         // It is sent to patch the original open trade with the adjustment ID.
         adjustmentID: closeTradeData.openID,
-        closed:true
+        closed: true
       }
     } else {
       patchData = {
         //adjustmentID: closeTradeData.adjustmentID,
-        closed:true
+        closed: true
       }
-    } 
+    }
     // Patch Request (Set closed flag in open order table) 
-    const url = "http://127.0.0.1:5000/open-orders/"+ closeTradeData.openID
+    const url = "http://127.0.0.1:5000/open-orders/" + closeTradeData.openID
     fetch(url, {
       method: "PATCH",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
       //mode: 'cors',
       body: JSON.stringify(patchData),
     })
@@ -178,7 +178,7 @@ function OpenTradeList(props) {
     // Post Request
     fetch("http://127.0.0.1:5000/close-orders", {
       method: "POST",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
       //mode: 'cors',
       body: JSON.stringify(closeTradeData),
     })
@@ -191,12 +191,12 @@ function OpenTradeList(props) {
       });
   }
 
-  function submitEditTradeHandler (openTradeData) {
+  function submitEditTradeHandler(openTradeData) {
     console.log(openTradeData)
-    const url = "http://127.0.0.1:5000/open-orders/"+ openTradeData.editID
+    const url = "http://127.0.0.1:5000/open-orders/" + openTradeData.editID
     fetch(url, {
       method: "PATCH",
-      headers: { "Content-type": "application/json"},
+      headers: { "Content-type": "application/json" },
       body: JSON.stringify(openTradeData),
     })
       .then((response) => {
@@ -211,50 +211,50 @@ function OpenTradeList(props) {
   }
 
   const TradeInfoModal = () => {
-    let tradeInfo = {...tradeInfoModal};
+    let tradeInfo = { ...tradeInfoModal };
     delete tradeInfo.tradeHistory;
     delete tradeInfo.tradeLegs;
-    
+
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler} size="xl">
         <Modal.Header closeButton>
-        <div className="space-y-2 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0">
-          <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
-          <h1>{tradeInfoModal.dte} DTE</h1>
-        </div>
+          <div className="space-y-2 sm:flex sm:justify-end sm:space-x-4 sm:space-y-0">
+            <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+            <h1>{tradeInfoModal.dte} DTE</h1>
+          </div>
         </Modal.Header>
-           
+
         <Modal.Body>
           <dl className="grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2">
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">Open Date</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openDate}</dd>
-                </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">Expiration Date</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.expirationDate}</dd>
-                </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">DIT</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.dit}</dd>
-                </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">Number of Contracts</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.numContracts}</dd>
-                </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">Open Price</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openPrice}</dd>
-                </div>
-                <div className="sm:col-span-1">
-                  <dt className="text-sm font-medium text-gray-500">Spread</dt>
-                  <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.spread}</dd>
-                </div>
-                {tradeInfoModal.openNotes == null ? null : tradeInfoModal.openNotes.length === 0 ? null :
-                  <div className="sm:col-span-2">
-                    <dt className="text-sm font-medium text-gray-500">Open Notes</dt>
-                    <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openNotes}</dd>
-                  </div>}
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Open Date</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openDate}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Expiration Date</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.expirationDate}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">DIT</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.dit}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Number of Contracts</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.numContracts}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Open Price</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openPrice}</dd>
+            </div>
+            <div className="sm:col-span-1">
+              <dt className="text-sm font-medium text-gray-500">Spread</dt>
+              <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.spread}</dd>
+            </div>
+            {tradeInfoModal.openNotes == null ? null : tradeInfoModal.openNotes.length === 0 ? null :
+              <div className="sm:col-span-2">
+                <dt className="text-sm font-medium text-gray-500">Open Notes</dt>
+                <dd className="mt-1 text-sm text-gray-900">{tradeInfoModal.openNotes}</dd>
+              </div>}
           </dl>
           {/* <div><Emoji symbol='📅'/> Trade expires in {tradeInfoModal.dte} {tradeInfoModal.dte<2 ? "day": "days"} on {tradeInfoModal.expirationDate}</div> 
           <div><Emoji symbol='📅'/> Trade was opened {tradeInfoModal.dit} {tradeInfoModal.dit<2 ? "day": "days"} ago on  {tradeInfoModal.openDate}</div>     
@@ -263,19 +263,26 @@ function OpenTradeList(props) {
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
           <div><Emoji symbol='🦵'/> Trade Legs</div> */}
           <div>{Array.isArray(tradeInfoModal.tradeLegs) ? tradeInfoModal.tradeLegs.map((leg, index) => {
-              console.log(leg)
-              return(
-                <div>
-                  <p>Leg #{index + 1}</p>
-                  <p>Side: {leg.legSide === true ? "Call" : "Put"}</p>
-                  <p>Strike: {leg.legStrike}</p>
-                  <p>Expiration: {leg.legExpiration}</p>
-                  <p>Price: {leg.legPrice}</p>
-                </div>
-              ) 
-          }): null}</div>
-          {/* <AdjustTradeList trades={tradeInfoModal.tradeHistory}></AdjustTradeList> */}
-          <div><TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory></div>
+            console.log(leg)
+            return (
+              <div>
+                <p>Leg #{index + 1}</p>
+                <p>Side: {leg.legSide === true ? "Call" : "Put"}</p>
+                <p>Strike: {leg.legStrike}</p>
+                <p>Expiration: {leg.legExpiration}</p>
+                <p>Price: {leg.legPrice}</p>
+              </div>
+            )
+          }) : null}</div>
+          <div className="relative py-4">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-3 bg-white text-lg font-medium text-gray-900">Trade History</span>
+            </div>            
+          </div>
+          <div><TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory></div> 
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -312,8 +319,8 @@ function OpenTradeList(props) {
           <Modal.Title>Enter Closing Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <CloseTradeForm 
-            tradeInfo={props.tradeInfo} 
+          <CloseTradeForm
+            tradeInfo={props.tradeInfo}
             onCancel={hideCloseTradeFormHandler}
             onCloseTrade={submitCloseTradeHandler}></CloseTradeForm>
         </Modal.Body>
@@ -328,7 +335,7 @@ function OpenTradeList(props) {
           <Modal.Title>Enter Adjustment Trade Info</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AdjustTradeForm 
+          <AdjustTradeForm
             tradeInfo={props.tradeInfo}
             onAdjustTrade={submitAdjustmentTradeHandler}
             onCancel={hideAdjustTradeFormHandler}></AdjustTradeForm>
@@ -358,18 +365,18 @@ function OpenTradeList(props) {
   return (
     <div>
       {/* <TradeListTable trades={props.trades} onRowSelect={onRowSelectHandler}/> */}
-      <TradeListTable 
+      <TradeListTable
         onRowSelect={onRowSelectHandler}
-        columns={props.columns} 
+        columns={props.columns}
         data={props.trades}
       >
       </TradeListTable>
       {
         // if...else if...else to conditionaly render modals
-        displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal}/> : 
-        displayAdjustTradeForm ? <AdjustTradeModal tradeInfo={tradeInfoModal}/> :
-        displayEditTradeForm ? <EditTradeModal tradeInfo={tradeInfoModal}/> :
-        <TradeInfoModal/>
+        displayCloseTradeForm ? <CloseTradeModal tradeInfo={tradeInfoModal} /> :
+          displayAdjustTradeForm ? <AdjustTradeModal tradeInfo={tradeInfoModal} /> :
+            displayEditTradeForm ? <EditTradeModal tradeInfo={tradeInfoModal} /> :
+              <TradeInfoModal />
       }
     </div>
   );

@@ -35,28 +35,27 @@ function OpenTradesPage(props) {
       .then((data) => {
         const trades = [];
         const openList = { ...data.open_list};
-        console.log("openList")
-        console.log(openList)
+        // console.log("openList")
+        // console.log(openList)
         const tradeHistory = data.trade_history;
         const adjustedTradeID = {...data.adjusted_trade_IDs[1]};
-        console.log("tradeHistory")
-        console.log(tradeHistory)
-        console.log("adjustedTradeID")
-        console.log(adjustedTradeID)
+        // console.log("tradeHistory")
+        // console.log(tradeHistory)
+        // console.log("adjustedTradeID")
+        // console.log(adjustedTradeID)
 
         for (const key in openList) {
           // Eliminate TZ offset and just use the date
           let currentTradeHistory = []
           let openDate = convertDate(openList[key].openDate)
           let expirationDate = convertDate(openList[key].expirationDate)
+          let numContracts = openList[key].numContracts
           // If something in the Open List has an adjustment ID get ALL trades with that ID from tradeHistory
           if (Object.values(adjustedTradeID).indexOf(openList[key].adjustmentID) > -1) {
               for(const index in tradeHistory) {
                 for (const adjustment in tradeHistory[index])
                   if (tradeHistory[index][0].adjustmentID === openList[key].adjustmentID) {
                     currentTradeHistory.push(tradeHistory[index][adjustment])
-                    console.log("currentTradeHistory")
-                    console.log(currentTradeHistory)
                 }
               }
           }
@@ -64,6 +63,7 @@ function OpenTradesPage(props) {
           const trade = {
             id: key,
             ...openList[key],
+            numContracts: numContracts <0 ? numContracts : "+" + numContracts,
             expirationDate: expirationDate.toDateString(),
             openDate: openDate.toDateString(),
             dte: Math.ceil((Math.abs(expirationDate.getTime() - currentDate.getTime()) / one_day)),
@@ -158,7 +158,6 @@ function OpenTradesPage(props) {
               Add New Trade
             </Button>
           </div>
-
           <OpenTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></OpenTradeList>
         </div>
       </main>

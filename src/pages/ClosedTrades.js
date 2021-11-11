@@ -44,10 +44,10 @@ function ClosedTradesPage(props) {
                 }
 
                 // This is any trade that had adjustments
-                Object.keys(adjustedTrades).map((key, index) => {
+                Object.keys(adjustedTrades).map((key) => {
                     var adjustmentPL = 0;
                     var totalDIT = 0;
-                    adjustedTrades[key].map((trade, index) => {
+                    adjustedTrades[key].map((trade) => {
                         var openTime = new Date(trade.openDate);
                         var closeTime = new Date(trade.closeDate);
                         adjustmentPL += (parseFloat(trade.openPrice) - parseFloat(trade.closePrice))
