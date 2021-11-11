@@ -64,6 +64,7 @@ function OpenTradesPage(props) {
             id: key,
             ...openList[key],
             numContracts: numContracts <0 ? numContracts : "+" + numContracts,
+            openPrice: "$"+ openList[key].openPrice,
             expirationDate: expirationDate.toDateString(),
             openDate: openDate.toDateString(),
             dte: Math.ceil((Math.abs(expirationDate.getTime() - currentDate.getTime()) / one_day)),

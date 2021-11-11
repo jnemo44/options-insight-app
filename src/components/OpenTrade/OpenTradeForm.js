@@ -306,7 +306,7 @@ function OpenTradeForm(props) {
           <div>
             <Button
               type="submit"
-              name="Submit"
+              name={props.edit ? "Save" : "Submit"}
               className="btn-action">
             </Button>
           </div>
