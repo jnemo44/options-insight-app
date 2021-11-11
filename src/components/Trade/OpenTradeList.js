@@ -262,27 +262,39 @@ function OpenTradeList(props) {
           <div><Emoji symbol='💰'/> Open Price: {tradeInfoModal.openPrice}</div>
           <div><Emoji symbol='📋'/> Notes: {tradeInfoModal.openNotes}</div>
           <div><Emoji symbol='🦵'/> Trade Legs</div> */}
-          <div>{Array.isArray(tradeInfoModal.tradeLegs) ? tradeInfoModal.tradeLegs.map((leg, index) => {
-            console.log(leg)
-            return (
-              <div>
-                <p>Leg #{index + 1}</p>
-                <p>Side: {leg.legSide === true ? "Call" : "Put"}</p>
-                <p>Strike: {leg.legStrike}</p>
-                <p>Expiration: {leg.legExpiration}</p>
-                <p>Price: {leg.legPrice}</p>
-              </div>
-            )
-          }) : null}</div>
           <div className="relative py-4">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center">
-              <span className="px-3 bg-white text-lg font-medium text-gray-900">Trade History</span>
-            </div>            
+              <span className="px-3 bg-white text-md font-medium text-gray-900">Trade History</span>
+            </div>
           </div>
-          <div><TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory></div> 
+          <div><TradeHistory tradeHistory={tradeInfoModal.tradeHistory}></TradeHistory></div>
+          {/* <div className="relative py-4">
+            <div className="absolute inset-0 flex items-center" aria-hidden="true">
+              <div className="w-full border-t border-gray-300" />
+            </div>
+            <div className="relative flex justify-center">
+              <span className="px-3 bg-white text-md font-medium text-gray-900">Trade Legs</span>
+            </div>
+          </div>
+          <ul role="list" className="divide-y divide-gray-200">
+            <div>{Array.isArray(tradeInfoModal.tradeLegs) ? tradeInfoModal.tradeLegs.map((leg, index) => {
+              console.log(leg)
+              return (
+                <li key={index} className="px-4 py-0 sm:px-0">
+                  <div className="flex flex-row gap-x-5">
+                    <div>{leg.legStrike}</div>
+                    <div>{leg.legExpiration}</div>
+                    <div>{leg.legSide === true ? "Call" : "Put"}</div>                  
+                    <div>{leg.legPrice}</div>
+                  </div>
+                </li>
+              )
+            }) : null}</div>
+          </ul> */}
+          
         </Modal.Body>
         <Modal.Footer>
           <Button
