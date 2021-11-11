@@ -44,33 +44,30 @@ function ClosedTradesPage(props) {
                 }
 
                 // This is any trade that had adjustments
-                for (const adjust_idx in adjustedTrades) {
-                    let adjustmentPL = 0;
-                    let totalDIT = 0;
-                    for (const trade_idx in adjustedTrades[adjust_idx]) {
-                        var openTime = new Date(adjustedTrades[adjust_idx][trade_idx].openDate);
-                        //openTime = openTime.split(' ').slice(0, 4).join(' ');
-
-                        var closeTime = new Date(adjustedTrades[adjust_idx][trade_idx].closeDate);
-                        //closeTime = closeTime.split(' ').slice(0, 4).join(' ');
-                        adjustmentPL += (parseFloat(adjustedTrades[adjust_idx][trade_idx].openPrice) - parseFloat(adjustedTrades[adjust_idx][trade_idx].closePrice))
+                Object.keys(adjustedTrades).map((key, index) => {
+                    var adjustmentPL = 0;
+                    var totalDIT = 0;
+                    adjustedTrades[key].map((trade, index) => {
+                        var openTime = new Date(adjustedTrades[key][index].openDate);
+                        var closeTime = new Date(adjustedTrades[key][index].closeDate);
+                        adjustmentPL += (parseFloat(adjustedTrades[key][index].openPrice) - parseFloat(adjustedTrades[key][index].closePrice))
                         totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)))
-                    }
+                    })
 
                     const trade = {
                         // Trade stats for main table
-                        ticker: adjustedTrades[adjust_idx][0].ticker,
-                        numContracts: adjustedTrades[adjust_idx][0].numContracts,
-                        spread: adjustedTrades[adjust_idx][0].spread,
+                        ticker: adjustedTrades[key][0].ticker,
+                        numContracts: adjustedTrades[key][0].numContracts,
+                        spread: adjustedTrades[key][0].spread,
                         profitLoss: adjustmentPL.toFixed(2),
                         dit: totalDIT,
                         // Pass all trade info
-                        ...adjustedTrades[adjust_idx]
+                        ...adjustedTrades[key]
                     }
                     console.log('trade')
                     console.log(trade)
                     trades.push(trade);
-                }
+                })
                 setLoadedTrades(trades);
                 setIsLoading(false);
                 //setNewTradeAdded(false);
@@ -88,12 +85,12 @@ function ClosedTradesPage(props) {
         <div className="min-h-screen bg-gray-100 text-gray-900">
             {/* This is where you can change the table width */}
             <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
-            <div className="px-4 py-5 sm:px-6">
-                <h1>Total P/L: {totalPL}</h1>
-            </div>
-            <div>
-                <ClosedTradeList columns={props.columns} trades={loadedTrades}></ClosedTradeList>
-            </div>
+                <div className="px-4 py-5 sm:px-6">
+                    <h1>Total P/L: {totalPL}</h1>
+                </div>
+                <div>
+                    <ClosedTradeList columns={props.columns} trades={loadedTrades}></ClosedTradeList>
+                </div>
             </main>
         </div>
 
