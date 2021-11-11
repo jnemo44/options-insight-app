@@ -48,9 +48,9 @@ function ClosedTradesPage(props) {
                     var adjustmentPL = 0;
                     var totalDIT = 0;
                     adjustedTrades[key].map((trade, index) => {
-                        var openTime = new Date(adjustedTrades[key][index].openDate);
-                        var closeTime = new Date(adjustedTrades[key][index].closeDate);
-                        adjustmentPL += (parseFloat(adjustedTrades[key][index].openPrice) - parseFloat(adjustedTrades[key][index].closePrice))
+                        var openTime = new Date(trade.openDate);
+                        var closeTime = new Date(trade.closeDate);
+                        adjustmentPL += (parseFloat(trade.openPrice) - parseFloat(trade.closePrice))
                         totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)))
                     })
 
@@ -59,7 +59,7 @@ function ClosedTradesPage(props) {
                         ticker: adjustedTrades[key][0].ticker,
                         numContracts: adjustedTrades[key][0].numContracts,
                         spread: adjustedTrades[key][0].spread,
-                        profitLoss: adjustmentPL.toFixed(2),
+                        profitLoss: parseFloat(adjustmentPL.toFixed(2)),
                         dit: totalDIT,
                         // Pass all trade info
                         ...adjustedTrades[key]
