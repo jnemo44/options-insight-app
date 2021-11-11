@@ -1,6 +1,6 @@
 import { useState } from "react";
 //import BootStrapTable from "react-bootstrap-table-next";
-import TradeListTable from "../Trade/Table";
+import TradeListTable from "./TradeListTable";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Buttons";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";

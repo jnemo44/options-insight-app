@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { SelectColumnFilter } from "../Trade/Table";
+import { SelectColumnFilter } from "../Trade/TradeListTable";
 
 export function OpenTradesColumns() {
     const columns = useMemo(() => [

@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import TradeListTable from "../Trade/Table";
+import TradeListTable from "./TradeListTable";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Buttons";
 import OpenTradeForm from "../OpenTrade/OpenTradeForm";
