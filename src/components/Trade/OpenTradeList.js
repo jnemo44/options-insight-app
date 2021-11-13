@@ -1,12 +1,15 @@
 import { React, useState } from "react";
 import TradeListTable from "./TradeListTable";
 import { Modal } from "react-bootstrap";
+import { useExportData } from "react-table-plugins";
+import Papa from "papaparse";
+import XLSX from "xlsx";
 import Button from "../UI/Buttons";
 import OpenTradeForm from "../OpenTrade/OpenTradeForm";
 import CloseTradeForm from "../CloseTrade/CloseTradeForm";
 import AdjustTradeForm from "../AdjustTrade/AdjustTradeForm";
-import Emoji from "../UI/Emoji";
 import Dropdown from "../UI/Dropdown";
+import Emoji from "../UI/Emoji";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
 import TradeHistory from "../TradeHistory/TradeHistory";
 
