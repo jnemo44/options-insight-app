@@ -1,5 +1,7 @@
 import React from "react";
-import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from 'react-table'
+import { useTable, useGlobalFilter, useAsyncDebounce, useFilters, useSortBy, usePagination } from 'react-table';
+import { useExportData } from "react-table-plugins";
+import { getExportFileBlob } from "../UI/Utils";
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Button, { PageButton } from "../UI/Buttons";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../UI/Icons";
@@ -91,37 +93,58 @@ function TradeListTable({ onRowSelect, columns, data }) {
     nextPage,
     previousPage,
     setPageSize,
+    exportData
   } = useTable({
     columns,
     data,
+    getExportFileBlob
   },
     useFilters,
     useGlobalFilter,
     useSortBy,
     usePagination,
+    useExportData,
   );
 
   // Render the UI for your table
   return (
     <>
-      <div className="flex gap-x-2">
+      <div className="flex flex-wrap gap-x-2 sm:w-auto sm:text-sm gap-y-2">
         {/* Search Filter */}
+        <div className="flex-shrink-0 flex-grow">
         <GlobalFilter
           preGlobalFilteredRows={preGlobalFilteredRows}
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
         />
+        </div>
         {/* Column Filter */}
         {headerGroups.map((headerGroup) =>
           headerGroup.headers.map((column) =>
             column.Filter ? (
-              <div key={column.id}>
+              <div key={column.id} className="flex-shrink-0 flex-grow">
                 {/* <label for={column.id}>{column.render("Header")}: </label> */}
                 {column.render("Filter")}
               </div>
             ) : null
           )
         )}
+        <Button
+          className="btn-action"
+          onClick={() => {
+            exportData("csv", true);
+          }}
+        >
+        Export as CSV
+        </Button>{" "}
+        <Button
+          className="btn-action"
+          onClick={() => {
+            exportData("xlsx", true);
+          }}
+        >
+        Export as XLSX
+        </Button>{" "}
       </div>
       {/* Table */}
       <div className="mt-2 flex flex-col">
