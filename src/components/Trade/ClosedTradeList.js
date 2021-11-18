@@ -29,6 +29,25 @@ function ClosedTradeList(props) {
     setDisplayTradeInfo(false);
   }
 
+  function deleteTradeHandler() {
+    // Delete Request
+    const url = "http://127.0.0.1:5000/close-orders?adjustmentID=" + tradeInfoModal.adjustmentID + "&id=" + tradeInfoModal.id
+    fetch(url, {
+      method: "DELETE",
+      headers: { "Content-type": "application/json" },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+        hideTradeInfoHandler();
+      });
+
+    // Trigger Page Reload
+    //props.modified();
+  }
+
   const TradeInfoModal = () => {
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
@@ -47,6 +66,12 @@ function ClosedTradeList(props) {
             type="button"
             onClick={hideTradeInfoHandler}
             name="Cancel"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          ></Button>
+          <Button
+            type="button"
+            onClick={deleteTradeHandler}
+            name="Delete"
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           ></Button>
         </Modal.Footer>

@@ -92,14 +92,14 @@ function CloseTradeForm(props) {
           <FormInput
             type="number"
             label="Number of Contracts"
-            value={contractsClosed}
+            value={parseInt(contractsClosed)}
             readOnly={true} />
         </div>
         <div>
           <FormInput
             type="number"
             label="Open Price"
-            value={props.tradeInfo.openPrice}
+            value={parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))}
             readOnly={true} />
         </div>
         <div>

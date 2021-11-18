@@ -40,26 +40,30 @@ function ClosedTradesPage(props) {
                     };
                     totalProfitLoss += parseFloat(trade.profitLoss);
                     trades.push(trade);
-                    setTotalPL(totalProfitLoss);
+                    console.log(totalProfitLoss)
                 }
 
                 // This is any trade that had adjustments
                 Object.keys(adjustedTrades).map((key) => {
-                    var adjustmentPL = 0;
-                    var totalDIT = 0;
+                    let adjustmentPL = 0;
+                    let totalDIT = 0;
                     adjustedTrades[key].map((trade) => {
-                        var openTime = new Date(trade.openDate);
-                        var closeTime = new Date(trade.closeDate);
-                        adjustmentPL += (parseFloat(trade.openPrice) - parseFloat(trade.closePrice))
+                        let openTime = new Date(trade.openDate);
+                        let closeTime = new Date(trade.closeDate);
+                        totalProfitLoss += (parseFloat(trade.openPrice) - parseFloat(trade.closePrice))
                         totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)))
+                        console.log(totalProfitLoss.toFixed(2))
                     })
+
+                    setTotalPL(totalProfitLoss.toFixed(2))
 
                     const trade = {
                         // Trade stats for main table
                         ticker: adjustedTrades[key][0].ticker,
+                        adjustmentID: adjustedTrades[key][0].adjustmentID,
                         numContracts: adjustedTrades[key][0].numContracts,
                         spread: adjustedTrades[key][0].spread,
-                        profitLoss: parseFloat(adjustmentPL.toFixed(2)),
+                        profitLoss: parseFloat(totalProfitLoss.toFixed(2)),
                         dit: totalDIT,
                         // Pass all trade info
                         ...adjustedTrades[key]
