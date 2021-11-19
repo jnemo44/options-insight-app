@@ -1,6 +1,7 @@
 import { useState } from "react";
 //import BootStrapTable from "react-bootstrap-table-next";
 import TradeListTable from "./TradeListTable";
+import Dropdown from "../UI/Dropdown";
 import { Modal } from "react-bootstrap";
 import Button from "../UI/Buttons";
 import AdjustTradeList from "../AdjustTrade/AdjustTradeList";
@@ -45,7 +46,7 @@ function ClosedTradeList(props) {
       });
 
     // Trigger Page Reload
-    //props.modified();
+    props.modified();
   }
 
   const TradeInfoModal = () => {
@@ -62,17 +63,15 @@ function ClosedTradeList(props) {
           <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
         </Modal.Body>
         <Modal.Footer>
+          <Dropdown
+            //edit={editTradeHandler}
+            delete={deleteTradeHandler}
+          />
           <Button
             type="button"
             onClick={hideTradeInfoHandler}
             name="Cancel"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          ></Button>
-          <Button
-            type="button"
-            onClick={deleteTradeHandler}
-            name="Delete"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="btn-cancel"
           ></Button>
         </Modal.Footer>
       </Modal>

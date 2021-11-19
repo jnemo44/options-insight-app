@@ -1,14 +1,17 @@
 import { useState, useEffect } from 'react';
 import ClosedTradeList from '../components/Trade/ClosedTradeList';
-import BootStrapTable from "react-bootstrap-table-next";
-import BootstrapTable from 'react-bootstrap-table-next';
 
 function ClosedTradesPage(props) {
     //const [displayModal, setDisplayModal] = useState(false);
-    //const [newTradeAdded, setNewTradeAdded] = useState(false);
+    const [tradeListModified, setTradeListModified] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [loadedTrades, setLoadedTrades] = useState([]);
     const [totalPL, setTotalPL] = useState();
+
+    function tradeListModifiedHandler() {
+        // A new trade has been added, closed, or adjusted
+        setTradeListModified(true);
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -74,9 +77,9 @@ function ClosedTradesPage(props) {
                 })
                 setLoadedTrades(trades);
                 setIsLoading(false);
-                //setNewTradeAdded(false);
+                setTradeListModified(false);
             });
-    }, []);
+    }, [tradeListModified]);
 
     if (isLoading) {
         return (
@@ -93,7 +96,7 @@ function ClosedTradesPage(props) {
                     <h1>Total P/L: {totalPL}</h1>
                 </div>
                 <div>
-                    <ClosedTradeList columns={props.columns} trades={loadedTrades}></ClosedTradeList>
+                    <ClosedTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></ClosedTradeList>
                 </div>
             </main>
         </div>
