@@ -1,7 +1,7 @@
 // An Adjustment trade will simply be a combo of an open and a close trade, but will set an adjustment
 // flag. This will prevent creating a new adjustment table.
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import FormInput from '../UI/Input';
 import TextArea from '../UI/TextArea';
 import Button from '../UI/Buttons';
@@ -12,8 +12,12 @@ function AdjustTradeForm(props) {
   const openAdjustedPriceInputRef = useRef();
   const closeAdjustedPriceInputRef = useRef();
   const adjustmentNotesInputRef = useRef();
+  const adjustmentExpirationDateInputRef = useRef();
+  const [PLResult, setPLResult] = useState(0);
+  const positivePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-green-600";
+  const negativePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-red-600";
 
-  let contractsClosed = props.tradeInfo.numContracts;
+  let contractsClosed = parseInt(props.tradeInfo.numContracts);
   console.log(props.tradeInfo)
 
   // Submit Adjustment Data to Server
@@ -23,6 +27,7 @@ function AdjustTradeForm(props) {
 
     // Get data from inputs
     const enteredAdjustmentDate = adjustmentDateInputRef.current.value;
+    const enteredAdjustmentExpirationDate = adjustmentExpirationDateInputRef.current.value;
     const enteredClosedAdjustmentPrice = closeAdjustedPriceInputRef.current.value;
     const enteredOpenAdjustmentPrice = openAdjustedPriceInputRef.current.value;
     const enteredAdjustmentNotes = adjustmentNotesInputRef.current.value;
@@ -44,7 +49,7 @@ function AdjustTradeForm(props) {
       numContracts: props.tradeInfo.numContracts,
       openPrice: enteredOpenAdjustmentPrice,
       openDate: enteredAdjustmentDate,
-      expirationDate: props.tradeInfo.expirationDate,
+      expirationDate: enteredAdjustmentExpirationDate,
       buyOrSell: props.tradeInfo.buyOrSell,
       //openNotes: enteredNotes,
       spread: props.tradeInfo.spread,
@@ -81,10 +86,9 @@ function AdjustTradeForm(props) {
         </div>
         <div>
           <FormInput
-            type="text"
+            type="date"
             label="Expiration Date"
-            value={dateStr}
-            readOnly={true} />
+            ref={adjustmentExpirationDateInputRef}/>
         </div>
         <div>
           <FormInput
@@ -99,7 +103,7 @@ function AdjustTradeForm(props) {
             type="number"
             step="0.01"
             label="Open Price"
-            value={props.tradeInfo.openPrice}
+            value={parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))}
             readOnly={true}
           />
         </div>
@@ -117,8 +121,9 @@ function AdjustTradeForm(props) {
             label="Open Adjusted Price"
             ref={openAdjustedPriceInputRef} />
         </div>
-        <div>
-          Placeholder
+        <div class={PLResult > 0 ? positivePL : negativePL}>
+          {props.tradeInfo.buyOrSell == "false" ? <p>Sell to Close</p> : <p>Buy to Close</p>}
+          P/L = {PLResult} x {Math.abs(contractsClosed)} x 100 = ${(PLResult * 100 * Math.abs(contractsClosed)).toFixed(2)}
         </div>
         <div class="grid col-span-1 sm:col-span-2">
           <TextArea

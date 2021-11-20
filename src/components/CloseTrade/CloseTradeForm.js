@@ -13,7 +13,8 @@ function CloseTradeForm(props) {
   const positivePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-green-600";
   const negativePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-red-600";
 
-  var contractsClosed = props.tradeInfo.numContracts;
+  let contractsClosed = parseInt(props.tradeInfo.numContracts);
+  const openPrice = parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))
 
   // Buy or Sell
   if (props.tradeInfo.buyOrSell === "true") {
@@ -26,15 +27,14 @@ function CloseTradeForm(props) {
 
   function closePriceHandler(event) {
     // Buy or Sell (false is buy)
-    if (props.tradeInfo.buyOrSell === "false") {
+    if (props.tradeInfo.buyOrSell == "false") {
       //Dynamically calculate PL Result
-      setPLResult(Math.round((event.target.value - props.tradeInfo.openPrice) * 100) / 100)
+      setPLResult(Math.round((event.target.value - openPrice) * 100) / 100)
     }
     else {
       //Dynamically calculate PL Results
-      setPLResult(Math.round((props.tradeInfo.openPrice - event.target.value) * 100) / 100)
+      setPLResult(Math.round((openPrice - event.target.value) * 100) / 100)
     }
-    
   }
 
   function submitFormHandler(event) {
@@ -92,14 +92,14 @@ function CloseTradeForm(props) {
           <FormInput
             type="number"
             label="Number of Contracts"
-            value={parseInt(contractsClosed)}
+            value={contractsClosed}
             readOnly={true} />
         </div>
         <div>
           <FormInput
             type="number"
             label="Open Price"
-            value={parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))}
+            value={openPrice}
             readOnly={true} />
         </div>
         <div>
@@ -112,7 +112,8 @@ function CloseTradeForm(props) {
           />
         </div>
         <div class={PLResult > 0 ? positivePL : negativePL}>
-          P/L = {PLResult} x {Math.abs(props.tradeInfo.numContracts)} x 100 = ${(PLResult * 100 * Math.abs(props.tradeInfo.numContracts)).toFixed(2)}
+          {props.tradeInfo.buyOrSell == "false" ? <p>Sell to Close</p> : <p>Buy to Close</p>}
+          P/L = {PLResult} x {Math.abs(contractsClosed)} x 100 = ${(PLResult * 100 * Math.abs(contractsClosed)).toFixed(2)}
         </div>
         <div className="grid col-span-1 sm:col-span-2">
           <TextArea
