@@ -13,12 +13,25 @@ function AdjustTradeForm(props) {
   const closeAdjustedPriceInputRef = useRef();
   const adjustmentNotesInputRef = useRef();
   const adjustmentExpirationDateInputRef = useRef();
-  const [PLResult, setPLResult] = useState(0);
+  const [PLResult, setPLResult] = useState(0.00);
   const positivePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-green-600";
   const negativePL = "grid col-span-1 sm:col-span-2 justify-items-center text-2xl text-red-600";
 
   let contractsClosed = parseInt(props.tradeInfo.numContracts);
   console.log(props.tradeInfo)
+
+  function closePriceHandler(event) {
+    // Buy or Sell (false is buy)
+    if (props.tradeInfo.buyOrSell == "false") {
+      //Dynamically calculate PL Result
+      setPLResult((parseFloat(props.tradeInfo.openPrice.replace(/\$/g,'')))+parseFloat(closeAdjustedPriceInputRef.current.value)-parseFloat(openAdjustedPriceInputRef.current.value))
+    }
+    else {
+      //Dynamically calculate PL Results
+      //setPLResult(Math.round((openPrice - event.target.value) * 100) / 100)
+    }
+    console.log(PLResult)
+  }
 
   // Submit Adjustment Data to Server
   function submitFormHandler(event) {
@@ -92,17 +105,17 @@ function AdjustTradeForm(props) {
         </div>
         <div>
           <FormInput
-            type="number"
-            min="1"
-            value={contractsClosed}
-            label="Number of Contracts"
+            type="text"
+            //min="1"
+            value={(props.tradeInfo.buyOrSell == "false" ? "+" : "-") + contractsClosed}
+            label={"Number of Contracts " + (props.tradeInfo.buyOrSell == "false" ? "Bought" : "Sold")}
             readOnly={true} />
         </div>
         <div>
           <FormInput
             type="number"
             step="0.01"
-            label="Open Price"
+            label="Previous Trade Open Price"
             value={parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))}
             readOnly={true}
           />
@@ -111,14 +124,16 @@ function AdjustTradeForm(props) {
           <FormInput
             type="number"
             step="0.01"
-            label="Close Adjusted Price"
+            label="Previous Trade Close Price"
+            onChange={closePriceHandler}
             ref={closeAdjustedPriceInputRef} />
         </div>
         <div>
           <FormInput
             type="number"
             step="0.01"
-            label="Open Adjusted Price"
+            label="Adjustment Open Price"
+            onChange={closePriceHandler}
             ref={openAdjustedPriceInputRef} />
         </div>
         <div class={PLResult > 0 ? positivePL : negativePL}>
