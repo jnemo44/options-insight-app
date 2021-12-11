@@ -118,24 +118,25 @@ function TradeListTable({ onRowSelect, columns, data }) {
             setGlobalFilter={setGlobalFilter}
           />
         </SearchFilter>
+
         <ColumnFilter headerGroups={headerGroups}/>
 
         <Button
-          className="btn-action"
+          className="btn-action place-items-center"
           onClick={() => {
             exportData("csv", true);
           }}
         >
         Export as CSV
-        </Button>{" "}
+        </Button>
         <Button
-          className="btn-action"
+          className="btn-action place-items-center"
           onClick={() => {
             exportData("xlsx", true);
           }}
         >
         Export as XLSX
-        </Button>{" "}
+        </Button>
 
       </TableHeader>
       {/* Table */}
