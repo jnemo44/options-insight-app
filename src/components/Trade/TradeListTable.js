@@ -5,6 +5,7 @@ import { getExportFileBlob } from "../UI/Utils";
 import { ChevronDoubleLeftIcon, ChevronLeftIcon, ChevronRightIcon, ChevronDoubleRightIcon } from "@heroicons/react/solid";
 import Button, { PageButton } from "../UI/Buttons";
 import { SortIcon, SortUpIcon, SortDownIcon } from "../UI/Icons";
+import { TableHeader, SearchFilter, ColumnFilter} from "../UI/Table";
 
 
 export function SelectColumnFilter({
@@ -109,26 +110,16 @@ function TradeListTable({ onRowSelect, columns, data }) {
   // Render the UI for your table
   return (
     <>
-      <div className="flex flex-wrap gap-x-2 sm:w-auto sm:text-sm gap-y-2">
-        {/* Search Filter */}
-        <div className="flex-shrink-0 flex-grow">
-        <GlobalFilter
-          preGlobalFilteredRows={preGlobalFilteredRows}
-          globalFilter={state.globalFilter}
-          setGlobalFilter={setGlobalFilter}
-        />
-        </div>
-        {/* Column Filter */}
-        {headerGroups.map((headerGroup) =>
-          headerGroup.headers.map((column) =>
-            column.Filter ? (
-              <div key={column.id} className="flex-shrink-0 flex-grow">
-                {/* <label for={column.id}>{column.render("Header")}: </label> */}
-                {column.render("Filter")}
-              </div>
-            ) : null
-          )
-        )}
+      <TableHeader>
+        <SearchFilter>
+          <GlobalFilter
+            preGlobalFilteredRows={preGlobalFilteredRows}
+            globalFilter={state.globalFilter}
+            setGlobalFilter={setGlobalFilter}
+          />
+        </SearchFilter>
+        <ColumnFilter headerGroups={headerGroups}/>
+
         <Button
           className="btn-action"
           onClick={() => {
@@ -145,7 +136,8 @@ function TradeListTable({ onRowSelect, columns, data }) {
         >
         Export as XLSX
         </Button>{" "}
-      </div>
+
+      </TableHeader>
       {/* Table */}
       <div className="mt-2 flex flex-col">
         <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
