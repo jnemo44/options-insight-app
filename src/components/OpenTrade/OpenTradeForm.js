@@ -36,7 +36,7 @@ function OpenTradeForm(props) {
   const notesInputRef = useRef();
 
   // Default to Sell (true)
-  const [enabled, setEnabled] = useState(props.edit ? props.tradeInfo.buyOrSell === 'true' : true);
+  const [enabled, setEnabled] = useState(props.edit ? props.tradeInfo.buyOrSell == "sell" : true);
 
   // Default Selected spread to Vertical
   const [selected, setSelected] = useState(props.edit ? search(props.tradeInfo.spread, spreads) : spreads[1]);
@@ -127,7 +127,7 @@ function OpenTradeForm(props) {
     const enteredExpirationDate = expirationDateInputRef.current.value;
     const enteredNotes = notesInputRef.current.value;
     const enteredSpread = selected.name;
-    const buyOrSell = enabled;
+    const buyOrSell = enabled ? "sell" : "buy";
     let enteredNumContracts = numContractInputRef.current.value;
     let id_value = null;
 
@@ -157,6 +157,7 @@ function OpenTradeForm(props) {
     };
 
     // Send data
+    console.log(openTradeData);
     props.onAddTrade(openTradeData);
   }
 

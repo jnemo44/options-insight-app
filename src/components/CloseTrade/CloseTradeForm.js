@@ -17,7 +17,7 @@ function CloseTradeForm(props) {
   const openPrice = parseFloat(props.tradeInfo.openPrice.replace(/\$/g,''))
 
   // Buy or Sell
-  if (props.tradeInfo.buyOrSell === "true") {
+  if (props.tradeInfo.buyOrSell === "sell") {
     contractsClosed = props.tradeInfo.numContracts * -1
   }
 
@@ -27,7 +27,7 @@ function CloseTradeForm(props) {
 
   function closePriceHandler(event) {
     // Buy or Sell (false is buy)
-    if (props.tradeInfo.buyOrSell == "false") {
+    if (props.tradeInfo.buyOrSell == "buy") {
       //Dynamically calculate PL Result
       setPLResult(Math.round((event.target.value - openPrice) * 100) / 100)
     }
@@ -112,7 +112,7 @@ function CloseTradeForm(props) {
           />
         </div>
         <div class={PLResult > 0 ? positivePL : negativePL}>
-          {props.tradeInfo.buyOrSell == "false" ? <p>Sell to Close</p> : <p>Buy to Close</p>}
+          {props.tradeInfo.buyOrSell == "buy" ? <p>Sell to Close</p> : <p>Buy to Close</p>}
           P/L = {PLResult} x {Math.abs(contractsClosed)} x 100 = ${(PLResult * 100 * Math.abs(contractsClosed)).toFixed(2)}
         </div>
         <div className="grid col-span-1 sm:col-span-2">

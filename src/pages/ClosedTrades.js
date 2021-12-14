@@ -6,7 +6,8 @@ function ClosedTradesPage(props) {
     const [tradeListModified, setTradeListModified] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [loadedTrades, setLoadedTrades] = useState([]);
-    const [totalPL, setTotalPL] = useState();
+    const [totalPL, setTotalPL] = useState(0);
+    const [numTrades, setNumTrades] = useState(0);
 
     function tradeListModifiedHandler() {
         // A new trade has been added, closed, or adjusted
@@ -33,40 +34,49 @@ function ClosedTradesPage(props) {
                 const adjustmentInfo = { ...data.adjustment_info };
 
                 var totalProfitLoss = 0;
+                var totalNumTrades = 0;
+                var premiumCaptureRate = 0;
 
                 // This is a trade that had no adjustments
                 for (const key in nonAdjustedTrades) {
+                    let priceDelta = (parseFloat(nonAdjustedTrades[key].openPrice) - parseFloat(nonAdjustedTrades[key].closePrice))
+                    
                     const trade = {
                         ...nonAdjustedTrades[key],
                         dit: (new Date(nonAdjustedTrades[key].openDate) - new Date(nonAdjustedTrades[key].closeDate)),
-                        profitLoss: (parseFloat(nonAdjustedTrades[key].openPrice) - parseFloat(nonAdjustedTrades[key].closePrice)).toFixed(2),
+                        profitLoss: priceDelta,
                     };
-                    totalProfitLoss += parseFloat(trade.profitLoss);
+                    totalProfitLoss += trade.profitLoss;
+                    premiumCaptureRate = (priceDelta/parseFloat(nonAdjustedTrades[key].openPrice))
+                    
+                    console.log(priceDelta)
+                    console.log("premiumCaptureRate")
+                    console.log(premiumCaptureRate)
+                    totalNumTrades+=1;
                     trades.push(trade);
-                    console.log(totalProfitLoss)
                 }
 
                 // This is any trade that had adjustments
                 Object.keys(adjustedTrades).map((key) => {
-                    let adjustmentPL = 0;
                     let totalDIT = 0;
                     adjustedTrades[key].map((trade) => {
                         let openTime = new Date(trade.openDate);
                         let closeTime = new Date(trade.closeDate);
-                        totalProfitLoss += (parseFloat(trade.openPrice) - parseFloat(trade.closePrice))
-                        totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)))
-                        console.log(totalProfitLoss.toFixed(2))
+                        totalProfitLoss += ((trade.openPrice - trade.closePrice));
+                        totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)));
+                        //console.log(totalProfitLoss)
                     })
 
-                    setTotalPL(totalProfitLoss.toFixed(2))
-
+                    // Only increment once per trade (do not count adjustments)
+                    totalNumTrades+=1;
+                    
                     const trade = {
                         // Trade stats for main table
                         ticker: adjustedTrades[key][0].ticker,
                         adjustmentID: adjustedTrades[key][0].adjustmentID,
                         numContracts: adjustedTrades[key][0].numContracts,
                         spread: adjustedTrades[key][0].spread,
-                        profitLoss: parseFloat(totalProfitLoss.toFixed(2)),
+                        profitLoss: totalProfitLoss.toFixed(2),
                         dit: totalDIT,
                         // Pass all trade info
                         ...adjustedTrades[key]
@@ -75,6 +85,9 @@ function ClosedTradesPage(props) {
                     console.log(trade)
                     trades.push(trade);
                 })
+                // Set Stat States
+                setTotalPL(totalProfitLoss.toFixed(2))
+                setNumTrades(totalNumTrades)
                 setLoadedTrades(trades);
                 setIsLoading(false);
                 setTradeListModified(false);
@@ -94,6 +107,7 @@ function ClosedTradesPage(props) {
             <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
                 <div className="px-4 py-5 sm:px-6">
                     <h1>Total P/L: {totalPL}</h1>
+                    <h1>Total Number of Trades: {numTrades}</h1>
                 </div>
                 <div>
                     <ClosedTradeList columns={props.columns} trades={loadedTrades} modified={tradeListModifiedHandler}></ClosedTradeList>

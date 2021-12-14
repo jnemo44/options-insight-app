@@ -22,7 +22,7 @@ function AdjustTradeForm(props) {
 
   function closePriceHandler(event) {
     // Buy or Sell (false is buy)
-    if (props.tradeInfo.buyOrSell == "false") {
+    if (props.tradeInfo.buyOrSell == "sell") {
       //Dynamically calculate PL Result
       setPLResult((parseFloat(props.tradeInfo.openPrice.replace(/\$/g,'')))+parseFloat(closeAdjustedPriceInputRef.current.value)-parseFloat(openAdjustedPriceInputRef.current.value))
     }
@@ -78,7 +78,7 @@ function AdjustTradeForm(props) {
   }
 
   // Buy or Sell
-  if (props.tradeInfo.buyOrSell === "true") {
+  if (props.tradeInfo.buyOrSell === "sell") {
     contractsClosed = props.tradeInfo.numContracts * -1
   }
 
@@ -108,8 +108,8 @@ function AdjustTradeForm(props) {
           <FormInput
             type="text"
             //min="1"
-            value={(props.tradeInfo.buyOrSell == "false" ? "+" : "-") + contractsClosed}
-            label={"Number of Contracts " + (props.tradeInfo.buyOrSell == "false" ? "Bought" : "Sold")}
+            value={(props.tradeInfo.buyOrSell == "buy" ? "+" : "-") + contractsClosed}
+            label={"Number of Contracts " + (props.tradeInfo.buyOrSell == "buy" ? "Bought" : "Sold")}
             readOnly={true} />
         </div>
         <div>
@@ -138,8 +138,8 @@ function AdjustTradeForm(props) {
             ref={openAdjustedPriceInputRef} />
         </div>
         <div class={PLResult > 0 ? positivePL : negativePL}>
-          {props.tradeInfo.buyOrSell == "false" ? <p>Sell to Close previous trade</p> : <p>Buy to Close previous trade</p>}
-          {props.tradeInfo.buyOrSell == "false" ? <p>Buy to Open adjustment</p> : <p>Sell to Open adjustment</p>}
+          {props.tradeInfo.buyOrSell == "buy" ? <p>Sell to Close previous trade</p> : <p>Buy to Close previous trade</p>}
+          {props.tradeInfo.buyOrSell == "buy" ? <p>Buy to Open adjustment</p> : <p>Sell to Open adjustment</p>}
           {PLResult > 0 ? <p>Rolling for a credit of {PLResult.toFixed(2)}</p> : <p>Rolling for a debit of {PLResult.toFixed(2)}</p>} 
         </div>
         <div class="grid col-span-1 sm:col-span-2">
