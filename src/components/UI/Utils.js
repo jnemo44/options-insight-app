@@ -1,10 +1,34 @@
 import Papa from "papaparse";
 import XLSX from "xlsx";
 
+export function calculatePL(trade) {
+  let PL = 0;
+  if (trade.buyOrSell == "sell") {
+    PL = parseFloat(trade.openPrice) - parseFloat(trade.closePrice);
+  }
+  else {
+    PL = parseFloat(trade.closePrice) - parseFloat(trade.openPrice);
+  }
+
+  return PL
+}
+
+export function calculatePCR(trade) {
+  let PCR = 0;
+  if (trade.buyOrSell == "sell") {
+    PCR = calculatePL(trade)/parseFloat(trade.openPrice)*100;
+  }
+  else {
+    PCR = calculatePL(trade)/parseFloat(trade.closePrice)*100;
+  }
+
+  return PCR
+}
+
+
 export function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
   }
-
 
 export function convertDate(date) {
   var dateObject = new Date(date)

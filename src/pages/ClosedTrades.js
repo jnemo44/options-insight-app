@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ClosedTradeList from '../components/Trade/ClosedTradeList';
+import { calculatePCR, calculatePL } from '../components/UI/Utils';
 
 function ClosedTradesPage(props) {
     //const [displayModal, setDisplayModal] = useState(false);
@@ -39,36 +40,46 @@ function ClosedTradesPage(props) {
 
                 // This is a trade that had no adjustments
                 for (const key in nonAdjustedTrades) {
-                    let priceDelta = (parseFloat(nonAdjustedTrades[key].openPrice) - parseFloat(nonAdjustedTrades[key].closePrice))
-                    
+                    let tradePL = calculatePL(nonAdjustedTrades[key])
+
+                    // Add calculated metrics to trade info
                     const trade = {
                         ...nonAdjustedTrades[key],
                         dit: (new Date(nonAdjustedTrades[key].openDate) - new Date(nonAdjustedTrades[key].closeDate)),
-                        profitLoss: priceDelta,
+                        profitLoss: tradePL.toFixed(2),
                     };
-                    totalProfitLoss += trade.profitLoss;
-                    premiumCaptureRate = (priceDelta/parseFloat(nonAdjustedTrades[key].openPrice))
+
+                    //Build metrics for all trades
+                    totalProfitLoss += tradePL;
+                    totalNumTrades += 1;
+
+                    //??How do I make this display as a percentage
+                    premiumCaptureRate = calculatePCR(nonAdjustedTrades[key])
                     
-                    console.log(priceDelta)
                     console.log("premiumCaptureRate")
                     console.log(premiumCaptureRate)
-                    totalNumTrades+=1;
+                    
+                    //Add trade to trade list
                     trades.push(trade);
                 }
 
                 // This is any trade that had adjustments
                 Object.keys(adjustedTrades).map((key) => {
                     let totalDIT = 0;
+                    let tradePL = 0;
                     adjustedTrades[key].map((trade) => {
                         let openTime = new Date(trade.openDate);
                         let closeTime = new Date(trade.closeDate);
-                        totalProfitLoss += ((trade.openPrice - trade.closePrice));
+                        
+                        // Calculate 
+                        tradePL += calculatePL(trade)
                         totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)));
-                        //console.log(totalProfitLoss)
                     })
 
                     // Only increment once per trade (do not count adjustments)
                     totalNumTrades+=1;
+                    // Add total adjustment PL to total PL of all trades
+                    totalProfitLoss+=tradePL;
                     
                     const trade = {
                         // Trade stats for main table
@@ -76,7 +87,7 @@ function ClosedTradesPage(props) {
                         adjustmentID: adjustedTrades[key][0].adjustmentID,
                         numContracts: adjustedTrades[key][0].numContracts,
                         spread: adjustedTrades[key][0].spread,
-                        profitLoss: totalProfitLoss.toFixed(2),
+                        profitLoss: tradePL.toFixed(2),
                         dit: totalDIT,
                         // Pass all trade info
                         ...adjustedTrades[key]
