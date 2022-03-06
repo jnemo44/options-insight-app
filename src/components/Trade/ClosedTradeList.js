@@ -53,13 +53,21 @@ function ClosedTradeList(props) {
     return (
       <Modal show={displayTradeInfo} onHide={hideTradeInfoHandler}>
         <Modal.Header closeButton>
-          <Modal.Title>{tradeInfoModal.ticker}</Modal.Title>
+          <Modal.Title>{tradeInfoModal.ticker}</Modal.Title> 
+          {tradeInfoModal.buyOrSell == "buy" ? 
+            <span className="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+              Bought
+            </span>   : 
+            <span className="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
+              Sold
+            </span>  
+          }
+               
         </Modal.Header>
         <Modal.Body>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
-          <div>OpenDate: {tradeInfoModal.openDate}</div>
-          <div>CloseDate: {tradeInfoModal.closeDate}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
+          <div>Open Price: {tradeInfoModal.openPrice}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>
           <div>Notes: {tradeInfoModal.closeNotes}</div>
           <AdjustTradeList trades={tradeInfoModal}></AdjustTradeList>
