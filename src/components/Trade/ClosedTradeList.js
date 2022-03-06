@@ -57,6 +57,8 @@ function ClosedTradeList(props) {
         </Modal.Header>
         <Modal.Body>
           <div>Number of Contracts: {tradeInfoModal.numContracts}</div>
+          <div>OpenDate: {tradeInfoModal.openDate}</div>
+          <div>CloseDate: {tradeInfoModal.closeDate}</div>
           <div>Days in Trade: {tradeInfoModal.dit}</div>
           <div>Close Price: {tradeInfoModal.closePrice}</div>
           <div>Notes: {tradeInfoModal.closeNotes}</div>

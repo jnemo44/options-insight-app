@@ -44,9 +44,11 @@ function ClosedTradesPage(props) {
                     let tradePL = calculatePL(nonAdjustedTrades[key])
 
                     // Add calculated metrics to trade info
+                    let openTime = new Date(nonAdjustedTrades[key].openDate)
+                    let closeTime = new Date(nonAdjustedTrades[key].closeDate)
                     const trade = {
                         ...nonAdjustedTrades[key],
-                        dit: (new Date(nonAdjustedTrades[key].openDate) - new Date(nonAdjustedTrades[key].closeDate)),
+                        dit: Math.ceil(Math.abs(closeTime - openTime)/ (1000 * 60 * 60 * 24)),
                         profitLoss: tradePL.toFixed(2),
                     };
 
@@ -96,8 +98,6 @@ function ClosedTradesPage(props) {
                         // Pass all trade info
                         ...adjustedTrades[key]
                     }
-                    console.log('trade')
-                    console.log(trade)
                     trades.push(trade);
                 })
                 // Set Stat States
