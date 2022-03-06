@@ -13,15 +13,30 @@ export function calculatePL(trade) {
   return PL
 }
 
-export function calculatePCR(trade) {
+export function calculatePCR(trade, adjustedPL) {
   let PCR = 0;
-  if (trade.buyOrSell == "sell") {
-    PCR = calculatePL(trade)/parseFloat(trade.openPrice)*100;
+  console.log(adjustedPL=null)
+  if (adjustedPL = null) {
+    console.log("Not Adjusted P/L")
+    if (trade.buyOrSell == "sell") {
+      PCR = calculatePL(trade)/parseFloat(trade.openPrice)*100;
+    }
+    else {
+      PCR = calculatePL(trade)/parseFloat(trade.closePrice)*100;
+    }
   }
   else {
-    PCR = calculatePL(trade)/parseFloat(trade.closePrice)*100;
+    //Adjustment
+    console.log("Adjusted P/L")
+    if (trade[0]?.buyOrSell == "sell") {
+      PCR = adjustedPL/trade[0]?.openPrice*100;
+    }
+    else {
+      //??Need to find the last trade index so I can use the final close price for this
+      PCR = adjustedPL/trade[-1]?.closePrice*100;
+    }
+    
   }
-
   return PCR
 }
 

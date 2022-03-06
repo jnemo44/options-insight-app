@@ -9,6 +9,7 @@ function ClosedTradesPage(props) {
     const [loadedTrades, setLoadedTrades] = useState([]);
     const [totalPL, setTotalPL] = useState(0);
     const [numTrades, setNumTrades] = useState(0);
+    //const [premiumCaptureRate, setPremiumCaptureRate] = useState();
 
     function tradeListModifiedHandler() {
         // A new trade has been added, closed, or adjusted
@@ -69,8 +70,7 @@ function ClosedTradesPage(props) {
                     let tradePL = 0;
                     adjustedTrades[key].map((trade) => {
                         let openTime = new Date(trade.openDate);
-                        let closeTime = new Date(trade.closeDate);
-                        
+                        let closeTime = new Date(trade.closeDate);                  
                         // Calculate 
                         tradePL += calculatePL(trade)
                         totalDIT += Math.ceil((Math.abs(closeTime - openTime) / (1000 * 60 * 60 * 24)));
@@ -80,6 +80,9 @@ function ClosedTradesPage(props) {
                     totalNumTrades+=1;
                     // Add total adjustment PL to total PL of all trades
                     totalProfitLoss+=tradePL;
+                    premiumCaptureRate = calculatePCR(adjustedTrades[key],tradePL)
+                    console.log(premiumCaptureRate)
+
                     
                     const trade = {
                         // Trade stats for main table
@@ -89,6 +92,7 @@ function ClosedTradesPage(props) {
                         spread: adjustedTrades[key][0].spread,
                         profitLoss: tradePL.toFixed(2),
                         dit: totalDIT,
+                        premiumCaptureRate: premiumCaptureRate,
                         // Pass all trade info
                         ...adjustedTrades[key]
                     }
